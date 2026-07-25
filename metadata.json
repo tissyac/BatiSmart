@@ -1,0 +1,11 @@
+{
+  "name": "BatiSmart Roof IA",
+  "description": "Plateforme intelligente de diagnostic et de maintenance prédictive des toitures des bâtiments publics algériens.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
