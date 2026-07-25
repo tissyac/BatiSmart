@@ -14,7 +14,7 @@ import SettingsScreen from "./components/SettingsScreen";
 import SupportScreen from "./components/SupportScreen";
 import { SEED_INSPECTIONS } from "./data";
 import { Inspection, UserProfile, Intervention } from "./types";
-import { Menu, Lock } from "lucide-react";
+import { Menu, Lock, ArrowLeft } from "lucide-react";
 import Logo from "./components/Logo";
 import { safeStorage } from "./utils/storage";
 import { isTabAuthorized, getRequiredRoles, getRestrictionMessage } from "./utils/rbac";
@@ -440,14 +440,26 @@ export default function App() {
       <header className={`flex items-center justify-between px-5 py-3 border-b shrink-0 z-30 transition-colors duration-300 ${
         theme === "dark" ? "bg-[#070c1e] border-slate-900 text-white" : "bg-white border-slate-200 text-slate-800"
       }`}>
-        <button
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 transition text-slate-700 dark:text-slate-300 cursor-pointer"
-          aria-label="Ouvrir le menu"
-        >
-          <Menu className="w-5 h-5" />
-        </button>
-        
+        <div className="flex items-center gap-2">
+          {activeTab !== "home" && (
+            <button
+              onClick={() => handleTabChange("home")}
+              className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 transition text-slate-700 dark:text-slate-300 cursor-pointer"
+              aria-label="Retour à l'accueil"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+          )}
+
+          <button
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 transition text-slate-700 dark:text-slate-300 cursor-pointer"
+            aria-label="Ouvrir le menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+        </div>
+
         <div className="flex items-center gap-1.5 font-display font-bold text-sm tracking-wider uppercase">
           <span className="text-sky-500">BatiSmart</span>
           <span className="bg-gradient-to-r from-sky-500 to-emerald-500 bg-clip-text text-transparent font-black">Roof IA</span>
