@@ -1980,39 +1980,7 @@ export default function DashboardScreen({
                 </div>
               </div>
 
-              {/* Submit and Feedback */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <button
-                  type="button"
-                  onClick={handleSaveExpertValidation}
-                  className="w-full sm:w-auto bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white text-xs font-bold py-3 px-6 rounded-xl shadow-md transition duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
-                >
-                  <ShieldCheck className="w-4 h-4" />
-                  Enregistrer et Authentifier la Validation
-                </button>
-
-                {validationSuccess && (
-                  <div className="flex flex-wrap items-center justify-between gap-3 bg-emerald-50 dark:bg-emerald-950/40 p-3 rounded-xl border border-emerald-500/30 w-full animate-fade-in">
-                    <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1.5">
-                      ✅ Décision & Signature enregistrées ! Le rapport PDF inclut désormais vos modifications J+2.
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const target = activeInspection || latestInspection;
-                        if (target) {
-                          setPdfModalTarget(target);
-                          setIsPdfModalOpen(true);
-                        }
-                      }}
-                      className="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1.5 cursor-pointer ml-auto shrink-0"
-                    >
-                      <FileText className="w-3.5 h-3.5" />
-                      Télécharger le PDF Mis à Jour
-                    </button>
-                  </div>
-                )}
-              </div>
+              {/* Validation actions moved to maintenance section */}
             </div>
           </div>
 
@@ -2377,17 +2345,28 @@ export default function DashboardScreen({
 
               {/* Action and feedback */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <button
-                  type="submit"
-                  className="w-full sm:w-auto bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold py-3 px-6 rounded-xl border border-slate-700 dark:border-slate-600 shadow-md transition duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
-                >
-                  <Calendar className="w-4 h-4" />
-                  Enregistrer l'Intervention dans l'Historique
-                </button>
+                <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                  <button
+                    type="submit"
+                    className="w-full sm:w-auto bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold py-3 px-6 rounded-xl border border-slate-700 dark:border-slate-600 shadow-md transition duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <Calendar className="w-4 h-4" />
+                    Enregistrer l'Intervention dans l'Historique
+                  </button>
 
-                {intervSuccess && (
+                  <button
+                    type="button"
+                    onClick={handleSaveExpertValidation}
+                    className="w-full sm:w-auto bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white text-xs font-bold py-3 px-6 rounded-xl shadow-md transition duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <ShieldCheck className="w-4 h-4" />
+                    Enregistrer et Authentifier la Validation
+                  </button>
+                </div>
+
+                {validationSuccess && (
                   <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1 bg-emerald-50 dark:bg-emerald-950/30 px-3 py-1.5 rounded-lg border border-emerald-500/20 animate-fade-in">
-                    ✅ Opération ajoutée avec succès à la chronologie du bâtiment !
+                    ✅ Décision & Signature enregistrées ! Le rapport PDF inclut désormais vos modifications J+2.
                   </span>
                 )}
               </div>
