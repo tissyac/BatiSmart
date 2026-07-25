@@ -486,11 +486,6 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
                             </div>
                           )}
                         </div>
-                        <p className={`text-[12px] leading-relaxed font-medium mt-1.5 ${
-                          isDark ? "text-slate-400" : "text-slate-700"
-                        }`}>
-                          {profile.desc}
-                        </p>
                       </div>
                     </button>
                   );
