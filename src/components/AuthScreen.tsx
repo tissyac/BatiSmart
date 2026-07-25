@@ -67,13 +67,6 @@ const AVAILABLE_PROFILES = [
     desc: "Vérification technique des acrotères, entretien courant, suivi des tâches assignées",
     icon: Hammer,
     color: "text-cyan-500 bg-cyan-500/10 border-cyan-500/25"
-  },
-  {
-    id: "Démonstration" as const,
-    label: "Démonstration",
-    desc: "Profil d'évaluation générale pré-configuré avec toutes les données réelles du prototype de recherche",
-    icon: Layers,
-    color: "text-orange-500 bg-orange-500/10 border-orange-500/25"
   }
 ];
 
@@ -88,7 +81,6 @@ const getDemoEmailByRole = (role: UserRole): string => {
     case "Opérateur drone / Agent de terrain": return "pilote.drone@batismart.dz";
     case "Inspecteur": return "inspecteur@batismart.dz";
     case "Technicien": return "technicien@batismart.dz";
-    case "Démonstration": return "demo@batismart-roof.ai";
     default: return "amine.belkacem@batismart.dz";
   }
 };
@@ -104,7 +96,6 @@ const getDemoNameByRole = (role: UserRole): string => {
     case "Opérateur drone / Agent de terrain": return "Riad Dahmani (Drone)";
     case "Inspecteur": return "Yanis Belkacem (Inspecteur)";
     case "Technicien": return "Mehdi Benslimane (Technicien)";
-    case "Démonstration": return "Prototype Jury (Démonstration)";
     default: return "Amine Belkacem";
   }
 };
