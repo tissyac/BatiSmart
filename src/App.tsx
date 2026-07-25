@@ -342,13 +342,13 @@ export default function App() {
       case "dashboard":
         return (
           <DashboardScreen
-            inspections={inspections}
+            inspections={filteredInspections}
             onViewInspection={handleViewInspection}
             onViewOnMap={handleViewOnMap}
             onNavigateToScan={() => handleTabChange("scan")}
             user={user}
             onFilterNavigate={handleFilterNavigate}
-            interventions={interventions}
+            interventions={filteredInterventions}
             onAddIntervention={handleAddIntervention}
             onUpdateInspection={handleUpdateInspection}
           />
