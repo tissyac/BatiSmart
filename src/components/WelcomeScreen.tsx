@@ -39,37 +39,6 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           </span>
         </div>
 
-        {/* Center Links */}
-        <nav className="hidden md:flex items-center gap-8">
-          <button 
-            onClick={() => {
-              const el = document.getElementById("features");
-              if (el) el.scrollIntoView({ behavior: "smooth" });
-            }}
-            className={`text-xs font-semibold tracking-wide uppercase hover:text-sky-500 transition duration-200 ${
-              isDark ? "text-slate-400" : "text-slate-500"
-            }`}
-          >
-            Fonctionnalités
-          </button>
-          <button 
-            onClick={() => onNavigateToTab("how_it_works")}
-            className={`text-xs font-semibold tracking-wide uppercase hover:text-sky-500 transition duration-200 ${
-              isDark ? "text-slate-400" : "text-slate-500"
-            }`}
-          >
-            Comment ça marche
-          </button>
-          <button 
-            onClick={() => onNavigateToTab("map")}
-            className={`text-xs font-semibold tracking-wide uppercase hover:text-sky-500 transition duration-200 ${
-              isDark ? "text-slate-400" : "text-slate-500"
-            }`}
-          >
-            Outils SIG
-          </button>
-        </nav>
-
         {/* Right Controls */}
         <div className="flex items-center gap-4">
           {/* Dark / Light Toggle */}
