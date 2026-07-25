@@ -123,7 +123,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           }`}>
             <div className="w-full rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 relative group/model aspect-[16/10] sm:aspect-[16/9]">
               <img 
-                src="/src/assets/images/roof_rehabilitation_comparison_1784574516217.jpg" 
+                src={welcomeBgImage} 
                 alt="Maquette 3D de réhabilitation" 
                 className="w-full h-full object-cover filter brightness-[0.80] contrast-[1.10] group-hover/model:scale-105 transition-transform duration-700"
               />

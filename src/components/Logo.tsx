@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Logo3DShowcase from "./Logo3DShowcase";
+import logo3dImage from "../assets/images/batismart_logo_3d_1784761795283.jpg";
 
 interface LogoProps {
   className?: string;
@@ -63,7 +64,7 @@ export default function Logo({
         {/* Main Official 3D Rendered Logo Image */}
         <div className="relative flex items-center justify-center p-1 rounded-2xl transition-all duration-300">
           <img
-            src="/src/assets/images/batismart_logo_3d_1784761795283.jpg"
+            src={logo3dImage}
             alt="BatiSmart Roof IA Logo"
             referrerPolicy="no-referrer"
             className={`${imgSizeClass} object-contain rounded-xl shadow-md group-hover:shadow-xl transition-shadow duration-300 bg-white border border-slate-200/60`}

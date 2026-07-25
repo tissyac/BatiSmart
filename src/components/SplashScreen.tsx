@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Sparkles, Activity, ShieldCheck, ArrowRight, Sun, Layers } from "lucide-react";
+import splashBackgroundImage from "../assets/images/roof_rehabilitation_comparison_1784574516217.jpg";
 
-const imgBackground = "/src/assets/images/roof_rehabilitation_comparison_1784574516217.jpg";
+const imgBackground = splashBackgroundImage;
 
 interface SplashScreenProps {
   onDismiss: () => void;

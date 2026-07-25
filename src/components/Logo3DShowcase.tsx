@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { X, RotateCw, Play, Pause, Sparkles, Sun, Shield, Layers, Droplets, Cpu, Download, Eye, Maximize2, RefreshCw } from "lucide-react";
+import logo3dImage from "../assets/images/batismart_logo_3d_1784761795283.jpg";
 
 interface Logo3DShowcaseProps {
   onClose: () => void;
@@ -100,7 +101,7 @@ export default function Logo3DShowcase({ onClose }: Logo3DShowcaseProps) {
             {/* Photorealistic 3D Render Image Asset with 3D Depth Shadow */}
             <div className="relative group">
               <img
-                src="/src/assets/images/batismart_logo_3d_1784761795283.jpg"
+                src={logo3dImage}
                 alt="BatiSmart Roof IA 3D Logo Studio Render"
                 referrerPolicy="no-referrer"
                 className={`w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 object-contain rounded-2xl transition-all duration-300 ${
@@ -287,7 +288,7 @@ export default function Logo3DShowcase({ onClose }: Logo3DShowcaseProps) {
               onClick={() => {
                 // Trigger download of 3D image asset
                 const link = document.createElement("a");
-                link.href = "/src/assets/images/batismart_logo_3d_1784761795283.jpg";
+                link.href = logo3dImage;
                 link.download = "BatiSmart_Roof_IA_Logo_3D.jpg";
                 link.click();
               }}
