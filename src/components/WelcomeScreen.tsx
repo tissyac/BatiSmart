@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight, Sparkles, Shield, Clock, FileText, Bot, Sun, Moon, CheckCircle, TrendingUp, AlertTriangle, Eye } from "lucide-react";
 import { UserProfile } from "../types";
+import welcomeBgImage from "../assets/images/roof_rehabilitation_comparison_1784574516217.jpg";
 
 interface WelcomeScreenProps {
   onStartInspection: () => void;
