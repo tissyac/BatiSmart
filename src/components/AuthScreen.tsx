@@ -173,6 +173,16 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
     "El Meniaa (58)"
   ];
 
+  const AUTH_CREDENTIALS_KEY = "batismart_auth_credentials";
+
+  const loadCredentials = (): Record<string, string> => {
+    const stored = safeStorage.getItem(AUTH_CREDENTIALS_KEY);
+    return stored ? JSON.parse(stored) : {};
+  };
+
+  const saveCredentials = (credentials: Record<string, string>) => {
+    safeStorage.setItem(AUTH_CREDENTIALS_KEY, JSON.stringify(credentials));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -197,15 +207,29 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
         return;
       }
 
+      const cleanEmail = email.trim().toLowerCase();
+      const credentials = loadCredentials();
+
       if (isLogin) {
-        // Simple auth simulation using selected/detected role & deterministic UID by email
-        const cleanEmail = email.trim().toLowerCase();
+        const savedPassword = credentials[cleanEmail];
+        if (!savedPassword) {
+          setError("Aucun compte trouvé avec cette adresse e-mail.");
+          setLoading(false);
+          return;
+        }
+
+        if (savedPassword !== password) {
+          setError("Mot de passe incorrect. Veuillez réessayer.");
+          setLoading(false);
+          return;
+        }
+
         const userUid = "usr_" + cleanEmail.replace(/[^a-z0-9]/g, "_");
         const authenticatedUser: UserProfile = {
           uid: userUid,
           email: cleanEmail,
           displayName: name || (cleanEmail.split("@")[0].charAt(0).toUpperCase() + cleanEmail.split("@")[0].slice(1)),
-          role: role, // Dynamically recognized or selected role
+          role: role,
           wilaya: wilaya || "Béjaïa (06)",
           createdAt: new Date().toISOString()
         };
@@ -218,16 +242,22 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
           setLoading(false);
           return;
         }
-        const cleanEmail = email.trim().toLowerCase();
-        const userUid = "usr_" + cleanEmail.replace(/[^a-z0-9]/g, "_");
+
+        const newUserEmail = cleanEmail;
+        const userUid = "usr_" + newUserEmail.replace(/[^a-z0-9]/g, "_");
         const newUser: UserProfile = {
           uid: userUid,
-          email: cleanEmail,
+          email: newUserEmail,
           displayName: name,
           role: role,
           wilaya: wilaya === "Autre (Saisir manuellement)" ? (customWilaya || "Autre") : wilaya,
           createdAt: new Date().toISOString()
         };
+
+        saveCredentials({
+          ...credentials,
+          [newUserEmail]: password
+        });
         safeStorage.setItem("batismart_user", JSON.stringify(newUser));
         onAuthSuccess(newUser);
       }
