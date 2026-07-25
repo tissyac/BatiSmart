@@ -2347,14 +2347,6 @@ export default function DashboardScreen({
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
                   <button
-                    type="submit"
-                    className="w-full sm:w-auto bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold py-3 px-6 rounded-xl border border-slate-700 dark:border-slate-600 shadow-md transition duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    <Calendar className="w-4 h-4" />
-                    Enregistrer l'Intervention dans l'Historique
-                  </button>
-
-                  <button
                     type="button"
                     onClick={handleSaveExpertValidation}
                     className="w-full sm:w-auto bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white text-xs font-bold py-3 px-6 rounded-xl shadow-md transition duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
