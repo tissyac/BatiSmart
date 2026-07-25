@@ -637,39 +637,6 @@ export default function DashboardScreen({
         </div>
       </div>
 
-      {/* 2-Day Return / Follow-Up Workflow Banner */}
-      <div className="p-4 md:p-5 rounded-2xl bg-gradient-to-r from-sky-950/80 via-slate-900 to-indigo-950/80 border border-sky-500/30 text-white shadow-lg space-y-3">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-sky-500 text-slate-950 shadow-xs">
-                Workflow Suivi J+2
-              </span>
-              <h3 className="text-sm font-bold font-display text-sky-200">
-                ⏱️ Re-visite & Complétion du Prédiagnostic (Après 2 Jours)
-              </h3>
-            </div>
-            <p className="text-xs text-slate-300 font-light max-w-3xl leading-relaxed">
-              Après avoir réalisé le premier prédiagnostic, revenez sur le tableau de bord pour valider l'avis de l'expert, mettre à jour le statut de la maintenance, enregistrer les travaux effectués et consigner vos observations à J+2. 
-              <strong className="text-sky-300 font-semibold"> Toutes ces modifications seront automatiquement intégrées dans le rapport PDF officiel téléchargeable.</strong>
-            </p>
-          </div>
-          <div className="flex items-center gap-2 self-stretch md:self-auto shrink-0">
-            <button
-              type="button"
-              onClick={() => {
-                const el = document.getElementById("decision-dashboard-card");
-                if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-              }}
-              className="w-full md:w-auto bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs py-2.5 px-4 rounded-xl transition shadow-md flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <Sparkles className="w-4 h-4" />
-              ⚡ Compléter le Suivi à J+2
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* Telemetry Indicator Cards Grid (Bento Style Grid) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         
