@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Mail, Lock, User, MapPin, Briefcase, RefreshCw, Shield, ClipboardCheck, Landmark, FileText, Hammer, Building2, Plane, Check, Sun, Moon } from "lucide-react";
 import { UserProfile, UserRole } from "../types";
 import Logo from "./Logo";
-import { safeStorage } from "../utils/storage";
+import { safeStorage, safeSessionStorage } from "../utils/storage";
 
 const AVAILABLE_PROFILES = [
   {
@@ -233,7 +233,7 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
           wilaya: wilaya || "Béjaïa (06)",
           createdAt: new Date().toISOString()
         };
-        safeStorage.setItem("batismart_user", JSON.stringify(authenticatedUser));
+        safeSessionStorage.setItem("batismart_user", JSON.stringify(authenticatedUser));
         onAuthSuccess(authenticatedUser);
       } else {
         // Register Simulation
@@ -258,7 +258,7 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
           ...credentials,
           [newUserEmail]: password
         });
-        safeStorage.setItem("batismart_user", JSON.stringify(newUser));
+        safeSessionStorage.setItem("batismart_user", JSON.stringify(newUser));
         onAuthSuccess(newUser);
       }
       setLoading(false);

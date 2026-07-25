@@ -16,7 +16,7 @@ import { SEED_INSPECTIONS } from "./data";
 import { Inspection, UserProfile, Intervention } from "./types";
 import { Menu, Lock, ArrowLeft } from "lucide-react";
 import Logo from "./components/Logo";
-import { safeStorage } from "./utils/storage";
+import { safeStorage, safeSessionStorage } from "./utils/storage";
 import { isTabAuthorized, getRequiredRoles, getRestrictionMessage } from "./utils/rbac";
 
 export function getFilteredInspectionsForUser(inspections: Inspection[], user: UserProfile | null): Inspection[] {
@@ -190,13 +190,13 @@ export default function App() {
 
   // 1. Initial configuration load
   useEffect(() => {
-    // Check local storage for authenticated user profile
-    const storedUser = safeStorage.getItem("batismart_user");
+    // Check session storage for authenticated user profile
+    const storedUser = safeSessionStorage.getItem("batismart_user");
     if (storedUser) {
       try {
         setUser(JSON.parse(storedUser));
       } catch (err) {
-        safeStorage.removeItem("batismart_user");
+        safeSessionStorage.removeItem("batismart_user");
       }
     }
 
@@ -319,7 +319,7 @@ export default function App() {
   };
 
   const handleLogout = () => {
-    safeStorage.removeItem("batismart_user");
+    safeSessionStorage.removeItem("batismart_user");
     setUser(null);
     setActiveTab("home");
   };
