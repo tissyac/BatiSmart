@@ -27,49 +27,44 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
     }`}>
       
       {/* 1. TOP HEADER NAVIGATION */}
-      <header className={`px-8 py-5 border-b flex items-center justify-between sticky top-0 z-30 backdrop-blur-md transition-colors duration-300 ${
-        isDark ? "border-slate-900 bg-[#030712]/80" : "border-slate-200/80 bg-white/80"
+      <header className={`px-8 py-4 border-b sticky top-0 z-30 backdrop-blur-md transition-colors duration-300 ${
+        isDark ? "border-slate-900 bg-[#030712]/90" : "border-slate-200/80 bg-white/90"
       }`}>
-        {/* Brand Logo & Name */}
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-sky-600 flex items-center justify-center text-white font-bold shadow-md shadow-sky-500/10">
-            B
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-3xl bg-sky-600 flex items-center justify-center text-white font-bold shadow-lg shadow-sky-500/20">
+              B
+            </div>
+            <div>
+              <div className={`text-base font-bold tracking-tight ${isDark ? "text-white" : "text-slate-900"}`}>
+                BatiSmart Roof IA
+              </div>
+              <div className="text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
+                Diagnostic dédié
+              </div>
+            </div>
           </div>
-          <span className={`text-lg font-extrabold tracking-tight font-display ${
-            isDark ? "text-white" : "text-slate-900"
-          }`}>
-            BatiSmart <span className="bg-gradient-to-r from-sky-500 to-teal-500 bg-clip-text text-transparent font-black">Roof IA</span>
-          </span>
-          <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onStartInspection}
+              className="px-5 py-2 rounded-full bg-sky-600 text-white text-sm font-semibold shadow-lg shadow-sky-500/20 hover:bg-sky-500 transition duration-300"
+            >
+              Commencer
+            </button>
+            <button
+              onClick={() => setTheme(isDark ? "light" : "dark")}
+              className={`p-2 rounded-2xl border transition-all duration-300 ${
+                isDark ? "bg-slate-900 border-slate-800 text-amber-400" : "bg-white border-slate-200 text-slate-600"
+              }`}
+              title={isDark ? "Passer au mode clair" : "Passer au mode sombre"}
+            >
+              {isDark ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
+            </button>
+          </div>
         </div>
 
-        {/* Right Controls */}
-        <div className="flex items-center gap-4">
-          {/* Dark / Light Toggle */}
-          <button
-            onClick={() => setTheme(isDark ? "light" : "dark")}
-            className={`p-2 rounded-xl border transition-all duration-300 ${
-              isDark 
-                ? "bg-slate-900 border-slate-800 text-amber-400 hover:text-amber-300" 
-                : "bg-slate-100 border-slate-200 text-slate-600 hover:text-sky-600 shadow-sm"
-            }`}
-            title={isDark ? "Passer au mode clair" : "Passer au mode sombre"}
-          >
-            {isDark ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
-          </button>
-
-          {/* Quick Action Button */}
-          <button
-            onClick={onStartInspection}
-            className="px-4 py-2 bg-[#0ea5e9] hover:bg-sky-500 text-white font-semibold text-xs rounded-xl shadow-md shadow-sky-500/10 hover:shadow-sky-500/20 transition-all duration-300"
-          >
-            Commencer
-          </button>
-        </div>
-        <nav className="flex flex-wrap justify-center gap-3 pt-4">
+        <nav className="mx-auto flex flex-wrap items-center justify-center gap-3 pt-4 w-full lg:w-auto">
           <button
             type="button"
             onClick={() => scrollToSection("problem")}
@@ -448,23 +443,26 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
       <section id="features" className={`py-16 border-t transition-colors duration-300 ${
         isDark ? "border-slate-900 bg-slate-950/20" : "border-slate-200/80 bg-slate-50/50"
       }`}>
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-6xl mx-auto px-8">
           
           {/* Section Header */}
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
             <span className="text-[10px] font-extrabold text-teal-600 dark:text-teal-400 tracking-widest uppercase block">
               FONCTIONNALITÉS
             </span>
             <h2 className="text-3xl md:text-4xl font-bold font-serif text-slate-900 dark:text-white tracking-tight">
-              Tout ce qu'il faut, rien de superflu.
+              Des fonctionnalités au cœur de votre diagnostic.
             </h2>
+            <p className="mx-auto text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
+              Un accès clair et centralisé à vos outils de diagnostic, votre historique, et vos rapports dans un design moderne et aéré.
+            </p>
           </div>
 
           {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8">
             
             {/* Feature 01 */}
-            <div className={`p-8 rounded-2xl border flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 ${
+            <div className={`p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
               isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
             }`}>
               {/* Number overlay */}
@@ -487,7 +485,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             </div>
 
             {/* Feature 02 */}
-            <div className={`p-8 rounded-2xl border flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 ${
+            <div className={`p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
               isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
             }`}>
               {/* Number overlay */}
@@ -510,7 +508,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             </div>
 
             {/* Feature 03 */}
-            <div className={`p-8 rounded-2xl border flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 ${
+            <div className={`p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
               isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
             }`}>
               {/* Number overlay */}
@@ -533,7 +531,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             </div>
 
             {/* Feature 04 */}
-            <div className={`p-8 rounded-2xl border flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 ${
+            <div className={`p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
               isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
             }`}>
               {/* Number overlay */}
