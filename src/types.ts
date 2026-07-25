@@ -66,8 +66,7 @@ export type UserRole =
   | "Gestionnaire du patrimoine / Propriétaire ou Client"
   | "Opérateur drone / Agent de terrain"
   | "Inspecteur"
-  | "Technicien"
-  | "Démonstration";
+  | "Technicien";
 
 export interface UserProfile {
   uid: string;

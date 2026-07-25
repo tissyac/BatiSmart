@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Mail, Lock, User, MapPin, Briefcase, RefreshCw, Layers, Shield, ClipboardCheck, Landmark, FileText, Hammer, Building2, Plane, Check, Sun, Moon } from "lucide-react";
+import { Mail, Lock, User, MapPin, Briefcase, RefreshCw, Shield, ClipboardCheck, Landmark, FileText, Hammer, Building2, Plane, Check, Sun, Moon } from "lucide-react";
 import { UserProfile, UserRole } from "../types";
 import Logo from "./Logo";
 import { safeStorage } from "../utils/storage";
@@ -70,35 +70,7 @@ const AVAILABLE_PROFILES = [
   }
 ];
 
-const getDemoEmailByRole = (role: UserRole): string => {
-  switch (role) {
-    case "Administrateur": return "admin@batismart.dz";
-    case "Expert / Diagnostiqueur": return "expert.diagnostiqueur@batismart.dz";
-    case "Collectivité locale (APC / Wilaya / Ministère)": return "apc.bejaia@batismart.dz";
-    case "Bureau d'études": return "bureau.etude@batismart.dz";
-    case "Entreprise de maintenance": return "maintenance.batiment@batismart.dz";
-    case "Gestionnaire du patrimoine / Propriétaire ou Client": return "gestionnaire.patrimoine@batismart.dz";
-    case "Opérateur drone / Agent de terrain": return "pilote.drone@batismart.dz";
-    case "Inspecteur": return "inspecteur@batismart.dz";
-    case "Technicien": return "technicien@batismart.dz";
-    default: return "amine.belkacem@batismart.dz";
-  }
-};
 
-const getDemoNameByRole = (role: UserRole): string => {
-  switch (role) {
-    case "Administrateur": return "Kamel Benali (Admin)";
-    case "Expert / Diagnostiqueur": return "Yacine Belkacem (Expert)";
-    case "Collectivité locale (APC / Wilaya / Ministère)": return "Nadia Zeroual (Mairie de Béjaïa)";
-    case "Bureau d'études": return "Samy Mansouri (Ingénieur)";
-    case "Entreprise de maintenance": return "Karim Haddad (Travaux)";
-    case "Gestionnaire du patrimoine / Propriétaire ou Client": return "Farid Meziane (Gestionnaire)";
-    case "Opérateur drone / Agent de terrain": return "Riad Dahmani (Drone)";
-    case "Inspecteur": return "Yanis Belkacem (Inspecteur)";
-    case "Technicien": return "Mehdi Benslimane (Technicien)";
-    default: return "Amine Belkacem";
-  }
-};
 
 interface AuthScreenProps {
   onAuthSuccess: (user: UserProfile) => void;
@@ -201,22 +173,6 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
     "El Meniaa (58)"
   ];
 
-  const handleDemoLogin = () => {
-    setLoading(true);
-    setTimeout(() => {
-      const demoUser: UserProfile = {
-        uid: "demo_user_" + Math.random().toString(36).substr(2, 9),
-        email: getDemoEmailByRole(role),
-        displayName: getDemoNameByRole(role),
-        role: role,
-        wilaya: "Béjaïa (06)",
-        createdAt: new Date().toISOString()
-      };
-      safeStorage.setItem("batismart_user", JSON.stringify(demoUser));
-      onAuthSuccess(demoUser);
-      setLoading(false);
-    }, 800);
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -562,55 +518,36 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
               "Créer mon compte"
             )}
           </button>
-        </form>
 
-        {/* Dynamic State Toggle Footer */}
-        <div className={`mt-6 pt-5 border-t text-center space-y-3 ${
-          isDark ? "border-slate-800" : "border-slate-200"
-        }`}>
-          {isLogin ? (
-            <p className={`text-xs font-light ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-              Nouveau sur la plateforme ?{" "}
-              <button
-                onClick={() => { setIsLogin(false); setIsReset(false); }}
-                className="text-sky-500 hover:text-sky-400 font-semibold transition cursor-pointer"
-              >
-                S'inscrire gratuitement
-              </button>
-            </p>
-          ) : (
-            <p className={`text-xs font-light ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-              Vous avez déjà un compte ?{" "}
-              <button
-                onClick={() => { setIsLogin(true); setIsReset(false); }}
-                className="text-sky-500 hover:text-sky-400 font-semibold transition cursor-pointer"
-              >
-                Se connecter
-              </button>
-            </p>
-          )}
-
-          {/* Quick Demo Login Option */}
-          <div className="pt-2">
-            <div className="relative flex items-center justify-center my-3">
-              <span className={`absolute inset-x-0 border-t ${isDark ? "border-slate-800" : "border-slate-200"}`} />
-              <span className={`relative px-3 text-[10px] uppercase tracking-widest font-semibold ${isDark ? "bg-[#070c1e] text-slate-450" : "bg-white text-slate-500"}`}>Option d'évaluation</span>
-            </div>
-            <button
-              onClick={handleDemoLogin}
-              type="button"
-              className={`w-full border py-2 px-4 rounded-xl text-xs font-medium transition duration-300 cursor-pointer flex items-center justify-center gap-2 ${
-                isDark 
-                  ? "bg-slate-900/60 hover:bg-slate-900 border-slate-800 text-slate-300 hover:text-white" 
-                  : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700 hover:text-slate-900"
-              }`}
-            >
-              <Layers className="w-4 h-4 text-sky-500" />
-              Utiliser le Compte Démo (Accès Rapide)
-            </button>
+          {/* Dynamic State Toggle Footer */}
+          <div className={`mt-6 pt-5 border-t text-center space-y-3 ${
+            isDark ? "border-slate-800" : "border-slate-200"
+          }`}>
+            {isLogin ? (
+              <p className={`text-xs font-light ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                Nouveau sur la plateforme ?{" "}
+                <button
+                  type="button"
+                  onClick={() => { setIsLogin(false); setIsReset(false); }}
+                  className="text-sky-500 hover:text-sky-400 font-semibold transition cursor-pointer"
+                >
+                  S'inscrire gratuitement
+                </button>
+              </p>
+            ) : (
+              <p className={`text-xs font-light ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                Vous avez déjà un compte ?{" "}
+                <button
+                  type="button"
+                  onClick={() => { setIsLogin(true); setIsReset(false); }}
+                  className="text-sky-500 hover:text-sky-400 font-semibold transition cursor-pointer"
+                >
+                  Se connecter
+                </button>
+              </p>
+            )}
           </div>
-        </div>
-
+        </form>
       </div>
     </div>
   );

@@ -25,16 +25,7 @@ export function getFilteredInspectionsForUser(inspections: Inspection[], user: U
   const userEmail = (user.email || "").trim().toLowerCase();
   const userUid = (user.uid || "").trim().toLowerCase();
 
-  // Pour le compte de démonstration (demo@batismart-roof.ai, demo@batismart.dz, rôle "Démonstration" ou e-mail démo) :
-  // Afficher STRICTEMENT ET UNIQUEMENT l'unique bâtiment d'étude complet : Université Abderrahmane Mira de Béjaïa
-  if (user.role === "Démonstration" || userEmail.includes("demo") || userEmail === "demo@batismart-roof.ai" || userEmail === "demo@batismart.dz") {
-    const univInspection = inspections.find((ins) => 
-      ins && ins.buildingName && ins.buildingName.toLowerCase().includes("université abderrahmane mira")
-    );
-    return univInspection ? [univInspection] : [];
-  }
-
-  // Pour tout autre compte utilisateur personnel (nouveau ou existant) :
+  // Pour tout compte utilisateur personnel (nouveau ou existant) :
   // Afficher uniquement et automatiquement toutes les inspections créées par et associées à cet utilisateur
   return inspections.filter((ins) => {
     if (!ins) return false;
@@ -312,23 +303,13 @@ export default function App() {
 
   // 3. Select existing inspection and jump to registry page
   const handleViewInspection = (inspection: Inspection) => {
-    if (user && (user.role === "Démonstration" || user.email.toLowerCase().includes("demo"))) {
-      const demoTarget = filteredInspections[0] || inspection;
-      setSelectedInspectionId(demoTarget.id);
-    } else {
-      setSelectedInspectionId(inspection.id);
-    }
+    setSelectedInspectionId(inspection.id);
     setActiveTab("history");
   };
 
   // 4. Select inspection and jump directly to SIG map with auto-popup
   const handleViewOnMap = (inspection: Inspection) => {
-    if (user && (user.role === "Démonstration" || user.email.toLowerCase().includes("demo"))) {
-      const demoTarget = filteredInspections[0] || inspection;
-      setSelectedInspectionId(demoTarget.id);
-    } else {
-      setSelectedInspectionId(inspection.id);
-    }
+    setSelectedInspectionId(inspection.id);
     setActiveTab("map");
   };
 
