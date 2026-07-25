@@ -14,6 +14,13 @@ interface WelcomeScreenProps {
 export default function WelcomeScreen({ onStartInspection, onNavigateToTab, theme, setTheme, user }: WelcomeScreenProps) {
   const isDark = theme === "dark";
 
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className={`h-screen w-full overflow-y-auto font-sans transition-colors duration-300 ${
       isDark ? "bg-[#030712] text-slate-100" : "bg-slate-50 text-slate-800"
@@ -62,6 +69,36 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             Commencer
           </button>
         </div>
+        <nav className="flex flex-wrap justify-center gap-3 pt-4">
+          <button
+            type="button"
+            onClick={() => scrollToSection("problem")}
+            className="px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+          >
+            Le problème
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToSection("solution")}
+            className="px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+          >
+            La solution
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToSection("features")}
+            className="px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+          >
+            Fonctionnalité
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToSection("benefits")}
+            className="px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+          >
+            Bénéfices
+          </button>
+        </nav>
       </header>
 
       {/* 2. HERO SECTION */}
@@ -329,7 +366,85 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
 
       </section>
 
-      {/* 3. FEATURES GRID (Tout ce qu'il faut, rien de superflu) */}
+      {/* 3. PROBLEM SECTION */}
+      <section id="problem" className={`py-16 transition-colors duration-300 ${
+        isDark ? "bg-slate-950 text-slate-200" : "bg-white text-slate-800"
+      }`}>
+        <div className="max-w-6xl mx-auto px-8">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-[10px] font-extrabold text-teal-600 dark:text-teal-400 tracking-widest uppercase block">
+              PROBLÈME
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif tracking-tight">
+              Les diagnostics sont difficiles, longs et fragmentés.
+            </h2>
+            <p className="mt-4 text-sm md:text-base leading-relaxed text-slate-500 dark:text-slate-400">
+              Vos inspections de toiture restent souvent dispersées entre différents comptes et rapports, sans retour utilisateur cohérent ni suivi personnalisé.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
+              <h3 className="text-lg font-semibold mb-3">Perte de continuité</h3>
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                Les diagnostics ne restent pas attachés à votre compte, ce qui empêche un historique propre et un suivi sur le long terme.
+              </p>
+            </div>
+            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
+              <h3 className="text-lg font-semibold mb-3">Informations dispersées</h3>
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                Les résultats sont mélangés entre différents utilisateurs et comptes, ce qui rend l’analyse de risque peu claire et peu fiable.
+              </p>
+            </div>
+            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
+              <h3 className="text-lg font-semibold mb-3">Suivi insuffisant</h3>
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                Sans une vue dédiée par utilisateur, il est difficile de comparer les évolutions de risque et les actions réalisées sur une seule toiture.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. SOLUTION SECTION */}
+      <section id="solution" className={`py-16 transition-colors duration-300 ${
+        isDark ? "bg-slate-900 text-slate-100" : "bg-slate-50 text-slate-800"
+      }`}>
+        <div className="max-w-6xl mx-auto px-8">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-[10px] font-extrabold text-teal-600 dark:text-teal-400 tracking-widest uppercase block">
+              LA SOLUTION
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif tracking-tight">
+              Un tableau de bord personnalisé pour chaque compte.
+            </h2>
+            <p className="mt-4 text-sm md:text-base leading-relaxed text-slate-500 dark:text-slate-400">
+              BatiSmart Roof IA centralise vos propres diagnostics, votre propre historique, et vous permet de suivre l’état de votre toiture sans mélange avec d’autres utilisateurs.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="rounded-3xl border p-8 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 shadow-sm">
+              <h3 className="text-lg font-semibold mb-3">Compte dédié</h3>
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                Tous vos diagnostics sont liés à votre adresse e-mail et à votre identifiant utilisateur.
+              </p>
+            </div>
+            <div className="rounded-3xl border p-8 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 shadow-sm">
+              <h3 className="text-lg font-semibold mb-3">Historique clair</h3>
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                Suivez l’évolution du risque uniquement pour les inspections que vous avez réalisées.
+              </p>
+            </div>
+            <div className="rounded-3xl border p-8 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 shadow-sm">
+              <h3 className="text-lg font-semibold mb-3">Pas de mélange</h3>
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                Les rapports des autres comptes ne sont jamais affichés dans votre tableau de bord personnel.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. FEATURES GRID (Tout ce qu'il faut, rien de superflu) */}
       <section id="features" className={`py-16 border-t transition-colors duration-300 ${
         isDark ? "border-slate-900 bg-slate-950/20" : "border-slate-200/80 bg-slate-50/50"
       }`}>
@@ -445,7 +560,46 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
         </div>
       </section>
 
-      {/* 4. FOOTER */}
+      {/* 6. BENEFITS SECTION */}
+      <section id="benefits" className={`py-16 transition-colors duration-300 ${
+        isDark ? "bg-slate-950 text-slate-200" : "bg-white text-slate-800"
+      }`}>
+        <div className="max-w-6xl mx-auto px-8">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-[10px] font-extrabold text-teal-600 dark:text-teal-400 tracking-widest uppercase block">
+              BÉNÉFICES
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif tracking-tight">
+              Des résultats concrets pour votre toiture et votre budget.
+            </h2>
+            <p className="mt-4 text-sm md:text-base leading-relaxed text-slate-500 dark:text-slate-400">
+              BatiSmart Roof IA vous aide à comprendre l’état de votre toit, prioriser les actions, et réduire les coûts grâce à des diagnostics clairs et dédiés à votre compte.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
+              <h3 className="text-lg font-semibold mb-3">Gain de temps</h3>
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                Un diagnostic rapide et centralisé, sans avoir à rechercher des rapports dispersés entre plusieurs comptes.
+              </p>
+            </div>
+            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
+              <h3 className="text-lg font-semibold mb-3">Meilleure visibilité</h3>
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                Suivi personnalisé de l’état de vos inspections et de l’évolution du risque pour chaque intervention.
+              </p>
+            </div>
+            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
+              <h3 className="text-lg font-semibold mb-3">Décisions plus fiables</h3>
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                Des préconisations IA claires pour prioriser les travaux et éviter les réparations inutiles.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. FOOTER */}
       <footer className={`py-12 border-t text-center text-xs transition-colors duration-300 ${
         isDark ? "border-slate-900 bg-slate-950 text-slate-500" : "border-slate-200 bg-white text-slate-400 shadow-inner"
       }`}>
