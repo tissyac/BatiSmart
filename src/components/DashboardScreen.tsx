@@ -612,29 +612,6 @@ export default function DashboardScreen({
           </div>
         </div>
         
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 self-start md:self-auto w-full md:w-auto">
-          {/* Quick Launch Inspection Button */}
-          <button
-            onClick={onNavigateToScan}
-            className="bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-white font-semibold text-xs py-3 px-5 rounded-xl transition shadow-lg shadow-sky-500/20 flex items-center justify-center gap-2 border border-sky-400/20 cursor-pointer hover:-translate-y-0.5 duration-300 w-full sm:w-auto"
-          >
-            <Activity className="w-4 h-4 animate-pulse text-sky-200" />
-            Lancer un Prédiagnostic IA
-          </button>
-
-          {/* Quick Access to Interventions History */}
-          <button
-            type="button"
-            onClick={() => {
-              const el = document.getElementById("maintenance-history-card");
-              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-            }}
-            className="bg-slate-800 hover:bg-slate-950 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-100 font-semibold text-xs py-3 px-5 rounded-xl transition border border-slate-700 dark:border-slate-800 cursor-pointer flex items-center justify-center gap-2 hover:-translate-y-0.5 duration-300 w-full sm:w-auto shadow-md"
-          >
-            <Wrench className="w-4 h-4 text-amber-500 animate-pulse" />
-            Historique des Interventions 🛠️
-          </button>
-        </div>
       </div>
 
       {/* Telemetry Indicator Cards Grid (Bento Style Grid) */}
