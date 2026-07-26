@@ -200,12 +200,14 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
   const [facingMode, setFacingMode] = useState<"user" | "environment">("environment");
   const [isShutterFlashing, setIsShutterFlashing] = useState(false);
   const [cameraLaunching, setCameraLaunching] = useState(false);
+  const [cameraReady, setCameraReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   // Helper functions for Camera
   const startCamera = async (mode: "user" | "environment" = "environment") => {
     setCameraError(null);
     setCameraLaunching(true);
+    setCameraReady(false);
 
     if (cameraStream) {
       cameraStream.getTracks().forEach((track) => track.stop());
@@ -243,7 +245,14 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
 
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
+        videoRef.current.onloadedmetadata = () => {
+          setCameraReady(true);
+        };
+        videoRef.current.oncanplay = () => {
+          setCameraReady(true);
+        };
         await videoRef.current.play().catch(() => undefined);
+        setCameraReady(true);
       }
     } catch (err: any) {
       console.error("Error accessing camera:", err);
@@ -262,10 +271,23 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
       setCameraStream(null);
     }
     setCameraActive(false);
+    setCameraReady(false);
   };
 
-  const capturePhoto = () => {
-    if (!videoRef.current || !videoRef.current.videoWidth || !videoRef.current.videoHeight) {
+  const capturePhoto = async () => {
+    if (!videoRef.current) {
+      showToast("Le flux caméra n'est pas encore prêt. Veuillez patienter un instant.");
+      return;
+    }
+
+    for (let attempt = 0; attempt < 8; attempt += 1) {
+      if (videoRef.current.videoWidth && videoRef.current.videoHeight) {
+        break;
+      }
+      await new Promise(resolve => setTimeout(resolve, 150));
+    }
+
+    if (!videoRef.current.videoWidth || !videoRef.current.videoHeight) {
       showToast("Le flux caméra n'est pas encore prêt. Veuillez patienter un instant.");
       return;
     }
