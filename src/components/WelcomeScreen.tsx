@@ -6,12 +6,12 @@ import infiltrationImg from "../assets/images/problem-infiltration.png";
 import toitureDegradeeImg from "../assets/images/problem-toiture-degradee.png";
 import fissureImg from "../assets/images/problem-fissure.png";
 import humiditeImg from "../assets/images/problem-humidite.png";
-import fonctionnalitesImg from "../assets/images/FONCTIONNALITÉS.png";
-import detectionAutoImg from "../assets/images/DÉTECTION AUTOMATIQUE.png";
-import cartographieSigImg from "../assets/images/CARTOGRAPHIE SIG.png";
-import historiqueImg from "../assets/images/HISTORIQUE.png";
-import rapportPdfImg from "../assets/images/RAPPORT PDF.png";
-import assistantIaImg from "../assets/images/ASSISTANT IA.png";
+import fonctionnalitesImg from "../assets/images/fonctionnalites.png";
+import detectionAutoImg from "../assets/images/detection-automatique.png";
+import cartographieSigImg from "../assets/images/cartographie-sig.png";
+import historiqueImg from "../assets/images/historique.png";
+import rapportPdfImg from "../assets/images/rapport-pdf.png";
+import assistantIaImg from "../assets/images/assistant-ia.png";
 
 interface WelcomeScreenProps {
   onStartInspection: () => void;
