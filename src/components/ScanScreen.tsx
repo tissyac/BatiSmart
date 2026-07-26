@@ -2157,14 +2157,14 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                               <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider select-none">ou</div>
 
                               <div className="flex gap-2 w-full justify-center">
-                                {/* 2. Custom WebRTC Camera Live Stream */}
+                                {/* 2. Open system camera directly */}
                                 <button
                                   type="button"
-                                  onClick={() => startCamera(facingMode)}
+                                  onClick={openNativeCameraPicker}
                                   className="flex-1 bg-sky-500 hover:bg-sky-600 text-white font-bold text-[10.5px] py-2 px-3.5 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer shadow-md shadow-sky-500/10"
                                 >
-                                  <SwitchCamera className="w-3.5 h-3.5" />
-                                  <span>Caméra Web Live</span>
+                                  <Camera className="w-3.5 h-3.5" />
+                                  <span>Ouvrir la caméra</span>
                                 </button>
 
                                 {/* 3. Gallery Selector */}
