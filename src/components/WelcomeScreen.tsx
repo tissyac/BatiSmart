@@ -430,25 +430,6 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             </p>
           </div>
 
-          <div className="problem-platform mx-auto mb-12">
-            <div className="problem-platform-grid" />
-            <div className="relative z-10 px-6 py-8 md:px-12 md:py-10">
-              <div className="mb-4 inline-flex items-center gap-3 rounded-full bg-slate-900/10 dark:bg-slate-200/10 px-4 py-2 text-xs uppercase tracking-[0.24em] text-slate-800 dark:text-slate-200 font-semibold">
-                <span className="h-2.5 w-2.5 rounded-full bg-sky-500 animate-pulse" />
-                Vision 3D du diagnostic
-              </div>
-              <h3 className="text-xl md:text-2xl font-semibold text-slate-900 dark:text-white">
-                Un plateau de données 3D pour vos pathologies de toiture.
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300 max-w-2xl">
-                Un modèle visuel de votre bâtiment avec couches superposées d’images, d’analyses IA et de cartographie SIG, présenté comme une plateforme immersive et futuriste.
-              </p>
-            </div>
-            <div className="absolute inset-x-0 bottom-0 h-16 md:h-20">
-              <div className="platform-halo" />
-            </div>
-          </div>
-
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
             <div className="card-3d">
               <div className="card-3d-inner rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
