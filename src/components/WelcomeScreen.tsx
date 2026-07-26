@@ -127,6 +127,18 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             Bénéfices
           </button>
         </nav>
+        {activeSection !== "home" && (
+          <div className="mt-4 flex justify-center lg:justify-end">
+            <button
+              type="button"
+              onClick={() => setActiveSection("home")}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-white text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+            >
+              <ArrowRight className="w-4 h-4 rotate-180 text-slate-600 dark:text-slate-300" />
+              Retour à l'accueil
+            </button>
+          </div>
+        )}
       </header>
 
       {activeSection === "home" && (
