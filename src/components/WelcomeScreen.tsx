@@ -378,7 +378,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             <span className="text-[10px] font-extrabold text-teal-600 dark:text-teal-400 tracking-widest uppercase block">
               PROBLÈME
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold font-serif tracking-tight title-3d">
               Pourquoi BatiSmart Roof IA ?
             </h2>
             <p className="mt-4 text-sm md:text-base leading-relaxed text-slate-500 dark:text-slate-400">
@@ -673,7 +673,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             <span className="text-[10px] font-extrabold text-teal-600 dark:text-teal-400 tracking-widest uppercase block">
               LES BÉNÉFICES
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold font-serif tracking-tight title-3d">
               Pourquoi utiliser <span className="text-sky-600 dark:text-sky-300">BatiSmart Roof IA</span> ?
             </h2>
             <p className="mt-4 text-sm md:text-base leading-relaxed text-slate-500 dark:text-slate-400">
