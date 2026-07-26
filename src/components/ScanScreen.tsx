@@ -218,7 +218,7 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
       setCameraError("La caméra live n'est pas disponible sur ce navigateur.");
       setCameraActive(false);
       setCameraLaunching(false);
-      return;
+      return false;
     }
 
     const isSecureContext = typeof window !== "undefined" && window.isSecureContext;
@@ -228,7 +228,7 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
       setCameraError("Cette page doit être servie via HTTPS pour utiliser la caméra live.");
       setCameraActive(false);
       setCameraLaunching(false);
-      return;
+      return false;
     }
 
     try {
@@ -256,26 +256,30 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
         };
         await videoRef.current.play().catch(() => undefined);
 
-        await new Promise(resolve => setTimeout(resolve, 1200));
+        await new Promise(resolve => setTimeout(resolve, 900));
 
         if (videoRef.current.videoWidth && videoRef.current.videoHeight) {
           setCameraReady(true);
-        } else {
-          stream.getTracks().forEach((track) => track.stop());
-          setCameraStream(null);
-          setCameraActive(false);
-          setCameraReady(false);
-          setCameraError("Le flux caméra live ne s'affiche pas correctement sur cet appareil. Utilisez la sélection photo ci-dessous.");
+          setCameraLaunching(false);
+          return true;
         }
       }
+
+      stream.getTracks().forEach((track) => track.stop());
+      setCameraStream(null);
+      setCameraActive(false);
+      setCameraReady(false);
+      setCameraError("Le flux caméra live ne s'affiche pas correctement sur cet appareil.");
+      setCameraLaunching(false);
+      return false;
     } catch (err: any) {
       console.error("Error accessing camera:", err);
       setCameraError(
         "Impossible d'accéder à l'appareil photo. Autorisez la caméra dans votre navigateur ou utilisez la prise de photo mobile."
       );
       setCameraActive(false);
-    } finally {
       setCameraLaunching(false);
+      return false;
     }
   };
 
@@ -370,6 +374,14 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
       }
     };
     input.click();
+  };
+
+  const handleCameraButtonClick = async () => {
+    setAcquisitionMode("camera");
+    const started = await startCamera(facingMode);
+    if (!started) {
+      triggerNativeCamera();
+    }
   };
 
   const handleModeSelection = (modeId: "camera" | "gallery" | "drone" | "thermal" | "3d_scan", modeLabel: string, isFuture: boolean) => {
@@ -1986,7 +1998,7 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                     <div className="absolute inset-0 bg-white z-40 animate-pulse" />
                   )}
 
-                  {acquisitionMode === "camera" && cameraActive && cameraReady ? (
+                  {acquisitionMode === "camera" && cameraActive ? (
                     /* LIVE CAMERA STREAM VIEW */
                     <div className="absolute inset-0 w-full h-full bg-black flex flex-col items-center justify-between">
                       <video
@@ -2011,8 +2023,8 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
 
                       {/* Top status tag */}
                       <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-lg text-white text-[10px] font-mono font-bold flex items-center gap-1.5 z-10 border border-white/10">
-                        <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-                        <span>FLUX LIVE : CAMÉRA {facingMode === "environment" ? "ARRIÈRE" : "FRONTALE"}</span>
+                        <span className={`w-2 h-2 rounded-full ${cameraReady ? "bg-red-500 animate-ping" : "bg-amber-400"}`} />
+                        <span>{cameraReady ? `FLUX LIVE : CAMÉRA ${facingMode === "environment" ? "ARRIÈRE" : "FRONTALE"}` : "INITIALISATION DE LA CAMÉRA…"}</span>
                       </div>
 
                       {/* Controls toolbar overlay at the bottom */}
@@ -2115,7 +2127,7 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
 
                           <button
                             type="button"
-                            onClick={triggerNativeCamera}
+                            onClick={handleCameraButtonClick}
                             className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer"
                           >
                             <Camera className="w-4 h-4 shrink-0" />
@@ -2136,18 +2148,14 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                           
                           {acquisitionMode === "camera" ? (
                             <div className="mt-4 flex flex-col items-center justify-center gap-3 w-full max-w-sm px-4 z-10">
-                              <label className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer relative">
+                              <button
+                                type="button"
+                                onClick={handleCameraButtonClick}
+                                className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer"
+                              >
                                 <Camera className="w-4 h-4 shrink-0 animate-bounce" />
                                 <span>Prendre une photo</span>
-                                <input
-                                  ref={nativeCameraInputRef}
-                                  type="file"
-                                  accept="image/*"
-                                  capture={facingMode === "user" ? "user" : "environment"}
-                                  onChange={handleImageChange}
-                                  className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                                />
-                              </label>
+                              </button>
                               <p className="text-[10px] text-slate-500 dark:text-slate-400 text-center">
                                 Sur mobile, l’appareil photo natif s’ouvre directement. Sur ordinateur, le navigateur peut ouvrir un sélecteur photo.
                               </p>
