@@ -274,6 +274,17 @@
   animation: scanX 4s ease-in-out infinite;
 }
 
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.wow-fade-up {
+  opacity: 0;
+  animation: fadeUp 1s ease-out forwards;
+  animation-delay: 0.2s;
+}
+
 /* Custom premium scrollbar utility */
 .scrollbar-thin {
   scrollbar-width: thin;

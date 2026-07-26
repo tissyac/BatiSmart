@@ -22,8 +22,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
   };
 
   return (
-    <div className={`h-screen w-full overflow-y-auto font-sans transition-colors duration-300 ${
-      isDark ? "bg-[#030712] text-slate-100" : "bg-slate-50 text-slate-800"
+    <div className={`h-screen w-full overflow-y-auto scrollbar-thin font-sans transition-colors duration-300 ${
+      isDark ? "bg-[#030712] text-slate-100 bento-bg-dark" : "bg-slate-50 text-slate-800 bento-bg"
     }`}>
       
       {/* 1. TOP HEADER NAVIGATION */}
@@ -97,10 +97,13 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
       </header>
 
       {/* 2. HERO SECTION */}
-      <section className="max-w-7xl mx-auto px-8 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        
+      <section className="relative overflow-hidden max-w-7xl mx-auto px-8 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-sky-500/15 to-transparent" />
+        <div className="pointer-events-none absolute -left-16 top-16 h-72 w-72 rounded-full bg-teal-400/10 blur-3xl" />
+        <div className="pointer-events-none absolute right-0 bottom-0 h-72 w-72 rounded-full bg-sky-400/10 blur-3xl" />
+
         {/* Left Column (Content & Copy) */}
-        <div className="lg:col-span-7 space-y-8">
+        <div className="lg:col-span-7 space-y-8 wow-fade-up">
           
            {/* Accent Badge */}
           <div className="flex flex-wrap items-center gap-2">
@@ -118,7 +121,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           </div>
 
           {/* 3D Model Viewer Card (Promoted & Enlarged above main title) */}
-          <div className={`w-full max-w-xl lg:max-w-full rounded-2xl p-2.5 border shadow-2xl relative z-10 transition-colors duration-300 ${
+          <div className={`w-full max-w-xl lg:max-w-full rounded-3xl bento-card bento-card-accent relative z-10 transition-colors duration-300 ${
             isDark 
               ? "bg-[#0b1129] border-slate-800" 
               : "bg-white border-slate-200/80"
@@ -154,7 +157,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           </div>
 
           {/* Main Display Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black font-display tracking-tight leading-[1.1] text-slate-900 dark:text-white">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black font-display tracking-tight leading-[1.05] text-slate-900 dark:text-white wow-fade-up">
             Votre étanchéité, <br />
             <span className="font-serif italic text-teal-600 dark:text-teal-400 font-normal">
               enfin maîtrisée.
@@ -169,10 +172,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           </p>
 
           {/* Main CTAs */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 wow-fade-up">
             <button
               onClick={onStartInspection}
-              className="px-6 py-3.5 bg-[#0ea5e9] hover:bg-sky-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-sky-500/20 hover:-translate-y-0.5 transition duration-300 flex items-center justify-center gap-2"
+              className="px-6 py-3.5 bg-gradient-to-r from-sky-500 to-teal-500 hover:from-sky-400 hover:to-teal-400 text-white font-bold text-sm rounded-2xl shadow-2xl shadow-sky-500/20 hover:-translate-y-0.5 transition duration-300 flex items-center justify-center gap-2"
             >
               Faire mon bilan gratuit
               <ArrowRight className="w-4 h-4" />
@@ -196,7 +199,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           {/* Core Stats Bar */}
           <div className={`pt-8 border-t grid grid-cols-3 gap-6 md:gap-12 ${
             isDark ? "border-slate-900" : "border-slate-200"
-          }`}>
+          } wow-fade-up`}>
             <div>
               <span className="text-3xl md:text-4xl font-extrabold font-display text-slate-900 dark:text-white block">
                 640+
@@ -520,7 +523,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           </div>
 
           {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 wow-fade-up">
             
             {/* Feature 01 */}
             <div className={`p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
