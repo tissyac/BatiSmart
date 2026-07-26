@@ -9,7 +9,7 @@ import humiditeImg from "../assets/images/problem-humidite.png";
 import fonctionnalitesImg from "../assets/images/fonctionnalites.png";
 import detectionAutoImg from "../assets/images/detection-automatique.png";
 import cartographieSigImg from "../assets/images/cartographie-sig.png";
-import historiqueImg from "../assets/images/historique.png";
+import historiqueImg from "../assets/images/HISTORIQUE.png";
 import rapportPdfImg from "../assets/images/rapport-pdf.png";
 import assistantIaImg from "../assets/images/assistant-ia.png";
 
