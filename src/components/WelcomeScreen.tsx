@@ -160,6 +160,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
               </div>
             </div>
           </div>
+        </div>
 
           {/* Main Display Heading */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black font-display tracking-tight leading-[1.05] text-slate-900 dark:text-white wow-fade-up">
@@ -284,7 +285,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                     strokeWidth="7"
                     fill="transparent"
                     strokeDasharray="213"
-                    strokeDashoffset="60" // 72% filled
+                    strokeDashoffset="60"
                     strokeLinecap="round"
                   />
                 </svg>
