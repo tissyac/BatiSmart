@@ -12,3 +12,5 @@ services:
         sync: false
       - key: APP_URL
         sync: false
+      - key: NODE_VERSION
+        value: 20.19.0
