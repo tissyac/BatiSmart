@@ -364,22 +364,20 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
 
     setAcquisitionMode(modeId);
     if (modeId === "camera") {
-      stopCamera();
-      setTimeout(() => {
-        openNativeCameraPicker();
-      }, 120);
       showToast("Ouverture directe de l’appareil photo…");
     } else {
       showToast(`Mode d'acquisition '${modeLabel}' activé !`);
     }
   };
 
-  // Auto-stop camera stream when leaving camera mode to keep the capture flow direct
+  // Start the live camera immediately in camera mode.
   useEffect(() => {
-    if (acquisitionMode !== "camera") {
+    if (acquisitionMode === "camera") {
+      void startCamera(facingMode);
+    } else {
       stopCamera();
     }
-  }, [acquisitionMode]);
+  }, [acquisitionMode, facingMode]);
 
   // Clean up stream on unmount
   useEffect(() => {
@@ -2095,48 +2093,21 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                           </div>
                           <div>
                             <p className="text-xs font-bold text-slate-800 dark:text-white">
-                              Flux caméra live indisponible
+                              Caméra non disponible pour le moment
                             </p>
                             <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                              Le flux caméra live n’est pas fiable sur cet ordinateur. Vous pouvez directement choisir une photo depuis votre PC ou ouvrir le sélecteur photo natif.
+                              Autorisez l’accès à la caméra dans votre navigateur, puis relancez la prise de photo.
                             </p>
                           </div>
-                          
-                          <div className="flex flex-col gap-2.5 items-center w-full">
-                            {/* 1. Native photo picker / camera fallback */}
-                            <label className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer relative">
-                              <Camera className="w-4 h-4 shrink-0 animate-pulse" />
-                              <span>Prendre / Choisir une photo</span>
-                              <input
-                                type="file"
-                                accept="image/*"
-                                capture="environment"
-                                onChange={handleImageChange}
-                                className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                              />
-                            </label>
 
-                            <div className="flex gap-2 w-full">
-                              <button
-                                type="button"
-                                onClick={() => startCamera(facingMode)}
-                                className="flex-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 font-semibold text-[10px] py-2 rounded-lg transition cursor-pointer"
-                              >
-                                Réessayer le live
-                              </button>
-                              <label className="flex-1 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-[10px] py-2 rounded-lg transition cursor-pointer relative flex items-center justify-center gap-1">
-                                <Upload className="w-3.5 h-3.5" />
-                                <span>Galerie</span>
-                                <input
-                                  type="file"
-                                  accept="image/*"
-                                  multiple
-                                  onChange={handleImageChange}
-                                  className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                                />
-                              </label>
-                            </div>
-                          </div>
+                          <button
+                            type="button"
+                            onClick={() => startCamera(facingMode)}
+                            className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer"
+                          >
+                            <Camera className="w-4 h-4 shrink-0" />
+                            <span>Réessayer l’appareil photo</span>
+                          </button>
                         </div>
                       ) : (
                         <>
@@ -2154,11 +2125,11 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                             <div className="mt-4 flex flex-col items-center justify-center gap-3 w-full max-w-sm px-4 z-10">
                               <button
                                 type="button"
-                                onClick={openNativeCameraPicker}
+                                onClick={() => startCamera(facingMode)}
                                 className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer"
                               >
                                 <Camera className="w-4 h-4 shrink-0 animate-bounce" />
-                                <span>Prendre une photo</span>
+                                <span>Ouvrir l’appareil photo</span>
                               </button>
                             </div>
                           ) : (
