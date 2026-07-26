@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight, Sparkles, Shield, Clock, FileText, Bot, Sun, Moon, CheckCircle, TrendingUp, AlertTriangle, Eye, Droplet, Home, Zap, Waves } from "lucide-react";
+import { ArrowRight, Sparkles, Shield, Clock, FileText, Bot, Sun, Moon, CheckCircle, TrendingUp, AlertTriangle, Eye, Droplet, Home, Zap, Waves, Building, Brain, Gauge, MapPin } from "lucide-react";
 import { UserProfile } from "../types";
 import welcomeBgImage from "../assets/images/roof_rehabilitation_comparison_1784574516217.jpg";
 
@@ -429,33 +429,72 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
         <div className="max-w-6xl mx-auto px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-[10px] font-extrabold text-teal-600 dark:text-teal-400 tracking-widest uppercase block">
-              LA SOLUTION
+              NOTRE SOLUTION
             </span>
             <h2 className="text-3xl md:text-4xl font-bold font-serif tracking-tight">
-              Un tableau de bord personnalisé pour chaque compte.
+              Une plateforme <span className="text-sky-600 dark:text-sky-300">intelligente</span> d'aide au prédiagnostic
             </h2>
             <p className="mt-4 text-sm md:text-base leading-relaxed text-slate-500 dark:text-slate-400">
-              BatiSmart Roof IA centralise vos propres diagnostics, votre propre historique, et vous permet de suivre l’état de votre toiture sans mélange avec d’autres utilisateurs.
+              BatiSmart Roof IA combine l'Intelligence Artificielle, les Systèmes d'Information Géographique (SIG) et les technologies Smart City afin de réaliser un prédiagnostic automatisé à partir d'images, d'évaluer le niveau de risque, de cartographier les bâtiments et d'accompagner les décideurs dans la planification des opérations de maintenance.
             </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            <div className="rounded-3xl border p-8 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 shadow-sm">
-              <h3 className="text-lg font-semibold mb-3">Compte dédié</h3>
-              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                Tous vos diagnostics sont liés à votre adresse e-mail et à votre identifiant utilisateur.
-              </p>
-            </div>
-            <div className="rounded-3xl border p-8 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 shadow-sm">
-              <h3 className="text-lg font-semibold mb-3">Historique clair</h3>
-              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                Suivez l’évolution du risque uniquement pour les inspections que vous avez réalisées.
-              </p>
-            </div>
-            <div className="rounded-3xl border p-8 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 shadow-sm">
-              <h3 className="text-lg font-semibold mb-3">Pas de mélange</h3>
-              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                Les rapports des autres comptes ne sont jamais affichés dans votre tableau de bord personnel.
-              </p>
+
+          <div className="space-y-4">
+            <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-sm overflow-hidden">
+              <div className="bg-slate-100 dark:bg-slate-900 px-6 py-5 text-sm uppercase tracking-[0.24em] text-slate-600 dark:text-slate-400 font-semibold">
+                Pipeline de prédiagnostic
+              </div>
+              <div className="grid gap-4 p-6 md:grid-cols-2 xl:grid-cols-5">
+                <div className="rounded-3xl border border-slate-200 dark:border-slate-800 p-5 bg-slate-50 dark:bg-slate-900">
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-600 dark:bg-sky-900/20 dark:text-sky-300">
+                    <Building className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-semibold mb-2">1. Photo / Image</h3>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Acquisition d'images par drone, satellite ou smartphone.
+                  </p>
+                </div>
+
+                <div className="rounded-3xl border border-slate-200 dark:border-slate-800 p-5 bg-slate-50 dark:bg-slate-900">
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-fuchsia-100 text-fuchsia-600 dark:bg-fuchsia-900/20 dark:text-fuchsia-300">
+                    <Brain className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-semibold mb-2">2. Analyse par IA</h3>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Détection automatique des anomalies et des dégradations.
+                  </p>
+                </div>
+
+                <div className="rounded-3xl border border-slate-200 dark:border-slate-800 p-5 bg-slate-50 dark:bg-slate-900">
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-300">
+                    <Gauge className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-semibold mb-2">3. Score de risque</h3>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Évaluation du niveau de risque et priorisation des interventions.
+                  </p>
+                </div>
+
+                <div className="rounded-3xl border border-slate-200 dark:border-slate-800 p-5 bg-slate-50 dark:bg-slate-900">
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-300">
+                    <MapPin className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-semibold mb-2">4. Cartographie SIG</h3>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Géolocalisation et visualisation des bâtiments à risque.
+                  </p>
+                </div>
+
+                <div className="rounded-3xl border border-slate-200 dark:border-slate-800 p-5 bg-slate-50 dark:bg-slate-900">
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                    <FileText className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-semibold mb-2">5. Rapport PDF</h3>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Génération automatique d'un rapport détaillé.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
