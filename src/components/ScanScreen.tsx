@@ -350,17 +350,36 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
   };
 
   const openNativeCameraPicker = () => {
-    nativeCameraInputRef.current?.click();
+    if (nativeCameraInputRef.current) {
+      nativeCameraInputRef.current.value = "";
+      nativeCameraInputRef.current.click();
+    }
   };
 
-  // Auto-start or stop camera based on acquisition mode
-  useEffect(() => {
-    if (acquisitionMode === "camera") {
-      startCamera(facingMode);
+  const handleModeSelection = (modeId: "camera" | "gallery" | "drone" | "thermal" | "3d_scan", modeLabel: string, isFuture: boolean) => {
+    if (isFuture) {
+      showToast(`Le module d'acquisition ${modeLabel} est en cours de développement (Phase 2).`);
+      return;
+    }
+
+    setAcquisitionMode(modeId);
+    if (modeId === "camera") {
+      stopCamera();
+      setTimeout(() => {
+        openNativeCameraPicker();
+      }, 120);
+      showToast("Ouverture directe de l’appareil photo…");
     } else {
+      showToast(`Mode d'acquisition '${modeLabel}' activé !`);
+    }
+  };
+
+  // Auto-stop camera stream when leaving camera mode to keep the capture flow direct
+  useEffect(() => {
+    if (acquisitionMode !== "camera") {
       stopCamera();
     }
-  }, [acquisitionMode, facingMode]);
+  }, [acquisitionMode]);
 
   // Clean up stream on unmount
   useEffect(() => {
@@ -1919,14 +1938,7 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                   <button
                     key={mode.id}
                     type="button"
-                    onClick={() => {
-                      setAcquisitionMode(mode.id as any);
-                      if (mode.isFuture) {
-                        showToast(`Le module d'acquisition ${mode.label} est en cours de développement (Phase 2).`);
-                      } else {
-                        showToast(`Mode d'acquisition '${mode.label}' activé !`);
-                      }
-                    }}
+                    onClick={() => handleModeSelection(mode.id as any, mode.label, mode.isFuture)}
                     className={`p-2 rounded-xl border flex flex-col items-center justify-center text-center transition cursor-pointer relative ${
                       acquisitionMode === mode.id
                         ? "bg-sky-500/10 border-sky-500 text-sky-600 dark:text-sky-400 font-bold"
@@ -2130,56 +2142,24 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                         <>
                           <Upload className="w-9 h-9 text-slate-400 mb-2 group-hover:text-sky-500 transition" />
                           <span className="text-xs text-slate-700 dark:text-slate-300 font-semibold block">
-                            {acquisitionMode === "camera" && "Prendre une photo ou Importer"}
+                            {acquisitionMode === "camera" && "Prendre une photo directement"}
                             {acquisitionMode === "gallery" && "Sélectionner ou glisser la photo"}
                             {acquisitionMode === "drone" && "Sélectionner un cliché par Drone"}
                             {acquisitionMode === "thermal" && "Sélectionner un pré-diagnostic Thermographique"}
                             {acquisitionMode === "3d_scan" && "Charger un nuage photogrammétrique 3D"}
                           </span>
-                          <span className="text-[9.5px] text-slate-400 dark:text-slate-500 block mt-1 font-light">Max size 15MB • JPG, PNG • Sélection multiple</span>
+                          <span className="text-[9.5px] text-slate-400 dark:text-slate-500 block mt-1 font-light">Photo directe • Pas de sélection de fichiers</span>
                           
                           {acquisitionMode === "camera" ? (
                             <div className="mt-4 flex flex-col items-center justify-center gap-3 w-full max-w-sm px-4 z-10">
-                              {/* 1. Bulletproof Native Phone Camera Launcher */}
-                              <label className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer relative">
+                              <button
+                                type="button"
+                                onClick={openNativeCameraPicker}
+                                className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer"
+                              >
                                 <Camera className="w-4 h-4 shrink-0 animate-bounce" />
-                                <span>Prendre Photo (Appareil Photo Mobile)</span>
-                                <input
-                                  type="file"
-                                  accept="image/*"
-                                  capture="environment"
-                                  onChange={handleImageChange}
-                                  className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                                />
-                              </label>
-
-                              {/* OR separator */}
-                              <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider select-none">ou</div>
-
-                              <div className="flex gap-2 w-full justify-center">
-                                {/* 2. Open system camera directly */}
-                                <button
-                                  type="button"
-                                  onClick={openNativeCameraPicker}
-                                  className="flex-1 bg-sky-500 hover:bg-sky-600 text-white font-bold text-[10.5px] py-2 px-3.5 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer shadow-md shadow-sky-500/10"
-                                >
-                                  <Camera className="w-3.5 h-3.5" />
-                                  <span>Ouvrir la caméra</span>
-                                </button>
-
-                                {/* 3. Gallery Selector */}
-                                <label className="flex-1 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-[10.5px] py-2 px-3.5 rounded-xl transition cursor-pointer relative flex items-center justify-center gap-1.5">
-                                  <Upload className="w-3.5 h-3.5" />
-                                  <span>Galerie</span>
-                                  <input
-                                    type="file"
-                                    accept="image/*"
-                                    multiple
-                                    onChange={handleImageChange}
-                                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                                  />
-                                </label>
-                              </div>
+                                <span>Prendre une photo</span>
+                              </button>
                             </div>
                           ) : (
                             <input
