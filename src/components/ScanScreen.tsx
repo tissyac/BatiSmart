@@ -199,13 +199,33 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [facingMode, setFacingMode] = useState<"user" | "environment">("environment");
   const [isShutterFlashing, setIsShutterFlashing] = useState(false);
+  const [cameraLaunching, setCameraLaunching] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   // Helper functions for Camera
   const startCamera = async (mode: "user" | "environment" = "environment") => {
     setCameraError(null);
+    setCameraLaunching(true);
+
     if (cameraStream) {
       cameraStream.getTracks().forEach((track) => track.stop());
+    }
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setCameraError("La caméra live n'est pas disponible sur ce navigateur.");
+      setCameraActive(false);
+      setCameraLaunching(false);
+      return;
+    }
+
+    const isSecureContext = typeof window !== "undefined" && window.isSecureContext;
+    const isLocalhost = typeof window !== "undefined" && ["localhost", "127.0.0.1"].includes(window.location.hostname);
+
+    if (!isSecureContext && !isLocalhost) {
+      setCameraError("Cette page doit être servie via HTTPS pour utiliser la caméra live.");
+      setCameraActive(false);
+      setCameraLaunching(false);
+      return;
     }
 
     try {
@@ -217,29 +237,22 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
         },
         audio: false
       });
+
       setCameraStream(stream);
       setCameraActive(true);
+
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
+        await videoRef.current.play().catch(() => undefined);
       }
     } catch (err: any) {
       console.error("Error accessing camera:", err);
-      try {
-        const fallbackStream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-          audio: false
-        });
-        setCameraStream(fallbackStream);
-        setCameraActive(true);
-        if (videoRef.current) {
-          videoRef.current.srcObject = fallbackStream;
-        }
-      } catch (fallbackErr: any) {
-        setCameraError(
-          "Impossible d'accéder à l'appareil photo. Veuillez autoriser l'accès à la caméra dans vos paramètres."
-        );
-        setCameraActive(false);
-      }
+      setCameraError(
+        "Impossible d'accéder à l'appareil photo. Autorisez la caméra dans votre navigateur ou utilisez la prise de photo mobile."
+      );
+      setCameraActive(false);
+    } finally {
+      setCameraLaunching(false);
     }
   };
 
@@ -252,30 +265,33 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
   };
 
   const capturePhoto = () => {
-    if (!videoRef.current) return;
-    
+    if (!videoRef.current || !videoRef.current.videoWidth || !videoRef.current.videoHeight) {
+      showToast("Le flux caméra n'est pas encore prêt. Veuillez patienter un instant.");
+      return;
+    }
+
     try {
       const video = videoRef.current;
       const canvas = document.createElement("canvas");
       canvas.width = video.videoWidth || 1280;
       canvas.height = video.videoHeight || 720;
-      
+
       const ctx = canvas.getContext("2d");
       if (ctx) {
         if (facingMode === "user") {
           ctx.translate(canvas.width, 0);
           ctx.scale(-1, 1);
         }
-        
+
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         const base64Image = canvas.toDataURL("image/jpeg", 0.85);
-        
+
         setUploadedImages(prev => {
           const combined = [...prev, base64Image].slice(0, 5);
           setUploadedImage(base64Image);
           return combined;
         });
-        
+
         setSelectedSample("");
         showToast("Photo de terrain capturée avec succès ! 📸");
 
@@ -304,7 +320,7 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
     } else {
       stopCamera();
     }
-  }, [acquisitionMode]);
+  }, [acquisitionMode, facingMode]);
 
   // Clean up stream on unmount
   useEffect(() => {
