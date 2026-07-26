@@ -12,6 +12,7 @@ import cartographieSigImg from "../assets/images/cartographie-sig.png";
 import historiqueImg from "../assets/images/HISTORIQUE.png";
 import rapportPdfImg from "../assets/images/rapport-pdf.png";
 import assistantIaImg from "../assets/images/assistant-ia.png";
+import tableauBordImg from "../assets/images/tableau de bord.png";
 
 interface WelcomeScreenProps {
   onStartInspection: () => void;
@@ -643,33 +644,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                       <div className="text-sky-400"><Sparkles className="w-5 h-5" /></div>
                     </div>
                     <p className="text-xs text-slate-300 mb-3">Suivi des indicateurs, alertes, évolution des pathologies, ROI et aide à la décision.</p>
-                    <div className="grid grid-cols-2 gap-3 mb-3">
-                      <div className="p-3 bg-slate-900/30 rounded-md">
-                        <div className="text-xs text-slate-300">Bâtiments inspectés</div>
-                        <div className="text-2xl font-bold text-white">1,248</div>
-                      </div>
-                      <div className="p-3 bg-slate-900/30 rounded-md">
-                        <div className="text-xs text-slate-300">Alertes actives</div>
-                        <div className="text-2xl font-bold text-red-400">18</div>
-                      </div>
-                    </div>
-                    <div className="flex gap-3 mb-3">
-                      <div className="flex-1 rounded-md bg-slate-900/20 p-3">
-                        <svg className="w-full h-24" viewBox="0 0 100 40" preserveAspectRatio="none">
-                          <polyline fill="none" stroke="#06b6d4" strokeWidth="2" points="0,30 10,25 20,20 30,18 40,12 50,14 60,10 70,8 80,6 90,8 100,5" />
-                        </svg>
-                      </div>
-                      <div className="w-28 rounded-md bg-slate-900/20 p-3 flex items-center justify-center">
-                        <svg viewBox="0 0 36 36" className="w-16 h-16">
-                          <circle cx="18" cy="18" r="15" fill="#0ea5e9" opacity="0.15" />
-                          <text x="18" y="22" textAnchor="middle" className="text-white" fontSize="10">38%</text>
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="mt-auto grid grid-cols-3 gap-2 text-xs text-slate-300">
-                      <div className="text-center">Coût évité<br/><span className="font-bold text-amber-400">-28%</span></div>
-                      <div className="text-center">ROI<br/><span className="font-bold text-white">1.42 M DZD</span></div>
-                      <div className="text-center">Interventions<br/><span className="font-bold text-sky-400">24</span></div>
+                    <div className="flex-1 rounded-lg overflow-hidden bg-slate-800/40 border border-slate-700">
+                      <img src={tableauBordImg} alt="Tableau de bord" className="w-full h-56 object-cover" />
                     </div>
                   </div>
                 </div>
