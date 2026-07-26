@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight, Sparkles, Shield, Clock, FileText, Bot, Sun, Moon, CheckCircle, TrendingUp, AlertTriangle, Eye } from "lucide-react";
+import { ArrowRight, Sparkles, Shield, Clock, FileText, Bot, Sun, Moon, CheckCircle, TrendingUp, AlertTriangle, Eye, Droplet, Home, Zap, Waves } from "lucide-react";
 import { UserProfile } from "../types";
 import welcomeBgImage from "../assets/images/roof_rehabilitation_comparison_1784574516217.jpg";
 
@@ -371,29 +371,51 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
               PROBLÈME
             </span>
             <h2 className="text-3xl md:text-4xl font-bold font-serif tracking-tight">
-              Les diagnostics sont difficiles, longs et fragmentés.
+              Pourquoi BatiSmart Roof IA ?
             </h2>
             <p className="mt-4 text-sm md:text-base leading-relaxed text-slate-500 dark:text-slate-400">
-              Vos inspections de toiture restent souvent dispersées entre différents comptes et rapports, sans retour utilisateur cohérent ni suivi personnalisé.
+              Aujourd'hui, de nombreux bâtiments publics algériens présentent des infiltrations, des problèmes d'humidité et des dégradations d'étanchéité souvent détectés trop tard. Les inspections traditionnelles sont longues, coûteuses et nécessitent des interventions sur site parfois dangereuses. Cette situation entraîne des dépenses importantes de maintenance corrective et une dégradation progressive du patrimoine bâti.
             </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
+
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <h3 className="text-lg font-semibold mb-3">Perte de continuité</h3>
+              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-600 dark:bg-sky-900/20 dark:text-sky-300">
+                <Droplet className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-semibold mb-3">INFILTRATION</h3>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                Les diagnostics ne restent pas attachés à votre compte, ce qui empêche un historique propre et un suivi sur le long terme.
+                Les infiltrations d'eau sont la principale cause de détérioration des structures et des finitions intérieures.
               </p>
             </div>
+
             <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <h3 className="text-lg font-semibold mb-3">Informations dispersées</h3>
+              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-300">
+                <Home className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-semibold mb-3">TOITURE DÉGRADÉE</h3>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                Les résultats sont mélangés entre différents utilisateurs et comptes, ce qui rend l’analyse de risque peu claire et peu fiable.
+                Les membranes d'étanchéité se détériorent avec le temps sous l'effet des intempéries et des UV.
               </p>
             </div>
+
             <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <h3 className="text-lg font-semibold mb-3">Suivi insuffisant</h3>
+              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-fuchsia-100 text-fuchsia-600 dark:bg-fuchsia-900/20 dark:text-fuchsia-300">
+                <Zap className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-semibold mb-3">FISSURE</h3>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                Sans une vue dédiée par utilisateur, il est difficile de comparer les évolutions de risque et les actions réalisées sur une seule toiture.
+                Les fissures fragilisent l'étanchéité et facilitent la pénétration de l'eau dans les éléments constructifs.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
+              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-300">
+                <Waves className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-semibold mb-3">HUMIDITÉ</h3>
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                L'humidité affecte la qualité d'air intérieur et peut provoquer des problèmes de santé pour les occupants.
               </p>
             </div>
           </div>
