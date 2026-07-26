@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight, Sparkles, Shield, Clock, FileText, Bot, Sun, Moon, CheckCircle, TrendingUp, AlertTriangle, Eye, Droplet, Home, Zap, Waves, Building, Brain, Gauge, MapPin } from "lucide-react";
+import { ArrowRight, Sparkles, Shield, Clock, FileText, Bot, Sun, Moon, CheckCircle, TrendingUp, AlertTriangle, Eye, Droplet, Home, Zap, Waves, Building, Brain, Gauge, MapPin, Search, ShieldCheck, Database, PieChart, Cloud } from "lucide-react";
 import { UserProfile } from "../types";
 import welcomeBgImage from "../assets/images/roof_rehabilitation_comparison_1784574516217.jpg";
 
@@ -626,33 +626,110 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
         <div className="max-w-6xl mx-auto px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-[10px] font-extrabold text-teal-600 dark:text-teal-400 tracking-widest uppercase block">
-              BÉNÉFICES
+              LES BÉNÉFICES
             </span>
             <h2 className="text-3xl md:text-4xl font-bold font-serif tracking-tight">
-              Des résultats concrets pour votre toiture et votre budget.
+              Pourquoi utiliser <span className="text-sky-600 dark:text-sky-300">BatiSmart Roof IA</span> ?
             </h2>
             <p className="mt-4 text-sm md:text-base leading-relaxed text-slate-500 dark:text-slate-400">
-              BatiSmart Roof IA vous aide à comprendre l’état de votre toit, prioriser les actions, et réduire les coûts grâce à des diagnostics clairs et dédiés à votre compte.
+              BatiSmart Roof IA vous permet d'anticiper les problèmes, d'optimiser vos ressources et de protéger durablement vos bâtiments tout en réduisant les coûts.
             </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <h3 className="text-lg font-semibold mb-3">Gain de temps</h3>
-              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                Un diagnostic rapide et centralisé, sans avoir à rechercher des rapports dispersés entre plusieurs comptes.
-              </p>
+
+          <div className="space-y-6">
+            <div className="grid gap-6 md:grid-cols-3">
+              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                  <CheckCircle className="w-5 h-5" />
+                </div>
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-600 dark:bg-sky-900/20 dark:text-sky-300">
+                  <Search className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-semibold mb-2">1. Détection précoce des pathologies</h3>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  Identifiez rapidement les fissures, infiltrations, humidité et autres anomalies avant qu'elles ne s'aggravent.
+                </p>
+              </div>
+
+              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                  <CheckCircle className="w-5 h-5" />
+                </div>
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-300">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-semibold mb-2">2. Maintenance préventive</h3>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  Planifiez les interventions au bon moment et évitez les réparations d'urgence coûteuses.
+                </p>
+              </div>
+
+              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                  <CheckCircle className="w-5 h-5" />
+                </div>
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-300">
+                  <Database className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-semibold mb-2">3. Réduction des coûts</h3>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  Moins de pannes, moins d'interventions lourdes, réduction significative des coûts de maintenance.
+                </p>
+              </div>
             </div>
-            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <h3 className="text-lg font-semibold mb-3">Meilleure visibilité</h3>
-              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                Suivi personnalisé de l’état de vos inspections et de l’évolution du risque pour chaque intervention.
-              </p>
-            </div>
-            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <h3 className="text-lg font-semibold mb-3">Décisions plus fiables</h3>
-              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                Des préconisations IA claires pour prioriser les travaux et éviter les réparations inutiles.
-              </p>
+
+            <div className="grid gap-6 md:grid-cols-4">
+              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                  <CheckCircle className="w-5 h-5" />
+                </div>
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                  <PieChart className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-semibold mb-2">4. Optimisation des budgets</h3>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  Priorisez les actions selon le niveau de risque réel et allouez vos budgets plus efficacement.
+                </p>
+              </div>
+
+              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                  <CheckCircle className="w-5 h-5" />
+                </div>
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-fuchsia-100 text-fuchsia-600 dark:bg-fuchsia-900/20 dark:text-fuchsia-300">
+                  <Building className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-semibold mb-2">5. Protection du patrimoine</h3>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  Prolongez la durée de vie de vos bâtiments et préservez la valeur de votre patrimoine immobilier.
+                </p>
+              </div>
+
+              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                  <CheckCircle className="w-5 h-5" />
+                </div>
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-300">
+                  <Clock className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-semibold mb-2">6. Décisions plus rapides</h3>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  Accédez à une information fiable et à jour pour prendre des décisions éclairées rapidement.
+                </p>
+              </div>
+
+              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                  <CheckCircle className="w-5 h-5" />
+                </div>
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-300">
+                  <Cloud className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-semibold mb-2">7. Centralisation des données</h3>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  Toutes vos données, inspections et historiques centralisées au même endroit, accessibles à tout moment.
+                </p>
+              </div>
             </div>
           </div>
         </div>
