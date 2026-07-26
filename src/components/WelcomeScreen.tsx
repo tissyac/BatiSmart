@@ -394,8 +394,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                   INFILTRATION
                 </div>
               </div>
-              <div className="p-7">
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">INFILTRATION</h3>
+              <div className="p-7 pt-5">
                 <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                   Les infiltrations d'eau sont la principale cause de détérioration des structures et des finitions intérieures.
                 </p>
@@ -410,8 +409,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                   TOITURE DÉGRADÉE
                 </div>
               </div>
-              <div className="p-7">
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">TOITURE DÉGRADÉE</h3>
+              <div className="p-7 pt-5">
                 <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                   Les membranes d'étanchéité se détériorent avec le temps sous l'effet des intempéries et des UV.
                 </p>
@@ -426,8 +424,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                   FISSURE
                 </div>
               </div>
-              <div className="p-7">
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">FISSURE</h3>
+              <div className="p-7 pt-5">
                 <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                   Les fissures fragilisent l'étanchéité et facilitent la pénétration de l'eau dans les éléments constructifs.
                 </p>
@@ -442,8 +439,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                   HUMIDITÉ
                 </div>
               </div>
-              <div className="p-7">
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">HUMIDITÉ</h3>
+              <div className="p-7 pt-5">
                 <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                   L'humidité affecte la qualité d'air intérieur et peut provoquer des problèmes de santé pour les occupants.
                 </p>
