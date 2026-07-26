@@ -364,20 +364,20 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
 
     setAcquisitionMode(modeId);
     if (modeId === "camera") {
-      showToast("Ouverture directe de l’appareil photo…");
+      setTimeout(() => {
+        openNativeCameraPicker();
+      }, 120);
+      showToast("Ouverture de l’appareil photo…");
     } else {
       showToast(`Mode d'acquisition '${modeLabel}' activé !`);
     }
   };
 
-  // Start the live camera immediately in camera mode.
   useEffect(() => {
-    if (acquisitionMode === "camera") {
-      void startCamera(facingMode);
-    } else {
+    if (acquisitionMode !== "camera") {
       stopCamera();
     }
-  }, [acquisitionMode, facingMode]);
+  }, [acquisitionMode]);
 
   // Clean up stream on unmount
   useEffect(() => {
@@ -2125,12 +2125,15 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                             <div className="mt-4 flex flex-col items-center justify-center gap-3 w-full max-w-sm px-4 z-10">
                               <button
                                 type="button"
-                                onClick={() => startCamera(facingMode)}
+                                onClick={openNativeCameraPicker}
                                 className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer"
                               >
                                 <Camera className="w-4 h-4 shrink-0 animate-bounce" />
-                                <span>Ouvrir l’appareil photo</span>
+                                <span>Prendre une photo</span>
                               </button>
+                              <p className="text-[10px] text-slate-500 dark:text-slate-400 text-center">
+                                Sur mobile, l’appareil photo natif s’ouvre directement.
+                              </p>
                             </div>
                           ) : (
                             <input
