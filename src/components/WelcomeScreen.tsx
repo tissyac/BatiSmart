@@ -558,130 +558,173 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
         </div>
       </section>
 
-      {/* 5. FEATURES GRID (Tout ce qu'il faut, rien de superflu) */}
+      {/* 5. FONCTIONNALITÉS — Remplacé par layout dashboard dark glass */}
       <section id="features" className={`relative overflow-hidden py-16 border-t transition-colors duration-300 section-3d ${
-        isDark ? "border-slate-900 bg-slate-950/20" : "border-slate-200/80 bg-slate-50/50"
+        isDark ? "border-slate-900 bg-[#050812]" : "border-slate-200/80 bg-slate-50/50"
       }`}>
-        <div className="max-w-6xl mx-auto px-8">
-          
-          {/* Section Header */}
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-            <span className="text-[10px] font-extrabold text-teal-600 dark:text-teal-400 tracking-widest uppercase block">
-              FONCTIONNALITÉS
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif text-slate-900 dark:text-white tracking-tight title-3d">
-              Des fonctionnalités au cœur de votre diagnostic.
-            </h2>
-            <p className="mx-auto text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-              Un accès clair et centralisé à vos outils de diagnostic, votre historique, et vos rapports dans un design moderne et aéré.
-            </p>
+        <div className="max-w-7xl mx-auto px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="lg:col-span-4 order-1">
+              <span className="text-xs font-extrabold text-sky-400 uppercase tracking-widest block mb-4">LES FONCTIONNALITÉS</span>
+              <h2 className="text-3xl font-bold font-serif text-white mb-4">FONCTIONNALITÉS</h2>
+              <p className="text-sm text-slate-300 leading-relaxed mb-6">
+                BatiSmart Roof IA offre un ensemble complet de fonctionnalités intelligentes pour assurer un <span className="text-sky-400 font-semibold">prédiagnostic précis</span>, une meilleure <span className="text-sky-400 font-semibold">planification</span> et un <span className="text-sky-400 font-semibold">pilotage efficace</span> de la maintenance.
+              </p>
+              <div className="mt-6 rounded-3xl overflow-hidden glass-card p-4 flex items-center justify-center">
+                <img src={welcomeBgImage} alt="Ville connectée" className="w-full h-40 object-cover rounded-xl opacity-90" />
+              </div>
+            </div>
+
+            <div className="lg:col-span-8 order-2">
+              <div className="grid grid-cols-12 gap-6">
+                <div className="col-span-12 md:col-span-4">
+                  <div className="glass-card p-4 h-full flex flex-col">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-sm font-bold text-white">DÉTECTION AUTOMATIQUE</h4>
+                      <div className="text-sky-400"><Search className="w-5 h-5" /></div>
+                    </div>
+                    <p className="text-xs text-slate-300 mb-3">Détection automatique des fissures, infiltrations, humidité, corrosion et défauts d'étanchéité.</p>
+                    <div className="flex-1 rounded-lg overflow-hidden bg-slate-800/40 border border-slate-700">
+                      <img src={infiltrationImg} alt="toiture" className="w-full h-40 object-cover" />
+                    </div>
+                    <div className="mt-3 text-[12px] text-slate-300">Légende: <span className="inline-block w-3 h-3 bg-red-500 rounded-full ml-2 mr-1"></span>FISSURE <span className="inline-block w-3 h-3 bg-amber-400 rounded-full ml-3 mr-1"></span>INFILTRATION <span className="inline-block w-3 h-3 bg-blue-400 rounded-full ml-3 mr-1"></span>HUMIDITÉ</div>
+                  </div>
+                </div>
+
+                <div className="col-span-12 md:col-span-4">
+                  <div className="glass-card p-4 h-full flex flex-col">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-sm font-bold text-white">CARTOGRAPHIE SIG</h4>
+                      <div className="text-sky-400"><MapPin className="w-5 h-5" /></div>
+                    </div>
+                    <p className="text-xs text-slate-300 mb-3">Localisation des bâtiments sur les 69 wilayas.</p>
+                    <div className="flex-1 rounded-lg overflow-hidden bg-slate-800/40 border border-slate-700 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-2xl font-extrabold text-white">69</div>
+                        <div className="text-xs text-slate-300">WILAYAS</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-span-12 md:col-span-4 md:row-span-2">
+                  <div className="glass-card p-4 h-full flex flex-col">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-sm font-bold text-white">TABLEAU DE BORD</h4>
+                      <div className="text-sky-400"><Sparkles className="w-5 h-5" /></div>
+                    </div>
+                    <p className="text-xs text-slate-300 mb-3">Suivi des indicateurs, alertes, évolution des pathologies, ROI et aide à la décision.</p>
+                    <div className="grid grid-cols-2 gap-3 mb-3">
+                      <div className="p-3 bg-slate-900/30 rounded-md">
+                        <div className="text-xs text-slate-300">Bâtiments inspectés</div>
+                        <div className="text-2xl font-bold text-white">1,248</div>
+                      </div>
+                      <div className="p-3 bg-slate-900/30 rounded-md">
+                        <div className="text-xs text-slate-300">Alertes actives</div>
+                        <div className="text-2xl font-bold text-red-400">18</div>
+                      </div>
+                    </div>
+                    <div className="flex gap-3 mb-3">
+                      <div className="flex-1 rounded-md bg-slate-900/20 p-3">
+                        <svg className="w-full h-24" viewBox="0 0 100 40" preserveAspectRatio="none">
+                          <polyline fill="none" stroke="#06b6d4" strokeWidth="2" points="0,30 10,25 20,20 30,18 40,12 50,14 60,10 70,8 80,6 90,8 100,5" />
+                        </svg>
+                      </div>
+                      <div className="w-28 rounded-md bg-slate-900/20 p-3 flex items-center justify-center">
+                        <svg viewBox="0 0 36 36" className="w-16 h-16">
+                          <circle cx="18" cy="18" r="15" fill="#0ea5e9" opacity="0.15" />
+                          <text x="18" y="22" textAnchor="middle" className="text-white" fontSize="10">38%</text>
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="mt-auto grid grid-cols-3 gap-2 text-xs text-slate-300">
+                      <div className="text-center">Coût évité<br/><span className="font-bold text-amber-400">-28%</span></div>
+                      <div className="text-center">ROI<br/><span className="font-bold text-white">1.42 M DZD</span></div>
+                      <div className="text-center">Interventions<br/><span className="font-bold text-sky-400">24</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-span-12 md:col-span-4">
+                  <div className="glass-card p-4 h-full flex flex-col items-start">
+                    <div className="flex items-center justify-between w-full mb-3">
+                      <h4 className="text-sm font-bold text-white">RAPPORT PDF</h4>
+                      <div className="text-red-400"><FileText className="w-5 h-5" /></div>
+                    </div>
+                    <p className="text-xs text-slate-300 mb-3">Rapport professionnel généré automatiquement.</p>
+                    <div className="w-full rounded-lg bg-slate-800/30 border border-slate-700 p-4 flex items-center gap-4">
+                      <div className="w-20 h-20 bg-red-600 rounded-md flex items-center justify-center text-white font-bold">PDF</div>
+                      <div className="text-xs text-slate-300">Aperçu du rapport d'inspection avec graphiques et statistiques clés.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-span-12 md:col-span-4">
+                  <div className="glass-card p-4 h-full flex flex-col">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-sm font-bold text-white">ASSISTANT IA</h4>
+                      <div className="text-sky-400"><Bot className="w-5 h-5" /></div>
+                    </div>
+                    <p className="text-xs text-slate-300 mb-3">Assistant conversationnel technique.</p>
+                    <div className="flex-1 rounded-md bg-slate-900/20 p-3 overflow-auto">
+                      <div className="text-xs text-slate-300 mb-2">Utilisateur: Quels sont les bâtiments avec un risque élevé d'infiltration ?</div>
+                      <div className="text-xs text-white font-semibold">Assistant: Lycée Mohamed Boudiaf - Alger<br/>CEM Frères Mentouri - Oran<br/>Collège El Amen - Constantine</div>
+                    </div>
+                    <div className="mt-3 w-full flex gap-2">
+                      <input className="flex-1 bg-transparent border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-200" placeholder="Posez une question..." />
+                      <button className="px-4 py-2 bg-sky-500 text-white rounded-md">Envoyer</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-span-12 md:col-span-4">
+                  <div className="glass-card p-4 h-full flex flex-col">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-sm font-bold text-white">HISTORIQUE</h4>
+                      <div className="text-sky-400"><Clock className="w-5 h-5" /></div>
+                    </div>
+                    <p className="text-xs text-slate-300 mb-3">Historique des inspections et interventions.</p>
+                    <div className="overflow-auto text-xs">
+                      <table className="w-full text-left table-auto">
+                        <thead>
+                          <tr className="text-slate-400">
+                            <th className="py-2">DATE</th>
+                            <th>BÂTIMENT</th>
+                            <th>TYPE</th>
+                            <th>RÉSULTAT</th>
+                            <th>INTERVENTION</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-t border-slate-800">
+                            <td className="py-2">12/06/2024</td>
+                            <td>Lycée Mohamed Boudiaf</td>
+                            <td>Inspection complète</td>
+                            <td className="text-red-400">Risque élevé</td>
+                            <td className="text-sky-400">Planifiée</td>
+                          </tr>
+                          <tr className="border-t border-slate-800">
+                            <td className="py-2">03/05/2024</td>
+                            <td>CEM Frères Mentouri</td>
+                            <td>Inspection rapide</td>
+                            <td className="text-amber-400">Risque moyen</td>
+                            <td className="text-sky-400">Réalisée</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 glass-card p-4 flex items-center gap-3 border-sky-400/20">
+                <div className="p-2 bg-sky-500/20 rounded-md">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l7 4v6c0 5-3.6 9.7-7 11-3.4-1.3-7-6-7-11V6l7-4z"/><path d="M8 12l2 2 4-4"/></svg>
+                </div>
+                <div className="text-sm text-slate-300">Des <span className="text-sky-400 font-semibold">fonctionnalités avancées</span> pour un <span className="text-sky-400 font-semibold">prédiagnostic intelligent, rapide et fiable</span>.</div>
+              </div>
+            </div>
           </div>
-
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 wow-fade-up">
-            
-            {/* Feature 01 */}
-            <div className="card-3d">
-              <div className={`card-3d-inner p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
-                isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
-              }`}>
-                {/* Number overlay */}
-                <span className="absolute top-4 right-6 text-4xl font-black font-display opacity-10 text-teal-500 select-none">
-                  01
-                </span>
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-teal-100 dark:bg-teal-500/10 text-teal-600 flex items-center justify-center mb-6">
-                    <Clock className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-2">
-                    Pré-diagnostic en 5 minutes
-                  </h3>
-                  <p className={`text-xs md:text-sm font-light leading-relaxed ${
-                    isDark ? "text-slate-400" : "text-slate-600"
-                  }`}>
-                    Un parcours fluide, question par question. Prenez en photo l'acrotère ou le revêtement et laissez l'IA générer des analyses d'étanchéité adaptées en temps réel.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Feature 02 */}
-            <div className="card-3d">
-              <div className={`card-3d-inner p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
-                isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
-              }`}>
-                {/* Number overlay */}
-                <span className="absolute top-4 right-6 text-4xl font-black font-display opacity-10 text-teal-500 select-none">
-                  02
-                </span>
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-500/10 text-sky-600 flex items-center justify-center mb-6">
-                    <Sparkles className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-2">
-                    Analyse IA Personnalisée
-                  </h3>
-                  <p className={`text-xs md:text-sm font-light leading-relaxed ${
-                    isDark ? "text-slate-400" : "text-slate-600"
-                  }`}>
-                    Notre modèle d'intelligence artificielle de pointe identifie instantanément les fissures structurelles, l'humidité résiduelle, et calcule un score de risque précis de 0 à 10.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Feature 03 */}
-            <div className="card-3d">
-              <div className={`card-3d-inner p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
-                isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
-              }`}>
-                {/* Number overlay */}
-                <span className="absolute top-4 right-6 text-4xl font-black font-display opacity-10 text-teal-500 select-none">
-                  03
-                </span>
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-teal-100 dark:bg-teal-500/10 text-teal-600 flex items-center justify-center mb-6">
-                    <Shield className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-2">
-                    Zéro Données Sensibles
-                  </h3>
-                  <p className={`text-xs md:text-sm font-light leading-relaxed ${
-                    isDark ? "text-slate-400" : "text-slate-600"
-                  }`}>
-                    Aucune information confidentielle n'est partagée publiquement. Vous gardez le contrôle total sur vos coordonnées d'infrastructure et l'historique d'inspection.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Feature 04 */}
-            <div className="card-3d">
-              <div className={`card-3d-inner p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
-                isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
-              }`}>
-                {/* Number overlay */}
-                <span className="absolute top-4 right-6 text-4xl font-black font-display opacity-10 text-teal-500 select-none">
-                  04
-                </span>
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-500/10 text-sky-600 flex items-center justify-center mb-6">
-                    <FileText className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-2">
-                    Export PDF & SIG
-                  </h3>
-                  <p className={`text-xs md:text-sm font-light leading-relaxed ${
-                    isDark ? "text-slate-400" : "text-slate-600"
-                  }`}>
-                    Générez des rapports d'inspection clairs et officiels en format PDF d'un simple clic pour appuyer vos plans de rénovation de toiture auprès de votre administration.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
         </div>
       </section>
 
