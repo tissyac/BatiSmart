@@ -385,45 +385,69 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <div className="mb-5 h-20 w-20 overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800">
-                <img src={infiltrationImg} alt="Infiltration" className="h-full w-full object-cover" />
+          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
+            <div className="overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+              <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                <img src={infiltrationImg} alt="Infiltration" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
+                <div className="absolute left-5 bottom-5 rounded-3xl bg-sky-500/90 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-sky-500/20">
+                  INFILTRATION
+                </div>
               </div>
-              <h3 className="text-lg font-semibold mb-3">INFILTRATION</h3>
-              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                Les infiltrations d'eau sont la principale cause de détérioration des structures et des finitions intérieures.
-              </p>
+              <div className="p-7">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">INFILTRATION</h3>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  Les infiltrations d'eau sont la principale cause de détérioration des structures et des finitions intérieures.
+                </p>
+              </div>
             </div>
 
-            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <div className="mb-5 h-20 w-20 overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800">
-                <img src={toitureDegradeeImg} alt="Toiture dégradée" className="h-full w-full object-cover" />
+            <div className="overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+              <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                <img src={toitureDegradeeImg} alt="Toiture dégradée" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
+                <div className="absolute left-5 bottom-5 rounded-3xl bg-amber-500/90 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-amber-500/20">
+                  TOITURE DÉGRADÉE
+                </div>
               </div>
-              <h3 className="text-lg font-semibold mb-3">TOITURE DÉGRADÉE</h3>
-              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                Les membranes d'étanchéité se détériorent avec le temps sous l'effet des intempéries et des UV.
-              </p>
+              <div className="p-7">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">TOITURE DÉGRADÉE</h3>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  Les membranes d'étanchéité se détériorent avec le temps sous l'effet des intempéries et des UV.
+                </p>
+              </div>
             </div>
 
-            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <div className="mb-5 h-20 w-20 overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800">
-                <img src={fissureImg} alt="Fissure" className="h-full w-full object-cover" />
+            <div className="overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+              <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                <img src={fissureImg} alt="Fissure" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
+                <div className="absolute left-5 bottom-5 rounded-3xl bg-fuchsia-500/90 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-fuchsia-500/20">
+                  FISSURE
+                </div>
               </div>
-              <h3 className="text-lg font-semibold mb-3">FISSURE</h3>
-              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                Les fissures fragilisent l'étanchéité et facilitent la pénétration de l'eau dans les éléments constructifs.
-              </p>
+              <div className="p-7">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">FISSURE</h3>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  Les fissures fragilisent l'étanchéité et facilitent la pénétration de l'eau dans les éléments constructifs.
+                </p>
+              </div>
             </div>
 
-            <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <div className="mb-5 h-20 w-20 overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800">
-                <img src={humiditeImg} alt="Humidité" className="h-full w-full object-cover" />
+            <div className="overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+              <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                <img src={humiditeImg} alt="Humidité" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
+                <div className="absolute left-5 bottom-5 rounded-3xl bg-emerald-500/90 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-emerald-500/20">
+                  HUMIDITÉ
+                </div>
               </div>
-              <h3 className="text-lg font-semibold mb-3">HUMIDITÉ</h3>
-              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                L'humidité affecte la qualité d'air intérieur et peut provoquer des problèmes de santé pour les occupants.
-              </p>
+              <div className="p-7">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">HUMIDITÉ</h3>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  L'humidité affecte la qualité d'air intérieur et peut provoquer des problèmes de santé pour les occupants.
+                </p>
+              </div>
             </div>
           </div>
         </div>
