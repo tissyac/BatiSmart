@@ -255,6 +255,67 @@
   filter: blur(32px);
 }
 
+.problem-platform {
+  position: relative;
+  width: min(100%, 76rem);
+  min-height: 12rem;
+  background: rgba(148, 163, 184, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  backdrop-filter: blur(18px);
+  border-radius: 3rem;
+  overflow: hidden;
+}
+
+.problem-platform::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.08), transparent 45%);
+  pointer-events: none;
+}
+
+.problem-platform-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.18), transparent 18%), radial-gradient(circle at 75% 15%, rgba(16, 185, 129, 0.14), transparent 14%), radial-gradient(circle at 50% 70%, rgba(236, 72, 153, 0.12), transparent 12%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.platform-halo {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 70%;
+  height: 100%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.25), transparent 50%);
+  filter: blur(24px);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.platform-halo::before {
+  content: "";
+  position: absolute;
+  inset: 20% 10% 0;
+  border-top: 1px solid rgba(59, 130, 246, 0.35);
+  border-radius: 999px;
+}
+
+.platform-halo::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  width: 50%;
+  height: 8px;
+  transform: translateX(-50%);
+  background: rgba(59, 130, 246, 0.18);
+  filter: blur(12px);
+  border-radius: 999px;
+}
+
 .card-3d {
   perspective: 1500px;
   perspective-origin: top center;
@@ -310,10 +371,11 @@
 .title-3d {
   position: relative;
   display: inline-block;
+  font-weight: 900;
   background: linear-gradient(125deg, #38bdf8, #0ea5e9 35%, #22c55e 72%, #38bdf8 100%);
   -webkit-background-clip: text;
   color: transparent;
-  text-shadow: 0 10px 35px rgba(56, 189, 248, 0.2);
+  text-shadow: 0 10px 35px rgba(56, 189, 248, 0.22);
 }
 
 .title-3d::after {
@@ -322,35 +384,16 @@
   left: 50%;
   top: 100%;
   transform: translateX(-50%);
-  width: 80%;
-  height: 16px;
-  background: rgba(56, 189, 248, 0.08);
-  filter: blur(16px);
-  opacity: 0.7;
+  width: 90%;
+  height: 18px;
+  background: rgba(56, 189, 248, 0.12);
+  filter: blur(20px);
+  opacity: 0.8;
   pointer-events: none;
 }
 
 .dark .card-3d:hover .card-3d-inner {
   box-shadow: 0 40px 90px rgba(15, 23, 42, 0.28);
-}
-
-.title-3d {
-  display: inline-block;
-  position: relative;
-  background: linear-gradient(90deg, #0284c7, #5eead4);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.title-3d::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  transform: translateY(6px);
-  background: linear-gradient(90deg, rgba(2, 132, 199, 0.14), rgba(94, 234, 212, 0.14));
-  filter: blur(12px);
-  opacity: 0.4;
-  z-index: -1;
 }
 
 /* Hardcoded high-contrast dark mode fallback overrides for presentation elements */

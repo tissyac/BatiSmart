@@ -125,17 +125,18 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           </div>
 
           {/* 3D Model Viewer Card (Promoted & Enlarged above main title) */}
-          <div className={`w-full max-w-xl lg:max-w-full rounded-3xl bento-card bento-card-accent relative z-10 transition-colors duration-300 ${
-            isDark 
-              ? "bg-[#0b1129] border-slate-800" 
-              : "bg-white border-slate-200/80"
-          }`}>
-            <div className="w-full rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 relative group/model aspect-[16/10] sm:aspect-[16/9]">
-              <img 
-                src={welcomeBgImage} 
-                alt="Maquette 3D de réhabilitation" 
-                className="w-full h-full object-cover filter brightness-[0.80] contrast-[1.10] group-hover/model:scale-105 transition-transform duration-700"
-              />
+          <div className="card-3d">
+            <div className={`w-full max-w-xl lg:max-w-full rounded-3xl bento-card bento-card-accent card-3d-inner relative z-10 transition-colors duration-300 ${
+              isDark 
+                ? "bg-[#0b1129] border-slate-800" 
+                : "bg-white border-slate-200/80"
+            }`}>
+              <div className="w-full rounded-[2rem] overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 relative group/model aspect-[16/10] sm:aspect-[16/9] shadow-2xl shadow-sky-500/10">
+                <img 
+                  src={welcomeBgImage} 
+                  alt="Maquette 3D de réhabilitation" 
+                  className="w-full h-full object-cover filter brightness-[0.80] contrast-[1.10] group-hover/model:scale-105 transition-transform duration-700"
+                />
               {/* Tech Grid Overlay */}
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:10px_10px] pointer-events-none" />
               
@@ -384,6 +385,25 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             <p className="mt-4 text-sm md:text-base leading-relaxed text-slate-500 dark:text-slate-400">
               Aujourd'hui, de nombreux bâtiments publics algériens présentent des infiltrations, des problèmes d'humidité et des dégradations d'étanchéité souvent détectés trop tard. Les inspections traditionnelles sont longues, coûteuses et nécessitent des interventions sur site parfois dangereuses. Cette situation entraîne des dépenses importantes de maintenance corrective et une dégradation progressive du patrimoine bâti.
             </p>
+          </div>
+
+          <div className="problem-platform mx-auto mb-12">
+            <div className="problem-platform-grid" />
+            <div className="relative z-10 px-6 py-8 md:px-12 md:py-10">
+              <div className="mb-4 inline-flex items-center gap-3 rounded-full bg-slate-900/10 dark:bg-slate-200/10 px-4 py-2 text-xs uppercase tracking-[0.24em] text-slate-800 dark:text-slate-200 font-semibold">
+                <span className="h-2.5 w-2.5 rounded-full bg-sky-500 animate-pulse" />
+                Vision 3D du diagnostic
+              </div>
+              <h3 className="text-xl md:text-2xl font-semibold text-slate-900 dark:text-white">
+                Un plateau de données 3D pour vos pathologies de toiture.
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300 max-w-2xl">
+                Un modèle visuel de votre bâtiment avec couches superposées d’images, d’analyses IA et de cartographie SIG, présenté comme une plateforme immersive et futuriste.
+              </p>
+            </div>
+            <div className="absolute inset-x-0 bottom-0 h-16 md:h-20">
+              <div className="platform-halo" />
+            </div>
           </div>
 
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
