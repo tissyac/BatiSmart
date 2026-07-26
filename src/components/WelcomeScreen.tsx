@@ -604,8 +604,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
               <p className="text-sm text-slate-300 leading-relaxed mb-6">
                 BatiSmart Roof IA offre un ensemble complet de fonctionnalités intelligentes pour assurer un <span className="text-sky-400 font-semibold">prédiagnostic précis</span>, une meilleure <span className="text-sky-400 font-semibold">planification</span> et un <span className="text-sky-400 font-semibold">pilotage efficace</span> de la maintenance.
               </p>
-              <div className="mt-6 rounded-3xl overflow-hidden glass-card p-4 flex items-center justify-center bg-slate-900/20">
-                <img src={fonctionnalitesImg} alt="FONCTIONNALITÉS" className="w-full h-40 object-contain rounded-xl opacity-90" />
+              <div className="mt-6 rounded-3xl overflow-hidden glass-card p-4 flex items-center justify-center bg-slate-900/20 border border-slate-700/80">
+                <img src={fonctionnalitesImg} alt="FONCTIONNALITÉS" className="w-full h-56 object-contain rounded-xl opacity-90" />
               </div>
             </div>
 
@@ -618,8 +618,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                       <div className="text-sky-400"><Search className="w-5 h-5" /></div>
                     </div>
                     <p className="text-xs text-slate-300 mb-3">Détection automatique des fissures, infiltrations, humidité, corrosion et défauts d'étanchéité.</p>
-                    <div className="flex-1 rounded-lg overflow-hidden bg-slate-800/40 border border-slate-700 p-2 flex items-center justify-center">
-                      <img src={detectionAutoImg} alt="Détection automatique" className="w-full h-40 object-contain" />
+                    <div className="flex-1 rounded-xl overflow-hidden bg-slate-800/40 border border-slate-700/80 p-3 flex items-center justify-center min-h-[220px]">
+                      <img src={detectionAutoImg} alt="Détection automatique" className="w-full h-full object-contain" />
                     </div>
                   </div>
                 </div>
@@ -631,8 +631,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                       <div className="text-sky-400"><MapPin className="w-5 h-5" /></div>
                     </div>
                     <p className="text-xs text-slate-300 mb-3">Localisation des bâtiments sur les 69 wilayas.</p>
-                    <div className="flex-1 rounded-lg overflow-hidden bg-slate-800/40 border border-slate-700 p-2 flex items-center justify-center">
-                      <img src={cartographieSigImg} alt="Cartographie SIG" className="w-full h-40 object-contain" />
+                    <div className="flex-1 rounded-xl overflow-hidden bg-slate-800/40 border border-slate-700/80 p-3 flex items-center justify-center min-h-[220px]">
+                      <img src={cartographieSigImg} alt="Cartographie SIG" className="w-full h-full object-contain" />
                     </div>
                   </div>
                 </div>
@@ -644,8 +644,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                       <div className="text-sky-400"><Sparkles className="w-5 h-5" /></div>
                     </div>
                     <p className="text-xs text-slate-300 mb-3">Suivi des indicateurs, alertes, évolution des pathologies, ROI et aide à la décision.</p>
-                    <div className="flex-1 rounded-lg overflow-hidden bg-slate-800/40 border border-slate-700 p-2 flex items-center justify-center">
-                      <img src={tableauBordImg} alt="Tableau de bord" className="w-full h-56 object-contain" />
+                    <div className="flex-1 rounded-xl overflow-hidden bg-slate-800/40 border border-slate-700/80 p-3 flex items-center justify-center min-h-[280px]">
+                      <img src={tableauBordImg} alt="Tableau de bord" className="w-full h-full object-contain" />
                     </div>
                   </div>
                 </div>
@@ -657,8 +657,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                       <div className="text-red-400"><FileText className="w-5 h-5" /></div>
                     </div>
                     <p className="text-xs text-slate-300 mb-3">Rapport professionnel généré automatiquement.</p>
-                    <div className="w-full rounded-lg bg-slate-800/30 border border-slate-700 p-4 flex items-center justify-center">
-                      <img src={rapportPdfImg} alt="Rapport PDF" className="w-full h-40 object-contain rounded-md" />
+                    <div className="w-full rounded-xl bg-slate-800/30 border border-slate-700/80 p-4 flex items-center justify-center min-h-[220px]">
+                      <img src={rapportPdfImg} alt="Rapport PDF" className="w-full h-full object-contain rounded-md" />
                     </div>
                   </div>
                 </div>
@@ -670,8 +670,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                       <div className="text-sky-400"><Bot className="w-5 h-5" /></div>
                     </div>
                     <p className="text-xs text-slate-300 mb-3">Assistant conversationnel technique.</p>
-                    <div className="flex-1 rounded-md bg-slate-900/20 p-3 overflow-hidden flex items-center justify-center">
-                      <img src={assistantIaImg} alt="Assistant IA" className="w-full h-40 object-contain rounded-md" />
+                    <div className="flex-1 rounded-xl bg-slate-900/20 p-3 overflow-hidden flex items-center justify-center min-h-[220px] border border-slate-700/60">
+                      <img src={assistantIaImg} alt="Assistant IA" className="w-full h-full object-contain rounded-md" />
                     </div>
                   </div>
                 </div>
@@ -683,8 +683,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                       <div className="text-sky-400"><Clock className="w-5 h-5" /></div>
                     </div>
                     <p className="text-xs text-slate-300 mb-3">Historique des inspections et interventions.</p>
-                    <div className="overflow-hidden rounded-md flex items-center justify-center bg-slate-900/20 p-2">
-                      <img src={historiqueImg} alt="Historique" className="w-full h-40 object-contain rounded-md" />
+                    <div className="overflow-hidden rounded-xl flex items-center justify-center bg-slate-900/20 p-3 border border-slate-700/60 min-h-[220px]">
+                      <img src={historiqueImg} alt="Historique" className="w-full h-full object-contain rounded-md" />
                     </div>
                   </div>
                 </div>
