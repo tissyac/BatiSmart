@@ -369,9 +369,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
       </section>
 
       {/* 3. PROBLEM SECTION */}
-      <section id="problem" className={`py-16 transition-colors duration-300 ${
+      <section id="problem" className={`relative overflow-hidden py-16 transition-colors duration-300 section-3d ${
         isDark ? "bg-slate-950 text-slate-200" : "bg-white text-slate-800"
       }`}>
+        <div className="absolute inset-x-0 top-6 h-52 opacity-50 blur-3xl section-3d-glow" />
         <div className="max-w-6xl mx-auto px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-[10px] font-extrabold text-teal-600 dark:text-teal-400 tracking-widest uppercase block">
@@ -386,63 +387,71 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           </div>
 
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
-            <div className="overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
-              <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
-                <img src={infiltrationImg} alt="Infiltration" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
-                <div className="absolute left-5 bottom-5 rounded-3xl bg-sky-500/90 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-sky-500/20">
-                  INFILTRATION
+            <div className="card-3d">
+              <div className="card-3d-inner rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                  <img src={infiltrationImg} alt="Infiltration" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
+                  <div className="absolute left-5 bottom-5 rounded-3xl bg-sky-500/90 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-sky-500/20">
+                    INFILTRATION
+                  </div>
                 </div>
-              </div>
-              <div className="p-7 pt-5">
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  Les infiltrations d'eau sont la principale cause de détérioration des structures et des finitions intérieures.
-                </p>
+                <div className="p-7 pt-5">
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Les infiltrations d'eau sont la principale cause de détérioration des structures et des finitions intérieures.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
-              <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
-                <img src={toitureDegradeeImg} alt="Toiture dégradée" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
-                <div className="absolute left-5 bottom-5 rounded-3xl bg-amber-500/90 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-amber-500/20">
-                  TOITURE DÉGRADÉE
+            <div className="card-3d">
+              <div className="card-3d-inner rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                  <img src={toitureDegradeeImg} alt="Toiture dégradée" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
+                  <div className="absolute left-5 bottom-5 rounded-3xl bg-amber-500/90 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-amber-500/20">
+                    TOITURE DÉGRADÉE
+                  </div>
                 </div>
-              </div>
-              <div className="p-7 pt-5">
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  Les membranes d'étanchéité se détériorent avec le temps sous l'effet des intempéries et des UV.
-                </p>
+                <div className="p-7 pt-5">
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Les membranes d'étanchéité se détériorent avec le temps sous l'effet des intempéries et des UV.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
-              <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
-                <img src={fissureImg} alt="Fissure" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
-                <div className="absolute left-5 bottom-5 rounded-3xl bg-fuchsia-500/90 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-fuchsia-500/20">
-                  FISSURE
+            <div className="card-3d">
+              <div className="card-3d-inner rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                  <img src={fissureImg} alt="Fissure" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
+                  <div className="absolute left-5 bottom-5 rounded-3xl bg-fuchsia-500/90 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-fuchsia-500/20">
+                    FISSURE
+                  </div>
                 </div>
-              </div>
-              <div className="p-7 pt-5">
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  Les fissures fragilisent l'étanchéité et facilitent la pénétration de l'eau dans les éléments constructifs.
-                </p>
+                <div className="p-7 pt-5">
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Les fissures fragilisent l'étanchéité et facilitent la pénétration de l'eau dans les éléments constructifs.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
-              <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
-                <img src={humiditeImg} alt="Humidité" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
-                <div className="absolute left-5 bottom-5 rounded-3xl bg-emerald-500/90 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-emerald-500/20">
-                  HUMIDITÉ
+            <div className="card-3d">
+              <div className="card-3d-inner rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                  <img src={humiditeImg} alt="Humidité" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
+                  <div className="absolute left-5 bottom-5 rounded-3xl bg-emerald-500/90 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-emerald-500/20">
+                    HUMIDITÉ
+                  </div>
                 </div>
-              </div>
-              <div className="p-7 pt-5">
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  L'humidité affecte la qualité d'air intérieur et peut provoquer des problèmes de santé pour les occupants.
-                </p>
+                <div className="p-7 pt-5">
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    L'humidité affecte la qualité d'air intérieur et peut provoquer des problèmes de santé pour les occupants.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -450,15 +459,16 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
       </section>
 
       {/* 4. SOLUTION SECTION */}
-      <section id="solution" className={`py-16 transition-colors duration-300 ${
+      <section id="solution" className={`relative overflow-hidden py-16 transition-colors duration-300 section-3d ${
         isDark ? "bg-slate-900 text-slate-100" : "bg-slate-50 text-slate-800"
       }`}>
+        <div className="absolute inset-x-0 top-6 h-44 opacity-30 blur-3xl section-3d-glow" />
         <div className="max-w-6xl mx-auto px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-[10px] font-extrabold text-teal-600 dark:text-teal-400 tracking-widest uppercase block">
               NOTRE SOLUTION
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold font-serif tracking-tight title-3d">
               Une plateforme <span className="text-sky-600 dark:text-sky-300">intelligente</span> d'aide au prédiagnostic
             </h2>
             <p className="mt-4 text-sm md:text-base leading-relaxed text-slate-500 dark:text-slate-400">
@@ -528,7 +538,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
       </section>
 
       {/* 5. FEATURES GRID (Tout ce qu'il faut, rien de superflu) */}
-      <section id="features" className={`py-16 border-t transition-colors duration-300 ${
+      <section id="features" className={`relative overflow-hidden py-16 border-t transition-colors duration-300 section-3d ${
         isDark ? "border-slate-900 bg-slate-950/20" : "border-slate-200/80 bg-slate-50/50"
       }`}>
         <div className="max-w-6xl mx-auto px-8">
@@ -538,7 +548,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             <span className="text-[10px] font-extrabold text-teal-600 dark:text-teal-400 tracking-widest uppercase block">
               FONCTIONNALITÉS
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif text-slate-900 dark:text-white tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold font-serif text-slate-900 dark:text-white tracking-tight title-3d">
               Des fonctionnalités au cœur de votre diagnostic.
             </h2>
             <p className="mx-auto text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
@@ -550,94 +560,102 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 wow-fade-up">
             
             {/* Feature 01 */}
-            <div className={`p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
-              isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
-            }`}>
-              {/* Number overlay */}
-              <span className="absolute top-4 right-6 text-4xl font-black font-display opacity-10 text-teal-500 select-none">
-                01
-              </span>
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-teal-100 dark:bg-teal-500/10 text-teal-600 flex items-center justify-center mb-6">
-                  <Clock className="w-5 h-5" />
+            <div className="card-3d">
+              <div className={`card-3d-inner p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
+                isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
+              }`}>
+                {/* Number overlay */}
+                <span className="absolute top-4 right-6 text-4xl font-black font-display opacity-10 text-teal-500 select-none">
+                  01
+                </span>
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-teal-100 dark:bg-teal-500/10 text-teal-600 flex items-center justify-center mb-6">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-2">
+                    Pré-diagnostic en 5 minutes
+                  </h3>
+                  <p className={`text-xs md:text-sm font-light leading-relaxed ${
+                    isDark ? "text-slate-400" : "text-slate-600"
+                  }`}>
+                    Un parcours fluide, question par question. Prenez en photo l'acrotère ou le revêtement et laissez l'IA générer des analyses d'étanchéité adaptées en temps réel.
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-2">
-                  Pré-diagnostic en 5 minutes
-                </h3>
-                <p className={`text-xs md:text-sm font-light leading-relaxed ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}>
-                  Un parcours fluide, question par question. Prenez en photo l'acrotère ou le revêtement et laissez l'IA générer des analyses d'étanchéité adaptées en temps réel.
-                </p>
               </div>
             </div>
 
             {/* Feature 02 */}
-            <div className={`p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
-              isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
-            }`}>
-              {/* Number overlay */}
-              <span className="absolute top-4 right-6 text-4xl font-black font-display opacity-10 text-teal-500 select-none">
-                02
-              </span>
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-500/10 text-sky-600 flex items-center justify-center mb-6">
-                  <Sparkles className="w-5 h-5" />
+            <div className="card-3d">
+              <div className={`card-3d-inner p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
+                isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
+              }`}>
+                {/* Number overlay */}
+                <span className="absolute top-4 right-6 text-4xl font-black font-display opacity-10 text-teal-500 select-none">
+                  02
+                </span>
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-500/10 text-sky-600 flex items-center justify-center mb-6">
+                    <Sparkles className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-2">
+                    Analyse IA Personnalisée
+                  </h3>
+                  <p className={`text-xs md:text-sm font-light leading-relaxed ${
+                    isDark ? "text-slate-400" : "text-slate-600"
+                  }`}>
+                    Notre modèle d'intelligence artificielle de pointe identifie instantanément les fissures structurelles, l'humidité résiduelle, et calcule un score de risque précis de 0 à 10.
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-2">
-                  Analyse IA Personnalisée
-                </h3>
-                <p className={`text-xs md:text-sm font-light leading-relaxed ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}>
-                  Notre modèle d'intelligence artificielle de pointe identifie instantanément les fissures structurelles, l'humidité résiduelle, et calcule un score de risque précis de 0 à 10.
-                </p>
               </div>
             </div>
 
             {/* Feature 03 */}
-            <div className={`p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
-              isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
-            }`}>
-              {/* Number overlay */}
-              <span className="absolute top-4 right-6 text-4xl font-black font-display opacity-10 text-teal-500 select-none">
-                03
-              </span>
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-teal-100 dark:bg-teal-500/10 text-teal-600 flex items-center justify-center mb-6">
-                  <Shield className="w-5 h-5" />
+            <div className="card-3d">
+              <div className={`card-3d-inner p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
+                isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
+              }`}>
+                {/* Number overlay */}
+                <span className="absolute top-4 right-6 text-4xl font-black font-display opacity-10 text-teal-500 select-none">
+                  03
+                </span>
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-teal-100 dark:bg-teal-500/10 text-teal-600 flex items-center justify-center mb-6">
+                    <Shield className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-2">
+                    Zéro Données Sensibles
+                  </h3>
+                  <p className={`text-xs md:text-sm font-light leading-relaxed ${
+                    isDark ? "text-slate-400" : "text-slate-600"
+                  }`}>
+                    Aucune information confidentielle n'est partagée publiquement. Vous gardez le contrôle total sur vos coordonnées d'infrastructure et l'historique d'inspection.
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-2">
-                  Zéro Données Sensibles
-                </h3>
-                <p className={`text-xs md:text-sm font-light leading-relaxed ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}>
-                  Aucune information confidentielle n'est partagée publiquement. Vous gardez le contrôle total sur vos coordonnées d'infrastructure et l'historique d'inspection.
-                </p>
               </div>
             </div>
 
             {/* Feature 04 */}
-            <div className={`p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
-              isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
-            }`}>
-              {/* Number overlay */}
-              <span className="absolute top-4 right-6 text-4xl font-black font-display opacity-10 text-teal-500 select-none">
-                04
-              </span>
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-500/10 text-sky-600 flex items-center justify-center mb-6">
-                  <FileText className="w-5 h-5" />
+            <div className="card-3d">
+              <div className={`card-3d-inner p-8 rounded-2xl border min-h-[260px] flex flex-col justify-between relative group overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 ${
+                isDark ? "bg-[#0b1129] border-slate-800 hover:border-sky-500/40" : "bg-white border-slate-200/80 hover:border-sky-500/40"
+              }`}>
+                {/* Number overlay */}
+                <span className="absolute top-4 right-6 text-4xl font-black font-display opacity-10 text-teal-500 select-none">
+                  04
+                </span>
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-500/10 text-sky-600 flex items-center justify-center mb-6">
+                    <FileText className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-2">
+                    Export PDF & SIG
+                  </h3>
+                  <p className={`text-xs md:text-sm font-light leading-relaxed ${
+                    isDark ? "text-slate-400" : "text-slate-600"
+                  }`}>
+                    Générez des rapports d'inspection clairs et officiels en format PDF d'un simple clic pour appuyer vos plans de rénovation de toiture auprès de votre administration.
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-2">
-                  Export PDF & SIG
-                </h3>
-                <p className={`text-xs md:text-sm font-light leading-relaxed ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}>
-                  Générez des rapports d'inspection clairs et officiels en format PDF d'un simple clic pour appuyer vos plans de rénovation de toiture auprès de votre administration.
-                </p>
               </div>
             </div>
 
@@ -647,7 +665,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
       </section>
 
       {/* 6. BENEFITS SECTION */}
-      <section id="benefits" className={`py-16 transition-colors duration-300 ${
+      <section id="benefits" className={`relative overflow-hidden py-16 transition-colors duration-300 section-3d ${
         isDark ? "bg-slate-950 text-slate-200" : "bg-white text-slate-800"
       }`}>
         <div className="max-w-6xl mx-auto px-8">
@@ -665,97 +683,111 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
 
           <div className="space-y-6">
             <div className="grid gap-6 md:grid-cols-3">
-              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
-                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
-                  <CheckCircle className="w-5 h-5" />
+              <div className="card-3d">
+                <div className="card-3d-inner group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                  <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                    <CheckCircle className="w-5 h-5" />
+                  </div>
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-600 dark:bg-sky-900/20 dark:text-sky-300">
+                    <Search className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-semibold mb-2">1. Détection précoce des pathologies</h3>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Identifiez rapidement les fissures, infiltrations, humidité et autres anomalies avant qu'elles ne s'aggravent.
+                  </p>
                 </div>
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-600 dark:bg-sky-900/20 dark:text-sky-300">
-                  <Search className="w-6 h-6" />
-                </div>
-                <h3 className="text-base font-semibold mb-2">1. Détection précoce des pathologies</h3>
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  Identifiez rapidement les fissures, infiltrations, humidité et autres anomalies avant qu'elles ne s'aggravent.
-                </p>
               </div>
 
-              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
-                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
-                  <CheckCircle className="w-5 h-5" />
+              <div className="card-3d">
+                <div className="card-3d-inner group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                  <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                    <CheckCircle className="w-5 h-5" />
+                  </div>
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-300">
+                    <ShieldCheck className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-semibold mb-2">2. Maintenance préventive</h3>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Planifiez les interventions au bon moment et évitez les réparations d'urgence coûteuses.
+                  </p>
                 </div>
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-300">
-                  <ShieldCheck className="w-6 h-6" />
-                </div>
-                <h3 className="text-base font-semibold mb-2">2. Maintenance préventive</h3>
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  Planifiez les interventions au bon moment et évitez les réparations d'urgence coûteuses.
-                </p>
               </div>
 
-              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
-                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
-                  <CheckCircle className="w-5 h-5" />
+              <div className="card-3d">
+                <div className="card-3d-inner group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                  <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                    <CheckCircle className="w-5 h-5" />
+                  </div>
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-300">
+                    <Database className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-semibold mb-2">3. Réduction des coûts</h3>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Moins de pannes, moins d'interventions lourdes, réduction significative des coûts de maintenance.
+                  </p>
                 </div>
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-300">
-                  <Database className="w-6 h-6" />
-                </div>
-                <h3 className="text-base font-semibold mb-2">3. Réduction des coûts</h3>
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  Moins de pannes, moins d'interventions lourdes, réduction significative des coûts de maintenance.
-                </p>
               </div>
             </div>
 
             <div className="grid gap-6 md:grid-cols-4">
-              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
-                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
-                  <CheckCircle className="w-5 h-5" />
+              <div className="card-3d">
+                <div className="card-3d-inner group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                  <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                    <CheckCircle className="w-5 h-5" />
+                  </div>
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                    <PieChart className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-semibold mb-2">4. Optimisation des budgets</h3>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Priorisez les actions selon le niveau de risque réel et allouez vos budgets plus efficacement.
+                  </p>
                 </div>
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
-                  <PieChart className="w-6 h-6" />
-                </div>
-                <h3 className="text-base font-semibold mb-2">4. Optimisation des budgets</h3>
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  Priorisez les actions selon le niveau de risque réel et allouez vos budgets plus efficacement.
-                </p>
               </div>
 
-              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
-                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
-                  <CheckCircle className="w-5 h-5" />
+              <div className="card-3d">
+                <div className="card-3d-inner group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                  <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                    <CheckCircle className="w-5 h-5" />
+                  </div>
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-fuchsia-100 text-fuchsia-600 dark:bg-fuchsia-900/20 dark:text-fuchsia-300">
+                    <Building className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-semibold mb-2">5. Protection du patrimoine</h3>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Prolongez la durée de vie de vos bâtiments et préservez la valeur de votre patrimoine immobilier.
+                  </p>
                 </div>
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-fuchsia-100 text-fuchsia-600 dark:bg-fuchsia-900/20 dark:text-fuchsia-300">
-                  <Building className="w-6 h-6" />
-                </div>
-                <h3 className="text-base font-semibold mb-2">5. Protection du patrimoine</h3>
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  Prolongez la durée de vie de vos bâtiments et préservez la valeur de votre patrimoine immobilier.
-                </p>
               </div>
 
-              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
-                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
-                  <CheckCircle className="w-5 h-5" />
+              <div className="card-3d">
+                <div className="card-3d-inner group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                  <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                    <CheckCircle className="w-5 h-5" />
+                  </div>
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-300">
+                    <Clock className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-semibold mb-2">6. Décisions plus rapides</h3>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Accédez à une information fiable et à jour pour prendre des décisions éclairées rapidement.
+                  </p>
                 </div>
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-300">
-                  <Clock className="w-6 h-6" />
-                </div>
-                <h3 className="text-base font-semibold mb-2">6. Décisions plus rapides</h3>
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  Accédez à une information fiable et à jour pour prendre des décisions éclairées rapidement.
-                </p>
               </div>
 
-              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
-                <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
-                  <CheckCircle className="w-5 h-5" />
+              <div className="card-3d">
+                <div className="card-3d-inner group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 shadow-sm">
+                  <div className="absolute -left-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg">
+                    <CheckCircle className="w-5 h-5" />
+                  </div>
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-300">
+                    <Cloud className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-semibold mb-2">7. Centralisation des données</h3>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    Toutes vos données, inspections et historiques centralisées au même endroit, accessibles à tout moment.
+                  </p>
                 </div>
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-300">
-                  <Cloud className="w-6 h-6" />
-                </div>
-                <h3 className="text-base font-semibold mb-2">7. Centralisation des données</h3>
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  Toutes vos données, inspections et historiques centralisées au même endroit, accessibles à tout moment.
-                </p>
               </div>
             </div>
           </div>

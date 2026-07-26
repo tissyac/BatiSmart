@@ -216,6 +216,68 @@
   text-shadow: 0 0 10px rgba(14, 165, 233, 0.4);
 }
 
+.section-3d {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-3d::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at top left, rgba(14, 165, 233, 0.12), transparent 28%), radial-gradient(circle at top right, rgba(56, 189, 248, 0.08), transparent 24%), radial-gradient(circle at bottom, rgba(16, 185, 129, 0.06), transparent 24%);
+  opacity: 0.55;
+  z-index: 0;
+}
+
+.section-3d-glow {
+  position: relative;
+  z-index: 1;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.2), transparent 55%);
+}
+
+.card-3d {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+.card-3d-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  will-change: transform;
+}
+
+.card-3d:hover .card-3d-inner {
+  transform: translateY(-10px) rotateX(2deg) rotateY(-1deg);
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.16);
+}
+
+.dark .card-3d:hover .card-3d-inner {
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.28);
+}
+
+.title-3d {
+  display: inline-block;
+  position: relative;
+  background: linear-gradient(90deg, #0284c7, #5eead4);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.title-3d::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateY(6px);
+  background: linear-gradient(90deg, rgba(2, 132, 199, 0.14), rgba(94, 234, 212, 0.14));
+  filter: blur(12px);
+  opacity: 0.4;
+  z-index: -1;
+}
+
 /* Hardcoded high-contrast dark mode fallback overrides for presentation elements */
 .dark {
   .text-slate-950 {
