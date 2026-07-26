@@ -637,14 +637,14 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                   </div>
                 </div>
 
-                <div className="col-span-12 md:col-span-4 md:row-span-2">
+                <div className="col-span-12 md:col-span-4">
                   <div className="glass-card p-4 h-full flex flex-col">
                     <div className="flex items-center justify-between mb-3">
                       <h4 className="text-sm font-bold text-white">TABLEAU DE BORD</h4>
                       <div className="text-sky-400"><Sparkles className="w-5 h-5" /></div>
                     </div>
                     <p className="text-xs text-slate-300 mb-3">Suivi des indicateurs, alertes, évolution des pathologies, ROI et aide à la décision.</p>
-                    <div className="flex-1 rounded-xl overflow-hidden bg-slate-800/40 border border-slate-700/80 p-3 flex items-center justify-center min-h-[280px]">
+                    <div className="flex-1 rounded-xl overflow-hidden bg-slate-800/40 border border-slate-700/80 p-3 flex items-center justify-center min-h-[220px]">
                       <img src={tableauBordImg} alt="Tableau de bord" className="w-full h-full object-contain" />
                     </div>
                   </div>
