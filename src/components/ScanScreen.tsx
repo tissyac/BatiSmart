@@ -356,6 +356,22 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
     }
   };
 
+  const triggerNativeCamera = () => {
+    if (typeof window === "undefined") return;
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.capture = "environment";
+    input.onchange = (event) => {
+      const target = event.target as HTMLInputElement;
+      const files = target.files;
+      if (files && files.length > 0) {
+        processUploadedFiles(files);
+      }
+    };
+    input.click();
+  };
+
   const handleModeSelection = (modeId: "camera" | "gallery" | "drone" | "thermal" | "3d_scan", modeLabel: string, isFuture: boolean) => {
     if (isFuture) {
       showToast(`Le module d'acquisition ${modeLabel} est en cours de développement (Phase 2).`);
@@ -2097,18 +2113,14 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                             </p>
                           </div>
 
-                          <label className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer relative">
+                          <button
+                            type="button"
+                            onClick={triggerNativeCamera}
+                            className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer"
+                          >
                             <Camera className="w-4 h-4 shrink-0" />
                             <span>Prendre une photo</span>
-                            <input
-                              ref={nativeCameraInputRef}
-                              type="file"
-                              accept="image/*"
-                              capture={facingMode === "user" ? "user" : "environment"}
-                              onChange={handleImageChange}
-                              className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                            />
-                          </label>
+                          </button>
                         </div>
                       ) : (
                         <>
