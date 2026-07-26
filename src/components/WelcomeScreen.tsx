@@ -2,6 +2,10 @@ import React from "react";
 import { ArrowRight, Sparkles, Shield, Clock, FileText, Bot, Sun, Moon, CheckCircle, TrendingUp, AlertTriangle, Eye, Droplet, Home, Zap, Waves, Building, Brain, Gauge, MapPin, Search, ShieldCheck, Database, PieChart, Cloud } from "lucide-react";
 import { UserProfile } from "../types";
 import welcomeBgImage from "../assets/images/roof_rehabilitation_comparison_1784574516217.jpg";
+import infiltrationImg from "../assets/images/problem-infiltration.png";
+import toitureDegradeeImg from "../assets/images/problem-toiture-degradee.png";
+import fissureImg from "../assets/images/problem-fissure.png";
+import humiditeImg from "../assets/images/problem-humidite.png";
 
 interface WelcomeScreenProps {
   onStartInspection: () => void;
@@ -383,8 +387,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-600 dark:bg-sky-900/20 dark:text-sky-300">
-                <Droplet className="w-6 h-6" />
+              <div className="mb-5 h-20 w-20 overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800">
+                <img src={infiltrationImg} alt="Infiltration" className="h-full w-full object-cover" />
               </div>
               <h3 className="text-lg font-semibold mb-3">INFILTRATION</h3>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
@@ -393,8 +397,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             </div>
 
             <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-300">
-                <Home className="w-6 h-6" />
+              <div className="mb-5 h-20 w-20 overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800">
+                <img src={toitureDegradeeImg} alt="Toiture dégradée" className="h-full w-full object-cover" />
               </div>
               <h3 className="text-lg font-semibold mb-3">TOITURE DÉGRADÉE</h3>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
@@ -403,8 +407,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             </div>
 
             <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-fuchsia-100 text-fuchsia-600 dark:bg-fuchsia-900/20 dark:text-fuchsia-300">
-                <Zap className="w-6 h-6" />
+              <div className="mb-5 h-20 w-20 overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800">
+                <img src={fissureImg} alt="Fissure" className="h-full w-full object-cover" />
               </div>
               <h3 className="text-lg font-semibold mb-3">FISSURE</h3>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
@@ -413,8 +417,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             </div>
 
             <div className="rounded-3xl border p-8 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-300">
-                <Waves className="w-6 h-6" />
+              <div className="mb-5 h-20 w-20 overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800">
+                <img src={humiditeImg} alt="Humidité" className="h-full w-full object-cover" />
               </div>
               <h3 className="text-lg font-semibold mb-3">HUMIDITÉ</h3>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
