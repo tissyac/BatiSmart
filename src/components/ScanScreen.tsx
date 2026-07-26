@@ -202,6 +202,7 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
   const [cameraLaunching, setCameraLaunching] = useState(false);
   const [cameraReady, setCameraReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const nativeCameraInputRef = useRef<HTMLInputElement | null>(null);
 
   // Helper functions for Camera
   const startCamera = async (mode: "user" | "environment" = "environment") => {
@@ -245,6 +246,8 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
 
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
+        videoRef.current.setAttribute("playsinline", "true");
+        videoRef.current.setAttribute("webkit-playsinline", "true");
         videoRef.current.onloadedmetadata = () => {
           setCameraReady(true);
         };
@@ -252,7 +255,18 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
           setCameraReady(true);
         };
         await videoRef.current.play().catch(() => undefined);
-        setCameraReady(true);
+
+        await new Promise(resolve => setTimeout(resolve, 1200));
+
+        if (videoRef.current.videoWidth && videoRef.current.videoHeight) {
+          setCameraReady(true);
+        } else {
+          stream.getTracks().forEach((track) => track.stop());
+          setCameraStream(null);
+          setCameraActive(false);
+          setCameraReady(false);
+          setCameraError("Le flux caméra live ne s'affiche pas correctement sur cet appareil. Utilisez la sélection photo ci-dessous.");
+        }
       }
     } catch (err: any) {
       console.error("Error accessing camera:", err);
@@ -333,6 +347,10 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
     if (cameraActive) {
       startCamera(nextMode);
     }
+  };
+
+  const openNativeCameraPicker = () => {
+    nativeCameraInputRef.current?.click();
   };
 
   // Auto-start or stop camera based on acquisition mode
@@ -1945,7 +1963,7 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                     <div className="absolute inset-0 bg-white z-40 animate-pulse" />
                   )}
 
-                  {acquisitionMode === "camera" && cameraActive ? (
+                  {acquisitionMode === "camera" && cameraActive && cameraReady ? (
                     /* LIVE CAMERA STREAM VIEW */
                     <div className="absolute inset-0 w-full h-full bg-black flex flex-col items-center justify-between">
                       <video
@@ -1984,6 +2002,15 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                           title="Pivoter l'appareil photo"
                         >
                           <SwitchCamera className="w-4 h-4" />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={openNativeCameraPicker}
+                          className="bg-emerald-600/90 hover:bg-emerald-500 text-white text-[10px] font-bold py-2 px-3 rounded-full shadow-md transition flex items-center gap-1.5 border border-emerald-400/50"
+                        >
+                          <Camera className="w-3.5 h-3.5" />
+                          <span>Appareil photo mobile</span>
                         </button>
 
                         {/* Capture button */}
@@ -2049,7 +2076,7 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                   ) : (
                     /* EMPTY DROPZONE WITH FILE INPUT FALLBACK */
                     <>
-                      {acquisitionMode === "camera" && cameraError ? (
+                      {acquisitionMode === "camera" && (cameraError || !cameraReady) ? (
                         <div className="p-6 space-y-4 max-w-md text-center">
                           <div className="w-12 h-12 rounded-full bg-amber-500/15 flex items-center justify-center mx-auto text-amber-500">
                             <AlertCircle className="w-6 h-6" />
@@ -2059,15 +2086,15 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                               Flux caméra live indisponible
                             </p>
                             <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                              L'accès WebRTC à l'appareil photo est restreint par la sécurité du navigateur. Aucun problème ! Utilisez le bouton vert ci-dessous pour ouvrir directement l'appareil photo de votre smartphone.
+                              Le flux caméra live n’est pas fiable sur cet ordinateur. Vous pouvez directement choisir une photo depuis votre PC ou ouvrir le sélecteur photo natif.
                             </p>
                           </div>
                           
                           <div className="flex flex-col gap-2.5 items-center w-full">
-                            {/* 1. Native mobile camera as primary fallback */}
+                            {/* 1. Native photo picker / camera fallback */}
                             <label className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer relative">
                               <Camera className="w-4 h-4 shrink-0 animate-pulse" />
-                              <span>Ouvrir l'Appareil Photo Mobile</span>
+                              <span>Prendre / Choisir une photo</span>
                               <input
                                 type="file"
                                 accept="image/*"
@@ -2168,6 +2195,15 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                     </>
                   )}
                 </div>
+
+                <input
+                  ref={nativeCameraInputRef}
+                  type="file"
+                  accept="image/*"
+                  capture={facingMode === "user" ? "user" : "environment"}
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
 
                 {/* Multi-image thumbnail gallery */}
                 {uploadedImages.length > 0 && (
