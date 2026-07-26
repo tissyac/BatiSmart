@@ -364,10 +364,7 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
 
     setAcquisitionMode(modeId);
     if (modeId === "camera") {
-      setTimeout(() => {
-        openNativeCameraPicker();
-      }, 120);
-      showToast("Ouverture de l’appareil photo…");
+      showToast("Sélection de la photo via l’appareil photo…");
     } else {
       showToast(`Mode d'acquisition '${modeLabel}' activé !`);
     }
@@ -2088,26 +2085,30 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                     <>
                       {acquisitionMode === "camera" && (cameraError || !cameraReady) ? (
                         <div className="p-6 space-y-4 max-w-md text-center">
-                          <div className="w-12 h-12 rounded-full bg-amber-500/15 flex items-center justify-center mx-auto text-amber-500">
-                            <AlertCircle className="w-6 h-6" />
+                          <div className="w-12 h-12 rounded-full bg-emerald-500/15 flex items-center justify-center mx-auto text-emerald-600">
+                            <Camera className="w-6 h-6" />
                           </div>
                           <div>
                             <p className="text-xs font-bold text-slate-800 dark:text-white">
-                              Caméra non disponible pour le moment
+                              Appareil photo prêt à être utilisé
                             </p>
                             <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                              Autorisez l’accès à la caméra dans votre navigateur, puis relancez la prise de photo.
+                              Utilisez le bouton ci-dessous pour ouvrir la prise de photo depuis votre navigateur ou votre appareil.
                             </p>
                           </div>
 
-                          <button
-                            type="button"
-                            onClick={() => startCamera(facingMode)}
-                            className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer"
-                          >
+                          <label className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer relative">
                             <Camera className="w-4 h-4 shrink-0" />
-                            <span>Réessayer l’appareil photo</span>
-                          </button>
+                            <span>Prendre une photo</span>
+                            <input
+                              ref={nativeCameraInputRef}
+                              type="file"
+                              accept="image/*"
+                              capture={facingMode === "user" ? "user" : "environment"}
+                              onChange={handleImageChange}
+                              className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                            />
+                          </label>
                         </div>
                       ) : (
                         <>
@@ -2123,16 +2124,20 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                           
                           {acquisitionMode === "camera" ? (
                             <div className="mt-4 flex flex-col items-center justify-center gap-3 w-full max-w-sm px-4 z-10">
-                              <button
-                                type="button"
-                                onClick={openNativeCameraPicker}
-                                className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer"
-                              >
+                              <label className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-500/10 transition flex items-center justify-center gap-2 cursor-pointer relative">
                                 <Camera className="w-4 h-4 shrink-0 animate-bounce" />
                                 <span>Prendre une photo</span>
-                              </button>
+                                <input
+                                  ref={nativeCameraInputRef}
+                                  type="file"
+                                  accept="image/*"
+                                  capture={facingMode === "user" ? "user" : "environment"}
+                                  onChange={handleImageChange}
+                                  className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                                />
+                              </label>
                               <p className="text-[10px] text-slate-500 dark:text-slate-400 text-center">
-                                Sur mobile, l’appareil photo natif s’ouvre directement.
+                                Sur mobile, l’appareil photo natif s’ouvre directement. Sur ordinateur, le navigateur peut ouvrir un sélecteur photo.
                               </p>
                             </div>
                           ) : (
@@ -2150,14 +2155,6 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
                   )}
                 </div>
 
-                <input
-                  ref={nativeCameraInputRef}
-                  type="file"
-                  accept="image/*"
-                  capture={facingMode === "user" ? "user" : "environment"}
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
 
                 {/* Multi-image thumbnail gallery */}
                 {uploadedImages.length > 0 && (
