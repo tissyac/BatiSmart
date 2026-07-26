@@ -6,6 +6,12 @@ import infiltrationImg from "../assets/images/problem-infiltration.png";
 import toitureDegradeeImg from "../assets/images/problem-toiture-degradee.png";
 import fissureImg from "../assets/images/problem-fissure.png";
 import humiditeImg from "../assets/images/problem-humidite.png";
+import fonctionnalitesImg from "../assets/images/FONCTIONNALITÉS.png";
+import detectionAutoImg from "../assets/images/DÉTECTION AUTOMATIQUE.png";
+import cartographieSigImg from "../assets/images/CARTOGRAPHIE SIG.png";
+import historiqueImg from "../assets/images/HISTORIQUE.png";
+import rapportPdfImg from "../assets/images/RAPPORT PDF.png";
+import assistantIaImg from "../assets/images/ASSISTANT IA.png";
 
 interface WelcomeScreenProps {
   onStartInspection: () => void;
@@ -598,7 +604,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 BatiSmart Roof IA offre un ensemble complet de fonctionnalités intelligentes pour assurer un <span className="text-sky-400 font-semibold">prédiagnostic précis</span>, une meilleure <span className="text-sky-400 font-semibold">planification</span> et un <span className="text-sky-400 font-semibold">pilotage efficace</span> de la maintenance.
               </p>
               <div className="mt-6 rounded-3xl overflow-hidden glass-card p-4 flex items-center justify-center">
-                <img src={welcomeBgImage} alt="Ville connectée" className="w-full h-40 object-cover rounded-xl opacity-90" />
+                <img src={fonctionnalitesImg} alt="FONCTIONNALITÉS" className="w-full h-40 object-cover rounded-xl opacity-90" />
               </div>
             </div>
 
@@ -612,9 +618,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                     </div>
                     <p className="text-xs text-slate-300 mb-3">Détection automatique des fissures, infiltrations, humidité, corrosion et défauts d'étanchéité.</p>
                     <div className="flex-1 rounded-lg overflow-hidden bg-slate-800/40 border border-slate-700">
-                      <img src={infiltrationImg} alt="toiture" className="w-full h-40 object-cover" />
+                      <img src={detectionAutoImg} alt="Détection automatique" className="w-full h-40 object-cover" />
                     </div>
-                    <div className="mt-3 text-[12px] text-slate-300">Légende: <span className="inline-block w-3 h-3 bg-red-500 rounded-full ml-2 mr-1"></span>FISSURE <span className="inline-block w-3 h-3 bg-amber-400 rounded-full ml-3 mr-1"></span>INFILTRATION <span className="inline-block w-3 h-3 bg-blue-400 rounded-full ml-3 mr-1"></span>HUMIDITÉ</div>
                   </div>
                 </div>
 
@@ -625,11 +630,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                       <div className="text-sky-400"><MapPin className="w-5 h-5" /></div>
                     </div>
                     <p className="text-xs text-slate-300 mb-3">Localisation des bâtiments sur les 69 wilayas.</p>
-                    <div className="flex-1 rounded-lg overflow-hidden bg-slate-800/40 border border-slate-700 flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="text-2xl font-extrabold text-white">69</div>
-                        <div className="text-xs text-slate-300">WILAYAS</div>
-                      </div>
+                    <div className="flex-1 rounded-lg overflow-hidden bg-slate-800/40 border border-slate-700">
+                      <img src={cartographieSigImg} alt="Cartographie SIG" className="w-full h-40 object-cover" />
                     </div>
                   </div>
                 </div>
@@ -679,9 +681,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                       <div className="text-red-400"><FileText className="w-5 h-5" /></div>
                     </div>
                     <p className="text-xs text-slate-300 mb-3">Rapport professionnel généré automatiquement.</p>
-                    <div className="w-full rounded-lg bg-slate-800/30 border border-slate-700 p-4 flex items-center gap-4">
-                      <div className="w-20 h-20 bg-red-600 rounded-md flex items-center justify-center text-white font-bold">PDF</div>
-                      <div className="text-xs text-slate-300">Aperçu du rapport d'inspection avec graphiques et statistiques clés.</div>
+                    <div className="w-full rounded-lg bg-slate-800/30 border border-slate-700 p-4">
+                      <img src={rapportPdfImg} alt="Rapport PDF" className="w-full h-40 object-cover rounded-md" />
                     </div>
                   </div>
                 </div>
@@ -693,13 +694,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                       <div className="text-sky-400"><Bot className="w-5 h-5" /></div>
                     </div>
                     <p className="text-xs text-slate-300 mb-3">Assistant conversationnel technique.</p>
-                    <div className="flex-1 rounded-md bg-slate-900/20 p-3 overflow-auto">
-                      <div className="text-xs text-slate-300 mb-2">Utilisateur: Quels sont les bâtiments avec un risque élevé d'infiltration ?</div>
-                      <div className="text-xs text-white font-semibold">Assistant: Lycée Mohamed Boudiaf - Alger<br/>CEM Frères Mentouri - Oran<br/>Collège El Amen - Constantine</div>
-                    </div>
-                    <div className="mt-3 w-full flex gap-2">
-                      <input className="flex-1 bg-transparent border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-200" placeholder="Posez une question..." />
-                      <button className="px-4 py-2 bg-sky-500 text-white rounded-md">Envoyer</button>
+                    <div className="flex-1 rounded-md bg-slate-900/20 p-3 overflow-hidden">
+                      <img src={assistantIaImg} alt="Assistant IA" className="w-full h-40 object-cover rounded-md" />
                     </div>
                   </div>
                 </div>
@@ -711,34 +707,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                       <div className="text-sky-400"><Clock className="w-5 h-5" /></div>
                     </div>
                     <p className="text-xs text-slate-300 mb-3">Historique des inspections et interventions.</p>
-                    <div className="overflow-auto text-xs">
-                      <table className="w-full text-left table-auto">
-                        <thead>
-                          <tr className="text-slate-400">
-                            <th className="py-2">DATE</th>
-                            <th>BÂTIMENT</th>
-                            <th>TYPE</th>
-                            <th>RÉSULTAT</th>
-                            <th>INTERVENTION</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="border-t border-slate-800">
-                            <td className="py-2">12/06/2024</td>
-                            <td>Lycée Mohamed Boudiaf</td>
-                            <td>Inspection complète</td>
-                            <td className="text-red-400">Risque élevé</td>
-                            <td className="text-sky-400">Planifiée</td>
-                          </tr>
-                          <tr className="border-t border-slate-800">
-                            <td className="py-2">03/05/2024</td>
-                            <td>CEM Frères Mentouri</td>
-                            <td>Inspection rapide</td>
-                            <td className="text-amber-400">Risque moyen</td>
-                            <td className="text-sky-400">Réalisée</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div className="overflow-hidden rounded-md">
+                      <img src={historiqueImg} alt="Historique" className="w-full h-40 object-cover rounded-md" />
                     </div>
                   </div>
                 </div>
