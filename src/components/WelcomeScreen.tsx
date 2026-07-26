@@ -17,13 +17,18 @@ interface WelcomeScreenProps {
 
 export default function WelcomeScreen({ onStartInspection, onNavigateToTab, theme, setTheme, user }: WelcomeScreenProps) {
   const isDark = theme === "dark";
+  const [activeSection, setActiveSection] = React.useState<"home" | "problem" | "solution" | "features" | "benefits">("home");
 
-  const scrollToSection = (id: string) => {
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+  React.useEffect(() => {
+    if (activeSection === "home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      const section = document.getElementById(activeSection);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
     }
-  };
+  }, [activeSection]);
 
   return (
     <div className={`h-screen w-full overflow-y-auto scrollbar-thin font-sans transition-colors duration-300 ${
@@ -71,35 +76,61 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
         <nav className="mx-auto flex flex-wrap items-center justify-center gap-3 pt-4 w-full lg:w-auto">
           <button
             type="button"
-            onClick={() => scrollToSection("problem")}
-            className="px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            onClick={() => setActiveSection("problem")}
+            className={
+              `px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 ${
+                activeSection === "problem"
+                  ? "bg-sky-500 text-white hover:bg-sky-500 dark:bg-sky-500 dark:text-white"
+                  : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              }`
+            }
           >
             Le problème
           </button>
           <button
             type="button"
-            onClick={() => scrollToSection("solution")}
-            className="px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            onClick={() => setActiveSection("solution")}
+            className={
+              `px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 ${
+                activeSection === "solution"
+                  ? "bg-sky-500 text-white hover:bg-sky-500 dark:bg-sky-500 dark:text-white"
+                  : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              }`
+            }
           >
             La solution
           </button>
           <button
             type="button"
-            onClick={() => scrollToSection("features")}
-            className="px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            onClick={() => setActiveSection("features")}
+            className={
+              `px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 ${
+                activeSection === "features"
+                  ? "bg-sky-500 text-white hover:bg-sky-500 dark:bg-sky-500 dark:text-white"
+                  : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              }`
+            }
           >
             Fonctionnalité
           </button>
           <button
             type="button"
-            onClick={() => scrollToSection("benefits")}
-            className="px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            onClick={() => setActiveSection("benefits")}
+            className={
+              `px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 ${
+                activeSection === "benefits"
+                  ? "bg-sky-500 text-white hover:bg-sky-500 dark:bg-sky-500 dark:text-white"
+                  : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              }`
+            }
           >
             Bénéfices
           </button>
         </nav>
       </header>
 
+      {activeSection === "home" && (
+      <>
       {/* 2. HERO SECTION */}
       <section className="relative overflow-hidden max-w-7xl mx-auto px-8 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-sky-500/15 to-transparent" />
@@ -187,10 +218,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
               <ArrowRight className="w-4 h-4" />
             </button>
             <button
-              onClick={() => {
-                const el = document.getElementById("features");
-                if (el) el.scrollIntoView({ behavior: "smooth" });
-              }}
+              onClick={() => setActiveSection("features")}
               className={`px-5 py-3.5 border font-semibold text-sm rounded-xl transition duration-300 flex items-center justify-center gap-1.5 ${
                 isDark 
                   ? "border-slate-800 hover:bg-slate-900 text-slate-300" 
@@ -369,8 +397,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
         </div>
 
       </section>
+      </>
+      )}
 
-      {/* 3. PROBLEM SECTION */}
+      {activeSection === "problem" && (
       <section id="problem" className={`relative overflow-hidden py-16 transition-colors duration-300 section-3d ${
         isDark ? "bg-slate-950 text-slate-200" : "bg-white text-slate-800"
       }`}>
@@ -478,8 +508,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           </div>
         </div>
       </section>
+      )}
 
       {/* 4. SOLUTION SECTION */}
+      {activeSection === "solution" && (
       <section id="solution" className={`relative overflow-hidden py-16 transition-colors duration-300 section-3d ${
         isDark ? "bg-slate-900 text-slate-100" : "bg-slate-50 text-slate-800"
       }`}>
@@ -557,8 +589,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           </div>
         </div>
       </section>
+      )}
 
       {/* 5. FONCTIONNALITÉS — Remplacé par layout dashboard dark glass */}
+      {activeSection === "features" && (
       <section id="features" className={`relative overflow-hidden py-16 border-t transition-colors duration-300 section-3d ${
         isDark ? "border-slate-900 bg-[#050812]" : "border-slate-200/80 bg-slate-50/50"
       }`}>
@@ -727,8 +761,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           </div>
         </div>
       </section>
+      )}
 
       {/* 6. BENEFITS SECTION */}
+      {activeSection === "benefits" && (
       <section id="benefits" className={`relative overflow-hidden py-16 transition-colors duration-300 section-3d ${
         isDark ? "bg-slate-950 text-slate-200" : "bg-white text-slate-800"
       }`}>
@@ -857,6 +893,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           </div>
         </div>
       </section>
+      )}
 
       {/* 7. FOOTER */}
       <footer className={`py-12 border-t text-center text-xs transition-colors duration-300 ${
