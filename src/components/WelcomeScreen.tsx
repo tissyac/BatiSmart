@@ -839,15 +839,15 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           {/* Statistics Header */}
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
-              📊 En chiffres
+              📊 Tableau de Bord National des Prédiagnostics
             </h2>
             <p className={`text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-              Les chiffres clés de BatiSmart Roof IA
+              Les indicateurs présentés ci-dessous sont calculés à partir de l'ensemble des prédiagnostics enregistrés sur la plateforme. Ils offrent aux décideurs une vision globale de l'état du patrimoine bâti, facilitent la priorisation des interventions et l'aide à la décision.
             </p>
           </div>
 
           {/* Statistics Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {/* Statistic 1 */}
             <div className={`p-6 rounded-xl border text-center transition-colors duration-300 ${
               isDark 
@@ -855,13 +855,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 : "bg-white border-slate-200 hover:border-sky-300"
             }`}>
               <div className="text-4xl font-bold bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent mb-2">
-                98%
+                12
               </div>
               <p className={`text-sm font-semibold ${isDark ? "text-slate-300" : "text-slate-700"}`}>
-                Précision de diagnostic
-              </p>
-              <p className={`text-xs mt-1 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-                Via algorithmes IA
+                Prédiagnostics réalisés
               </p>
             </div>
 
@@ -872,13 +869,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 : "bg-white border-slate-200 hover:border-sky-300"
             }`}>
               <div className="text-4xl font-bold bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent mb-2">
-                45%
+                69
               </div>
               <p className={`text-sm font-semibold ${isDark ? "text-slate-300" : "text-slate-700"}`}>
-                Réduction des coûts
-              </p>
-              <p className={`text-xs mt-1 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-                Maintenance optimisée
+                Wilayas couvertes
               </p>
             </div>
 
@@ -889,13 +883,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 : "bg-white border-slate-200 hover:border-sky-300"
             }`}>
               <div className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-600 bg-clip-text text-transparent mb-2">
-                2+
+                8
               </div>
               <p className={`text-sm font-semibold ${isDark ? "text-slate-300" : "text-slate-700"}`}>
-                Années de R&D
-              </p>
-              <p className={`text-xs mt-1 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-                Recherche et développement
+                Alertes actives
               </p>
             </div>
 
@@ -906,13 +897,24 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 : "bg-white border-slate-200 hover:border-sky-300"
             }`}>
               <div className="text-4xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent mb-2">
-                ∞
+                12
               </div>
               <p className={`text-sm font-semibold ${isDark ? "text-slate-300" : "text-slate-700"}`}>
-                Scalabilité illimitée
+                Rapports PDF
               </p>
-              <p className={`text-xs mt-1 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-                Infrastructure cloud
+            </div>
+
+            {/* Statistic 5 */}
+            <div className={`p-6 rounded-xl border text-center transition-colors duration-300 ${
+              isDark 
+                ? "bg-slate-800/50 border-slate-700 hover:bg-slate-800" 
+                : "bg-white border-slate-200 hover:border-sky-300"
+            }`}>
+              <div className="text-4xl font-bold bg-gradient-to-r from-rose-500 to-red-600 bg-clip-text text-transparent mb-2">
+                2
+              </div>
+              <p className={`text-sm font-semibold ${isDark ? "text-slate-300" : "text-slate-700"}`}>
+                Interventions suivies
               </p>
             </div>
           </div>
