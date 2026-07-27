@@ -1046,174 +1046,11 @@ export function generateInspectionPDF(
 
   y += boxH + 8;
 
-  // --- 5.1. GOUVERNANCE & OPTIONS TECHNIQUES RECOMMANDÉES ---
-  if ((inspection.selectedTechnicalOptions || []).length > 0) {
-    if (y + 35 > 260) {
-      addPageWithHeader("GOUVERNANCE & DÉCISIONS");
-    }
-    
-    doc.setFont("Helvetica", "bold");
-    doc.setFontSize(9.5);
-    doc.setTextColor(darkNavy);
-    doc.text("5. GOUVERNANCE & DÉCISIONS - OPTIONS TECHNIQUES RECOMMANDÉES", 15, y);
-    doc.setDrawColor(lightBlue);
-    doc.setLineWidth(0.35);
-    doc.line(15, y + 1.5, 140, y + 1.5);
-
-    y += 6.5;
-
-    const techOptions = inspection.selectedTechnicalOptions || [];
-    
-    // Display technical options in a grid format
-    let col = 0;
-    const colWidth = (pageWidth - 30) / 2;
-    let boxX = 15;
-    let boxY = y;
-    
-    techOptions.forEach((option, idx) => {
-      const boxH = 12;
-      
-      // Handle page break
-      if (boxY + boxH > 260) {
-        addPageWithHeader("OPTIONS TECHNIQUES (SUITE)");
-        boxY = y;
-        boxX = 15;
-        col = 0;
-      }
-
-      // Draw box
-      doc.setFillColor("#f0f9ff");
-      doc.rect(boxX, boxY, colWidth - 3, boxH, "F");
-      doc.setDrawColor(lightBlue);
-      doc.setLineWidth(0.3);
-      doc.rect(boxX, boxY, colWidth - 3, boxH, "S");
-
-      // Add checkmark and text
-      doc.setFillColor("#10b981");
-      doc.circle(boxX + 3, boxY + 6, 1.2, "F");
-      doc.setTextColor("#ffffff");
-      doc.setFont("Helvetica", "bold");
-      doc.setFontSize(7);
-      doc.text("✓", boxX + 3, boxY + 6.8, { align: "center" });
-
-      // Option text
-      const wrappedOpt = doc.splitTextToSize(option, colWidth - 14);
-      doc.setFont("Helvetica", "normal");
-      doc.setFontSize(7.5);
-      doc.setTextColor(valueBlack);
-      doc.text(wrappedOpt, boxX + 8, boxY + 4.5);
-
-      col++;
-      if (col >= 2) {
-        col = 0;
-        boxX = 15;
-        boxY += boxH + 2;
-      } else {
-        boxX = 15 + colWidth;
-      }
-    });
-    
-    if (col > 0) {
-      boxY += 12 + 2;
-    }
-    
-    y = boxY + 3;
-  }
-
-  // --- 5.2. MAINTENANCE DE L'ÉDIFICE - TRAVAUX RÉALISÉS ---
-  const maintenanceOpts = inspection.selectedMaintenanceOptions || [];
-  const maintenanceDescription = inspection.maintenanceDescription || "";
-  const maintenanceType = inspection.maintenanceInterventionType || "";
-  const maintenanceDate = inspection.maintenanceInterventionDate || "";
-  const maintenanceCompany = inspection.maintenanceCompany || "";
-  const maintenanceResponsible = inspection.maintenanceResponsible || "";
-  const maintenanceDuration = inspection.maintenanceDuration || "";
-  const maintenanceCost = inspection.maintenanceCost || "";
-
-  if (maintenanceOpts.length > 0 || maintenanceDescription || maintenanceType || maintenanceDate || maintenanceCompany || maintenanceResponsible || maintenanceDuration || maintenanceCost) {
-    if (y + 35 > 260) {
-      addPageWithHeader("MAINTENANCE DE L'ÉDIFICE");
-    }
-    
-    doc.setFont("Helvetica", "bold");
-    doc.setFontSize(9.5);
-    doc.setTextColor(darkNavy);
-    doc.text("5. MAINTENANCE DE L'ÉDIFICE - DESCRIPTION DES TRAVAUX RÉALISÉS", 15, y);
-    doc.setDrawColor(lightBlue);
-    doc.setLineWidth(0.35);
-    doc.line(15, y + 1.5, 140, y + 1.5);
-
-    y += 6.5;
-
-    const summaryLines: string[] = [];
-    if (maintenanceType) summaryLines.push(`Type d'intervention : ${maintenanceType}`);
-    if (maintenanceDate) summaryLines.push(`Date : ${maintenanceDate}`);
-    if (maintenanceCompany) summaryLines.push(`Entreprise : ${maintenanceCompany}`);
-    if (maintenanceResponsible) summaryLines.push(`Responsable : ${maintenanceResponsible}`);
-    if (maintenanceDuration) summaryLines.push(`Durée : ${maintenanceDuration}`);
-    if (maintenanceCost) summaryLines.push(`Coût estimé : ${maintenanceCost}`);
-    if (maintenanceDescription) summaryLines.push(`Description : ${maintenanceDescription}`);
-
-    if (summaryLines.length > 0) {
-      const summaryBoxHeight = Math.max(14, (summaryLines.length * 3.3) + 6);
-      doc.setFillColor("#fff7ed");
-      doc.rect(15, y, pageWidth - 30, summaryBoxHeight, "F");
-      doc.setDrawColor("#f59e0b");
-      doc.setLineWidth(0.3);
-      doc.rect(15, y, pageWidth - 30, summaryBoxHeight, "S");
-      doc.setFont("Helvetica", "bold");
-      doc.setFontSize(7.5);
-      doc.setTextColor(darkNavy);
-      doc.text("Détails saisis dans le tableau de bord", 18, y + 4);
-      doc.setFont("Helvetica", "normal");
-      doc.setFontSize(7.2);
-      doc.setTextColor(valueBlack);
-      const summaryText = doc.splitTextToSize(summaryLines.join(" | "), pageWidth - 38);
-      doc.text(summaryText, 18, y + 8.5);
-      y += summaryBoxHeight + 3;
-    }
-
-    // Display maintenance options in a list format
-    maintenanceOpts.forEach((option, idx) => {
-      const optionText = `${idx + 1}. ${option}`;
-      const wrappedOpt = doc.splitTextToSize(optionText, pageWidth - 36);
-      const boxH = (wrappedOpt.length * 3.6) + 5;
-      
-      // Handle page break
-      if (y + boxH > 260) {
-        addPageWithHeader("TRAVAUX RÉALISÉS (SUITE)");
-      }
-
-      // Draw box
-      doc.setFillColor("#fef3c7");
-      doc.rect(15, y, pageWidth - 30, boxH, "F");
-      doc.setDrawColor("#fbbf24");
-      doc.setLineWidth(0.3);
-      doc.rect(15, y, pageWidth - 30, boxH, "S");
-
-      // Add checkmark indicator
-      doc.setFillColor("#f59e0b");
-      doc.circle(20, y + 4, 1.2, "F");
-      doc.setTextColor("#ffffff");
-      doc.setFont("Helvetica", "bold");
-      doc.setFontSize(7);
-      doc.text("✓", 20, y + 4.8, { align: "center" });
-
-      // Option text
-      doc.setFont("Helvetica", "normal");
-      doc.setFontSize(7.8);
-      doc.setTextColor(valueBlack);
-      doc.text(wrappedOpt, 26, y + 3);
-
-      y += boxH + 3;
-    });
-  }
-
   // --- 6. TECHNICAL RECOMMENDATIONS & ACTION TIMELINE ---
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(9.5);
   doc.setTextColor(darkNavy);
-  doc.text("6. PROGRAMME DE RÉHABILITATION ET DE MAINTENANCE PRÉVENTIVE", 15, y);
+  doc.text("5. PROGRAMME DE RÉHABILITATION ET DE MAINTENANCE PRÉVENTIVE", 15, y);
   doc.setDrawColor(lightBlue);
   doc.setLineWidth(0.35);
   doc.line(15, y + 1.5, 125, y + 1.5);
@@ -1520,18 +1357,71 @@ export function generateInspectionPDF(
 
   y += (splitEconDisclaimer.length * 2.5) + 6;
 
-  // --- 6.5. TABLEAU DE BORD DÉCISIONNEL & VALIDATION DE L'EXPERT ---
-  // If there's not enough space for Section 6.5 (needs ~45mm), add a Page Break!
-  if (y + 45 > 260) {
-    addPageWithHeader("VALUATION DE L'EXPERT & DÉCISIONS");
+  // --- 6. TABLEAU DE BORD DÉCISIONNEL & VALIDATION DE L'EXPERT ---
+  // If there's not enough space for the decision section (needs ~45mm), add a Page Break!
+  if (y + 60 > 260) {
+    addPageWithHeader("TABLEAU DE BORD DÉCISIONNEL");
   }
 
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(8.5);
   doc.setTextColor(darkNavy);
-  doc.text("6.5. TABLEAU DE BORD DÉCISIONNEL & VALIDATION DE L'EXPERT", 15, y);
+  doc.text("6. TABLEAU DE BORD DÉCISIONNEL", 15, y);
   
   y += 3.5;
+
+  const techOptions = inspection.selectedTechnicalOptions || [];
+  const maintenanceOpts = inspection.selectedMaintenanceOptions || [];
+  const maintenanceDescription = inspection.maintenanceDescription || "";
+  const maintenanceType = inspection.maintenanceInterventionType || "";
+  const maintenanceDate = inspection.maintenanceInterventionDate || "";
+  const maintenanceCompany = inspection.maintenanceCompany || "";
+  const maintenanceResponsible = inspection.maintenanceResponsible || "";
+  const maintenanceDuration = inspection.maintenanceDuration || "";
+  const maintenanceCost = inspection.maintenanceCost || "";
+  const governanceLines: string[] = [];
+
+  if (techOptions.length > 0) {
+    governanceLines.push("4.1. Options techniques recommandées :");
+    techOptions.forEach(option => governanceLines.push(`• ${option}`));
+  }
+
+  const maintenanceSummaryLines: string[] = [];
+  if (maintenanceType) maintenanceSummaryLines.push(`Type d'intervention : ${maintenanceType}`);
+  if (maintenanceDate) maintenanceSummaryLines.push(`Date : ${maintenanceDate}`);
+  if (maintenanceCompany) maintenanceSummaryLines.push(`Entreprise : ${maintenanceCompany}`);
+  if (maintenanceResponsible) maintenanceSummaryLines.push(`Responsable : ${maintenanceResponsible}`);
+  if (maintenanceDuration) maintenanceSummaryLines.push(`Durée : ${maintenanceDuration}`);
+  if (maintenanceCost) maintenanceSummaryLines.push(`Coût estimé : ${maintenanceCost}`);
+  if (maintenanceDescription) maintenanceSummaryLines.push(`Description : ${maintenanceDescription}`);
+  if (maintenanceOpts.length > 0) maintenanceSummaryLines.push(...maintenanceOpts.map(option => `• ${option}`));
+
+  if (maintenanceSummaryLines.length > 0) {
+    governanceLines.push("4.2. Maintenance de l’édifice :");
+    governanceLines.push(...maintenanceSummaryLines);
+  }
+
+  if (governanceLines.length > 0) {
+    doc.setFillColor("#f8fafc");
+    doc.rect(15, y, pageWidth - 30, 24, "F");
+    doc.setDrawColor("#cbd5e1");
+    doc.setLineWidth(0.2);
+    doc.rect(15, y, pageWidth - 30, 24, "S");
+
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(7.2);
+    doc.setTextColor(darkNavy);
+    doc.text("Données de gouvernance & maintenance", 20, y + 5);
+
+    doc.setFont("Helvetica", "normal");
+    doc.setFontSize(6.6);
+    doc.setTextColor(charcoal);
+    const wrappedGovernance = doc.splitTextToSize(governanceLines.join("\n"), pageWidth - 46);
+    doc.text(wrappedGovernance, 20, y + 9.5);
+
+    y += 28;
+  }
+
   const decisionBoxH = 34;
   doc.setFillColor("#f8fafc"); // light slate
   doc.rect(15, y, pageWidth - 30, decisionBoxH, "F");
@@ -1621,7 +1511,7 @@ export function generateInspectionPDF(
 
   y += decisionBoxH + 6;
 
-  // --- 6.8. SUIVI DE MAINTENANCE À J+2 & EXÉCUTION DES TRAVAUX DE CHANTIER ---
+  // --- 7. SUIVI DE MAINTENANCE À J+2 & EXÉCUTION DES TRAVAUX DE CHANTIER ---
   let storedInterventions: any[] = [];
   try {
     const rawInv = localStorage.getItem("batismart_interventions");
@@ -1640,7 +1530,7 @@ export function generateInspectionPDF(
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(8.5);
   doc.setTextColor(darkNavy);
-  doc.text("6.8. SUIVI DE MAINTENANCE À J+2 & EXÉCUTION DES TRAVAUX", 15, y);
+  doc.text("7. SUIVI DE MAINTENANCE À J+2 & EXÉCUTION DES TRAVAUX", 15, y);
 
   y += 3.5;
   const maintBoxH = 36;
@@ -1719,7 +1609,7 @@ export function generateInspectionPDF(
 
   y += maintBoxH + 6;
 
-  // --- 6.5. RELEVÉS PHOTOGRAPHIQUES ET CLICHÉS DETERRAIN ---
+  // --- 8. RELEVÉS PHOTOGRAPHIQUES ET CLICHÉS DETERRAIN ---
   // Collect up to 5 unique photos for the gallery
   const photosToRender: string[] = [];
   if (Array.isArray(inspection.imageUrls)) {
@@ -1765,7 +1655,7 @@ export function generateInspectionPDF(
     doc.setFont("Helvetica", "bold");
     doc.setFontSize(9.5);
     doc.setTextColor(darkNavy);
-    doc.text("7. RELEVÉS PHOTOGRAPHIQUES DE TERRAIN (HAUTE CLARTÉ)", 15, y);
+    doc.text("8. RELEVÉS PHOTOGRAPHIQUES DE TERRAIN (HAUTE CLARTÉ)", 15, y);
     doc.setDrawColor(lightBlue);
     doc.setLineWidth(0.35);
     doc.line(15, y + 1.5, 125, y + 1.5);
