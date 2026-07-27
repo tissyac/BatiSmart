@@ -55,9 +55,6 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
               <div className={`text-base font-bold tracking-tight ${isDark ? "text-white" : "text-slate-900"}`}>
                 BatiSmart Roof IA
               </div>
-              <div className="text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
-                Diagnostic dédié
-              </div>
             </div>
           </div>
 
