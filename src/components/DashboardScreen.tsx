@@ -266,6 +266,7 @@ export default function DashboardScreen({
   const [expertSignatureData, setExpertSignatureData] = useState<string>("");
   const [validationSuccess, setValidationSuccess] = useState<boolean>(false);
   const [selectedTechnicalOptions, setSelectedTechnicalOptions] = useState<string[]>([]);
+  const [expandedTechnicalCategory, setExpandedTechnicalCategory] = useState<string | null>(null);
 
   // PDF Modal state
   const [isPdfModalOpen, setIsPdfModalOpen] = useState<boolean>(false);
@@ -2034,32 +2035,63 @@ export default function DashboardScreen({
                   <label className="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
                     📋 Options techniques recommandées (multi-sélection)
                   </label>
-                  <div className="space-y-3">
-                    {getAvailableTechnicalOptions().map((category) => (
-                      <div key={category.category} className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800 rounded-xl p-3">
-                        <p className="text-[10px] font-bold text-slate-600 dark:text-slate-300 mb-2.5 uppercase tracking-wide">
-                          {category.category}
-                        </p>
-                        <div className="space-y-1.5">
-                          {category.options.map((option, idx) => (
-                            <label
-                              key={idx}
-                              className="flex items-start gap-2.5 cursor-pointer group"
-                            >
-                              <input
-                                type="checkbox"
-                                checked={selectedTechnicalOptions.includes(option)}
-                                onChange={() => toggleTechnicalOption(option)}
-                                className="mt-1 w-4 h-4 rounded border-2 border-slate-300 dark:border-slate-600 checked:bg-sky-500 checked:border-sky-500 cursor-pointer accent-sky-500 transition"
-                              />
-                              <span className="text-xs text-slate-700 dark:text-slate-300 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition leading-relaxed">
-                                {option}
+                  <div className="space-y-1.5">
+                    {getAvailableTechnicalOptions().map((category) => {
+                      const isExpanded = expandedTechnicalCategory === category.category;
+                      const selectedCount = category.options.filter((opt) =>
+                        selectedTechnicalOptions.includes(opt)
+                      ).length;
+                      return (
+                        <div key={category.category}>
+                          {/* Category Header - Clickable */}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setExpandedTechnicalCategory(
+                                isExpanded ? null : category.category
+                              )
+                            }
+                            className="w-full flex items-center justify-between gap-2 p-2.5 bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-lg hover:border-sky-300 dark:hover:border-sky-900/50 transition group"
+                          >
+                            <span className="flex items-center gap-2 flex-1 text-left">
+                              <span className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wide">
+                                {category.category}
                               </span>
-                            </label>
-                          ))}
+                              {selectedCount > 0 && (
+                                <span className="inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold text-white bg-sky-500 rounded-full">
+                                  {selectedCount}
+                                </span>
+                              )}
+                            </span>
+                            <span className={`text-slate-400 dark:text-slate-500 transition transform ${isExpanded ? 'rotate-180' : ''}`}>
+                              ▼
+                            </span>
+                          </button>
+
+                          {/* Options - Expandable */}
+                          {isExpanded && (
+                            <div className="mt-1.5 ml-0 p-3 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800 rounded-lg space-y-1.5">
+                              {category.options.map((option, idx) => (
+                                <label
+                                  key={idx}
+                                  className="flex items-start gap-2.5 cursor-pointer group"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedTechnicalOptions.includes(option)}
+                                    onChange={() => toggleTechnicalOption(option)}
+                                    className="mt-1 w-4 h-4 rounded border-2 border-slate-300 dark:border-slate-600 checked:bg-sky-500 checked:border-sky-500 cursor-pointer accent-sky-500 transition"
+                                  />
+                                  <span className="text-xs text-slate-700 dark:text-slate-300 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition leading-relaxed">
+                                    {option}
+                                  </span>
+                                </label>
+                              ))}
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                   {selectedTechnicalOptions.length > 0 && (
                     <div className="mt-2 p-2 bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-900/50 rounded-lg">
