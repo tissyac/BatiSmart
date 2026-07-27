@@ -568,7 +568,7 @@ export function generateInspectionPDF(
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(9.5);
   doc.setTextColor(darkNavy);
-  doc.text("3b. ÉVOLUTION DEPUIS LA DERNIÈRE INSPECTION", 15, y);
+  doc.text("4. ÉVOLUTION DEPUIS LA DERNIÈRE INSPECTION", 15, y);
   doc.setDrawColor(lightBlue);
   doc.setLineWidth(0.35);
   doc.line(15, y + 1.5, 125, y + 1.5);
@@ -648,7 +648,7 @@ export function generateInspectionPDF(
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(8.5);
   doc.setTextColor(darkNavy);
-  doc.text("GRAPHIQUE DE TENDANCE CHRONOLOGIQUE DU RISQUE ET DES PATHOLOGIES", 15, y);
+  doc.text("4.1. GRAPHIQUE DE TENDANCE CHRONOLOGIQUE DU RISQUE ET DES PATHOLOGIES", 15, y);
 
   y += 3.5;
   const chartH = 26;
@@ -829,7 +829,7 @@ export function generateInspectionPDF(
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(8.5);
   doc.setTextColor(darkNavy);
-  doc.text("TABLEAU COMPARATIF DES PATHOLOGIES PRINCIPALES", 15, y);
+  doc.text("4.2. TABLEAU COMPARATIF DES PATHOLOGIES PRINCIPALES", 15, y);
 
   y += 3.5;
   doc.setFillColor(darkNavy);
@@ -901,7 +901,7 @@ export function generateInspectionPDF(
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(8.5);
   doc.setTextColor(darkNavy);
-  doc.text("ANALYSE SYNTHÉTIQUE INTELLIGENTE (BatiSmart Roof IA)", 15, y);
+  doc.text("4.3. ANALYSE SYNTHÉTIQUE INTELLIGENTE (BatiSmart Roof IA)", 15, y);
 
   y += 3.5;
   const summaryText = generateEvolutionSummary(defaultPrevPoint, latestPoint, pathologiesDiff);
@@ -924,7 +924,7 @@ export function generateInspectionPDF(
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(8.5);
   doc.setTextColor(darkNavy);
-  doc.text("CONCLUSION SUR L'EFFICACITÉ DES TRAVAUX RÉALISÉS", 15, y);
+  doc.text("4.4. CONCLUSION SUR L'EFFICACITÉ DES TRAVAUX RÉALISÉS", 15, y);
 
   y += 3.5;
   let conclusionText = "";
