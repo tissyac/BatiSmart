@@ -252,7 +252,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           } wow-fade-up`}>
             <div>
               <span className="text-3xl md:text-4xl font-extrabold font-display text-slate-900 dark:text-white block">
-                640+
+                14+
               </span>
               <span className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold mt-1 block">
                 Bilans réalisés
