@@ -265,6 +265,7 @@ export default function DashboardScreen({
   const [expertCommentsInput, setExpertCommentsInput] = useState<string>("");
   const [expertSignatureData, setExpertSignatureData] = useState<string>("");
   const [validationSuccess, setValidationSuccess] = useState<boolean>(false);
+  const [selectedTechnicalOption, setSelectedTechnicalOption] = useState<string>("");
 
   // PDF Modal state
   const [isPdfModalOpen, setIsPdfModalOpen] = useState<boolean>(false);
@@ -323,6 +324,122 @@ export default function DashboardScreen({
       setExpertSignatureData(latestInspection.expertSignature || "");
     }
   }, [selectedBuilding, inspections, latestInspection, user.displayName]);
+
+  // Technical options by diagnostic type
+  const technicalOptions: Record<string, string[]> = {
+    riskScore: [
+      "Intervention immédiate fortement recommandée.",
+      "Maintenance préventive à programmer.",
+      "Surveillance périodique conseillée.",
+      "Expertise technique complémentaire recommandée.",
+      "Aucune intervention urgente requise.",
+      "Nouvelle inspection recommandée dans 6 mois.",
+      "Priorité élevée dans le programme de maintenance.",
+      "Le bâtiment présente un niveau de risque acceptable sous réserve d'un suivi régulier."
+    ],
+    cracks: [
+      "Fissures superficielles observées sans impact structurel immédiat.",
+      "Fissures évolutives nécessitant une surveillance régulière.",
+      "Présence de fissures susceptibles de favoriser les infiltrations.",
+      "Vérification structurelle recommandée.",
+      "Réparation localisée des fissures conseillée.",
+      "Injection de résine recommandée.",
+      "Contrôle après réparation recommandé.",
+      "Surveillance après les prochaines intempéries."
+    ],
+    humidity: [
+      "Humidité importante détectée dans plusieurs zones.",
+      "Recherche de l'origine de l'humidité recommandée.",
+      "Présence probable d'un défaut d'étanchéité.",
+      "Séchage complet avant intervention.",
+      "Traitement hydrofuge conseillé.",
+      "Contrôle de la ventilation recommandé.",
+      "Surveillance de l'évolution de l'humidité.",
+      "Intervention prioritaire afin d'éviter la dégradation des matériaux."
+    ],
+    infiltration: [
+      "Infiltrations localisées observées.",
+      "Vérification complète de l'étanchéité recommandée.",
+      "Contrôle des relevés d'étanchéité conseillé.",
+      "Inspection des évacuations d'eaux pluviales recommandée.",
+      "Réparation des points singuliers nécessaire.",
+      "Intervention avant la saison des pluies recommandée.",
+      "Contrôle après les travaux conseillé.",
+      "Risque d'aggravation en cas de fortes précipitations."
+    ],
+    degradation: [
+      "Dégradation localisée de la membrane d'étanchéité.",
+      "Reprise des joints périphériques recommandée.",
+      "Remplacement partiel de la membrane conseillé.",
+      "Contrôle des relevés d'acrotères recommandé.",
+      "Étanchéité à reprendre sur les zones défectueuses.",
+      "Essai d'étanchéité après intervention recommandé.",
+      "Surveillance renforcée pendant les périodes pluvieuses.",
+      "Réhabilitation complète à envisager à moyen terme."
+    ],
+    corrosion: [
+      "Début de corrosion sur les éléments métalliques.",
+      "Traitement anticorrosion recommandé.",
+      "Nettoyage des parties oxydées conseillé.",
+      "Remplacement des éléments fortement corrodés.",
+      "Protection complémentaire des armatures.",
+      "Inspection des éléments métalliques recommandée.",
+      "Contrôle périodique de la corrosion conseillé.",
+      "Risque d'évolution en l'absence de traitement."
+    ],
+    deformation: [
+      "Déformations légères sans risque immédiat.",
+      "Surveillance régulière recommandée.",
+      "Vérification de la stabilité de l'ouvrage conseillée.",
+      "Expertise structurelle complémentaire recommandée.",
+      "Contrôle des charges supportées par la toiture.",
+      "Aucune évolution significative observée.",
+      "Intervention corrective à prévoir si aggravation.",
+      "Nouvelle inspection après 12 mois."
+    ],
+    aging: [
+      "Vieillissement naturel des matériaux observé.",
+      "Dégradation liée aux conditions climatiques.",
+      "Maintenance préventive recommandée.",
+      "Remplacement progressif des matériaux conseillé.",
+      "Réhabilitation générale à moyen terme.",
+      "Contrôle annuel recommandé.",
+      "Durée de vie résiduelle des matériaux à évaluer.",
+      "Modernisation de la toiture recommandée."
+    ]
+  };
+
+  // Get available options based on selected diagnostics
+  const getAvailableTechnicalOptions = (): { category: string; options: string[] }[] => {
+    const available: { category: string; options: string[] }[] = [];
+    
+    if (activeLines.riskScore) {
+      available.push({ category: "Niveau de risque global", options: technicalOptions.riskScore });
+    }
+    if (activeLines.cracks) {
+      available.push({ category: "Fissures", options: technicalOptions.cracks });
+    }
+    if (activeLines.humidity) {
+      available.push({ category: "Humidité", options: technicalOptions.humidity });
+    }
+    if (activeLines.infiltration) {
+      available.push({ category: "Infiltrations", options: technicalOptions.infiltration });
+    }
+    if (activeLines.degradation) {
+      available.push({ category: "Défauts d'étanchéité", options: technicalOptions.degradation });
+    }
+    if (activeLines.corrosion) {
+      available.push({ category: "Corrosion", options: technicalOptions.corrosion });
+    }
+    if (activeLines.deformation) {
+      available.push({ category: "Déformations", options: technicalOptions.deformation });
+    }
+    if (activeLines.aging) {
+      available.push({ category: "Vieillissement", options: technicalOptions.aging });
+    }
+    
+    return available;
+  };
 
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
     const canvas = signatureCanvasRef.current;
@@ -1899,6 +2016,36 @@ export default function DashboardScreen({
                   />
                 </div>
               </div>
+
+              {/* Technical Options based on diagnostics selection */}
+              {getAvailableTechnicalOptions().length > 0 && (
+                <div className="mb-4">
+                  <label className="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
+                    📋 Options techniques recommandées
+                  </label>
+                  <div className="space-y-2">
+                    {getAvailableTechnicalOptions().map((category) => (
+                      <div key={category.category} className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800 rounded-xl p-3">
+                        <p className="text-[10px] font-bold text-slate-600 dark:text-slate-300 mb-2 uppercase tracking-wide">
+                          {category.category}
+                        </p>
+                        <select
+                          value={selectedTechnicalOption}
+                          onChange={(e) => setSelectedTechnicalOption(e.target.value)}
+                          className="w-full text-xs p-2.5 rounded-lg bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition cursor-pointer"
+                        >
+                          <option value="">-- Sélectionner une option ({category.category}) --</option>
+                          {category.options.map((option, idx) => (
+                            <option key={idx} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Comments */}
               <div className="mb-4">
