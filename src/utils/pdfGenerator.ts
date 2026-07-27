@@ -73,7 +73,9 @@ export function generateInspectionPDF(
       expertSignature: rawInspection?.expertSignature,
       expertComments: rawInspection?.expertComments,
       aiProposedDecision: rawInspection?.aiProposedDecision,
-      aiProposedJustification: rawInspection?.aiProposedJustification
+      aiProposedJustification: rawInspection?.aiProposedJustification,
+      selectedTechnicalOptions: rawInspection?.selectedTechnicalOptions,
+      selectedMaintenanceOptions: rawInspection?.selectedMaintenanceOptions
     } as Inspection;
 
     const safeBuildingName = (inspection.buildingName || "Structure_Publique")
@@ -1037,11 +1039,139 @@ export function generateInspectionPDF(
 
   y += boxH + 8;
 
+  // --- 5.1. GOUVERNANCE & OPTIONS TECHNIQUES RECOMMANDÉES ---
+  if ((inspection.selectedTechnicalOptions || []).length > 0) {
+    if (y + 35 > 260) {
+      addPageWithHeader("GOUVERNANCE & DÉCISIONS");
+    }
+    
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(9.5);
+    doc.setTextColor(darkNavy);
+    doc.text("5. GOUVERNANCE & DÉCISIONS - OPTIONS TECHNIQUES RECOMMANDÉES", 15, y);
+    doc.setDrawColor(lightBlue);
+    doc.setLineWidth(0.35);
+    doc.line(15, y + 1.5, 140, y + 1.5);
+
+    y += 6.5;
+
+    const techOptions = inspection.selectedTechnicalOptions || [];
+    
+    // Display technical options in a grid format
+    let col = 0;
+    const colWidth = (pageWidth - 30) / 2;
+    let boxX = 15;
+    let boxY = y;
+    
+    techOptions.forEach((option, idx) => {
+      const boxH = 12;
+      
+      // Handle page break
+      if (boxY + boxH > 260) {
+        addPageWithHeader("OPTIONS TECHNIQUES (SUITE)");
+        boxY = y;
+        boxX = 15;
+        col = 0;
+      }
+
+      // Draw box
+      doc.setFillColor("#f0f9ff");
+      doc.rect(boxX, boxY, colWidth - 3, boxH, "F");
+      doc.setDrawColor(lightBlue);
+      doc.setLineWidth(0.3);
+      doc.rect(boxX, boxY, colWidth - 3, boxH, "S");
+
+      // Add checkmark and text
+      doc.setFillColor("#10b981");
+      doc.circle(boxX + 3, boxY + 6, 1.2, "F");
+      doc.setTextColor("#ffffff");
+      doc.setFont("Helvetica", "bold");
+      doc.setFontSize(7);
+      doc.text("✓", boxX + 3, boxY + 6.8, { align: "center" });
+
+      // Option text
+      const wrappedOpt = doc.splitTextToSize(option, colWidth - 14);
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(7.5);
+      doc.setTextColor(valueBlack);
+      doc.text(wrappedOpt, boxX + 8, boxY + 4.5);
+
+      col++;
+      if (col >= 2) {
+        col = 0;
+        boxX = 15;
+        boxY += boxH + 2;
+      } else {
+        boxX = 15 + colWidth;
+      }
+    });
+    
+    if (col > 0) {
+      boxY += 12 + 2;
+    }
+    
+    y = boxY + 3;
+  }
+
+  // --- 5.2. MAINTENANCE DE L'ÉDIFICE - TRAVAUX RÉALISÉS ---
+  if ((inspection.selectedMaintenanceOptions || []).length > 0) {
+    if (y + 35 > 260) {
+      addPageWithHeader("MAINTENANCE DE L'ÉDIFICE");
+    }
+    
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(9.5);
+    doc.setTextColor(darkNavy);
+    doc.text("5. MAINTENANCE DE L'ÉDIFICE - DESCRIPTION DES TRAVAUX RÉALISÉS", 15, y);
+    doc.setDrawColor(lightBlue);
+    doc.setLineWidth(0.35);
+    doc.line(15, y + 1.5, 140, y + 1.5);
+
+    y += 6.5;
+
+    const maintenanceOpts = inspection.selectedMaintenanceOptions || [];
+    
+    // Display maintenance options in a list format
+    maintenanceOpts.forEach((option, idx) => {
+      const optionText = `${idx + 1}. ${option}`;
+      const wrappedOpt = doc.splitTextToSize(optionText, pageWidth - 36);
+      const boxH = (wrappedOpt.length * 3.6) + 5;
+      
+      // Handle page break
+      if (y + boxH > 260) {
+        addPageWithHeader("TRAVAUX RÉALISÉS (SUITE)");
+      }
+
+      // Draw box
+      doc.setFillColor("#fef3c7");
+      doc.rect(15, y, pageWidth - 30, boxH, "F");
+      doc.setDrawColor("#fbbf24");
+      doc.setLineWidth(0.3);
+      doc.rect(15, y, pageWidth - 30, boxH, "S");
+
+      // Add checkmark indicator
+      doc.setFillColor("#f59e0b");
+      doc.circle(20, y + 4, 1.2, "F");
+      doc.setTextColor("#ffffff");
+      doc.setFont("Helvetica", "bold");
+      doc.setFontSize(7);
+      doc.text("✓", 20, y + 4.8, { align: "center" });
+
+      // Option text
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(7.8);
+      doc.setTextColor(valueBlack);
+      doc.text(wrappedOpt, 26, y + 3);
+
+      y += boxH + 3;
+    });
+  }
+
   // --- 6. TECHNICAL RECOMMENDATIONS & ACTION TIMELINE ---
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(9.5);
   doc.setTextColor(darkNavy);
-  doc.text("5. PROGRAMME DE RÉHABILITATION ET DE MAINTENANCE PRÉVENTIVE", 15, y);
+  doc.text("6. PROGRAMME DE RÉHABILITATION ET DE MAINTENANCE PRÉVENTIVE", 15, y);
   doc.setDrawColor(lightBlue);
   doc.setLineWidth(0.35);
   doc.line(15, y + 1.5, 125, y + 1.5);

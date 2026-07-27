@@ -642,6 +642,8 @@ export default function DashboardScreen({
       aiProposedDecision: decision,
       aiProposedJustification: justification,
       customSurface: userSurface,
+      selectedTechnicalOptions: selectedTechnicalOptions,
+      selectedMaintenanceOptions: selectedMaintenanceOptions,
     };
 
     if (onUpdateInspection) {

@@ -55,6 +55,10 @@ export interface Inspection {
   aiProposedJustification?: string;
   customSurface?: number;
   isUserCreated?: boolean;
+
+  // Technical options and maintenance details
+  selectedTechnicalOptions?: string[];
+  selectedMaintenanceOptions?: string[];
 }
 
 export type UserRole =
