@@ -668,6 +668,13 @@ export default function DashboardScreen({
       customSurface: userSurface,
       selectedTechnicalOptions: selectedTechnicalOptions,
       selectedMaintenanceOptions: selectedMaintenanceOptions,
+      maintenanceDescription: intervDescription,
+      maintenanceInterventionType: intervType,
+      maintenanceInterventionDate: intervDate,
+      maintenanceCompany: intervCompany,
+      maintenanceResponsible: intervResponsible,
+      maintenanceDuration: intervDuration,
+      maintenanceCost: intervCost,
     };
 
     if (onUpdateInspection) {

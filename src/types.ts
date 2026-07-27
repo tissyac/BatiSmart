@@ -59,6 +59,13 @@ export interface Inspection {
   // Technical options and maintenance details
   selectedTechnicalOptions?: string[];
   selectedMaintenanceOptions?: string[];
+  maintenanceDescription?: string;
+  maintenanceInterventionType?: string;
+  maintenanceInterventionDate?: string;
+  maintenanceCompany?: string;
+  maintenanceResponsible?: string;
+  maintenanceDuration?: string;
+  maintenanceCost?: string;
 }
 
 export type UserRole =

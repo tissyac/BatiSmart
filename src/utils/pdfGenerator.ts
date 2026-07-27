@@ -75,7 +75,14 @@ export function generateInspectionPDF(
       aiProposedDecision: rawInspection?.aiProposedDecision,
       aiProposedJustification: rawInspection?.aiProposedJustification,
       selectedTechnicalOptions: rawInspection?.selectedTechnicalOptions,
-      selectedMaintenanceOptions: rawInspection?.selectedMaintenanceOptions
+      selectedMaintenanceOptions: rawInspection?.selectedMaintenanceOptions,
+      maintenanceDescription: rawInspection?.maintenanceDescription,
+      maintenanceInterventionType: rawInspection?.maintenanceInterventionType,
+      maintenanceInterventionDate: rawInspection?.maintenanceInterventionDate,
+      maintenanceCompany: rawInspection?.maintenanceCompany,
+      maintenanceResponsible: rawInspection?.maintenanceResponsible,
+      maintenanceDuration: rawInspection?.maintenanceDuration,
+      maintenanceCost: rawInspection?.maintenanceCost
     } as Inspection;
 
     const safeBuildingName = (inspection.buildingName || "Structure_Publique")
@@ -1114,7 +1121,16 @@ export function generateInspectionPDF(
   }
 
   // --- 5.2. MAINTENANCE DE L'ÉDIFICE - TRAVAUX RÉALISÉS ---
-  if ((inspection.selectedMaintenanceOptions || []).length > 0) {
+  const maintenanceOpts = inspection.selectedMaintenanceOptions || [];
+  const maintenanceDescription = inspection.maintenanceDescription || "";
+  const maintenanceType = inspection.maintenanceInterventionType || "";
+  const maintenanceDate = inspection.maintenanceInterventionDate || "";
+  const maintenanceCompany = inspection.maintenanceCompany || "";
+  const maintenanceResponsible = inspection.maintenanceResponsible || "";
+  const maintenanceDuration = inspection.maintenanceDuration || "";
+  const maintenanceCost = inspection.maintenanceCost || "";
+
+  if (maintenanceOpts.length > 0 || maintenanceDescription || maintenanceType || maintenanceDate || maintenanceCompany || maintenanceResponsible || maintenanceDuration || maintenanceCost) {
     if (y + 35 > 260) {
       addPageWithHeader("MAINTENANCE DE L'ÉDIFICE");
     }
@@ -1129,8 +1145,34 @@ export function generateInspectionPDF(
 
     y += 6.5;
 
-    const maintenanceOpts = inspection.selectedMaintenanceOptions || [];
-    
+    const summaryLines: string[] = [];
+    if (maintenanceType) summaryLines.push(`Type d'intervention : ${maintenanceType}`);
+    if (maintenanceDate) summaryLines.push(`Date : ${maintenanceDate}`);
+    if (maintenanceCompany) summaryLines.push(`Entreprise : ${maintenanceCompany}`);
+    if (maintenanceResponsible) summaryLines.push(`Responsable : ${maintenanceResponsible}`);
+    if (maintenanceDuration) summaryLines.push(`Durée : ${maintenanceDuration}`);
+    if (maintenanceCost) summaryLines.push(`Coût estimé : ${maintenanceCost}`);
+    if (maintenanceDescription) summaryLines.push(`Description : ${maintenanceDescription}`);
+
+    if (summaryLines.length > 0) {
+      const summaryBoxHeight = Math.max(14, (summaryLines.length * 3.3) + 6);
+      doc.setFillColor("#fff7ed");
+      doc.rect(15, y, pageWidth - 30, summaryBoxHeight, "F");
+      doc.setDrawColor("#f59e0b");
+      doc.setLineWidth(0.3);
+      doc.rect(15, y, pageWidth - 30, summaryBoxHeight, "S");
+      doc.setFont("Helvetica", "bold");
+      doc.setFontSize(7.5);
+      doc.setTextColor(darkNavy);
+      doc.text("Détails saisis dans le tableau de bord", 18, y + 4);
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(7.2);
+      doc.setTextColor(valueBlack);
+      const summaryText = doc.splitTextToSize(summaryLines.join(" | "), pageWidth - 38);
+      doc.text(summaryText, 18, y + 8.5);
+      y += summaryBoxHeight + 3;
+    }
+
     // Display maintenance options in a list format
     maintenanceOpts.forEach((option, idx) => {
       const optionText = `${idx + 1}. ${option}`;

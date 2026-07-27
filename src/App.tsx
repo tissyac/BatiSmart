@@ -252,6 +252,13 @@ export default function App() {
               maintenancePhotos: ins.maintenancePhotos || (seed ? seed.maintenancePhotos : undefined),
               selectedTechnicalOptions: Array.isArray(ins.selectedTechnicalOptions) ? ins.selectedTechnicalOptions : [],
               selectedMaintenanceOptions: Array.isArray(ins.selectedMaintenanceOptions) ? ins.selectedMaintenanceOptions : [],
+              maintenanceDescription: ins.maintenanceDescription || "",
+              maintenanceInterventionType: ins.maintenanceInterventionType || "",
+              maintenanceInterventionDate: ins.maintenanceInterventionDate || "",
+              maintenanceCompany: ins.maintenanceCompany || "",
+              maintenanceResponsible: ins.maintenanceResponsible || "",
+              maintenanceDuration: ins.maintenanceDuration || "",
+              maintenanceCost: ins.maintenanceCost || "",
               isUserCreated: ins.isUserCreated || false
             };
           });
