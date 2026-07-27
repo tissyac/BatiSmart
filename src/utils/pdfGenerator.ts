@@ -1046,11 +1046,11 @@ export function generateInspectionPDF(
 
   y += boxH + 8;
 
-  // --- 6. TECHNICAL RECOMMENDATIONS & ACTION TIMELINE ---
+  // --- 4. PROGRAMME DE RÉHABILITATION ET DE MAINTENANCE PRÉVENTIVE ---
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(9.5);
   doc.setTextColor(darkNavy);
-  doc.text("5. PROGRAMME DE RÉHABILITATION ET DE MAINTENANCE PRÉVENTIVE", 15, y);
+  doc.text("4. PROGRAMME DE RÉHABILITATION ET DE MAINTENANCE PRÉVENTIVE", 15, y);
   doc.setDrawColor(lightBlue);
   doc.setLineWidth(0.35);
   doc.line(15, y + 1.5, 125, y + 1.5);
@@ -1094,7 +1094,7 @@ export function generateInspectionPDF(
     y += cardHeight + 4;
   });
 
-  // --- 6. ESTIMATION PRÉVISIONNELLE DES COÛTS D'INTERVENTION ---
+  // --- 5. ESTIMATION PRÉVISIONNELLE DES COÛTS D'INTERVENTION ---
   const est = getBudgetEstimation(inspection);
   
   if (y + 66.5 > 260) {
@@ -1105,7 +1105,7 @@ export function generateInspectionPDF(
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(9.5);
   doc.setTextColor(darkNavy);
-  doc.text("6. ESTIMATION PRÉVISIONNELLE DES COÛTS D'INTERVENTION", 15, y);
+  doc.text("5. ESTIMATION PRÉVISIONNELLE DES COÛTS D'INTERVENTION", 15, y);
   doc.setDrawColor(lightBlue);
   doc.setLineWidth(0.35);
   doc.line(15, y + 1.5, 125, y + 1.5);
@@ -1218,7 +1218,7 @@ export function generateInspectionPDF(
 
   y += legalBoxH + 6;
 
-  // --- 6.2. ANALYSE DE RENTABILITÉ ÉCONOMIQUE & RETOUR SUR INVESTISSEMENT (ROI) ---
+  // --- 6. ANALYSE DE RENTABILITÉ ÉCONOMIQUE & RETOUR SUR INVESTISSEMENT (ROI) ---
   const econ = getEconomicAnalysis(inspection, inspection.customSurface);
 
   // If there's not enough space for Section 6.2 on Page 3 (needs ~75mm), add a Page Break!
@@ -1229,7 +1229,7 @@ export function generateInspectionPDF(
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(10.5);
   doc.setTextColor(darkNavy);
-  doc.text("6.2. ANALYSE DE RENTABILITÉ ÉCONOMIQUE & RETOUR SUR INVESTISSEMENT (ROI)", 15, y);
+  doc.text("6. ANALYSE DE RENTABILITÉ ÉCONOMIQUE & RETOUR SUR INVESTISSEMENT (ROI)", 15, y);
   doc.setDrawColor(lightBlue);
   doc.setLineWidth(0.35);
   doc.line(15, y + 1.5, 125, y + 1.5);
@@ -1357,16 +1357,15 @@ export function generateInspectionPDF(
 
   y += (splitEconDisclaimer.length * 2.5) + 6;
 
-  // --- 6. TABLEAU DE BORD DÉCISIONNEL & VALIDATION DE L'EXPERT ---
-  // If there's not enough space for the decision section (needs ~45mm), add a Page Break!
-  if (y + 60 > 260) {
+  // --- 7. TABLEAU DE BORD DÉCISIONNEL & VALIDATION DE L'EXPERT ---
+  if (y + 80 > 260) {
     addPageWithHeader("TABLEAU DE BORD DÉCISIONNEL");
   }
 
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(8.5);
   doc.setTextColor(darkNavy);
-  doc.text("6. TABLEAU DE BORD DÉCISIONNEL", 15, y);
+  doc.text("7. TABLEAU DE BORD DÉCISIONNEL & VALIDATION DE L'EXPERT", 15, y);
   
   y += 3.5;
 
@@ -1382,7 +1381,7 @@ export function generateInspectionPDF(
   const governanceLines: string[] = [];
 
   if (techOptions.length > 0) {
-    governanceLines.push("4.1. Options techniques recommandées :");
+    governanceLines.push("Options techniques recommandées :");
     techOptions.forEach(option => governanceLines.push(`• ${option}`));
   }
 
@@ -1397,7 +1396,7 @@ export function generateInspectionPDF(
   if (maintenanceOpts.length > 0) maintenanceSummaryLines.push(...maintenanceOpts.map(option => `• ${option}`));
 
   if (maintenanceSummaryLines.length > 0) {
-    governanceLines.push("4.2. Maintenance de l’édifice :");
+    governanceLines.push("Maintenance de l’édifice :");
     governanceLines.push(...maintenanceSummaryLines);
   }
 
@@ -1411,7 +1410,7 @@ export function generateInspectionPDF(
     doc.setFont("Helvetica", "bold");
     doc.setFontSize(7.2);
     doc.setTextColor(darkNavy);
-    doc.text("Données de gouvernance & maintenance", 20, y + 5);
+    doc.text("Informations issues du tableau de bord", 20, y + 5);
 
     doc.setFont("Helvetica", "normal");
     doc.setFontSize(6.6);
@@ -1511,7 +1510,7 @@ export function generateInspectionPDF(
 
   y += decisionBoxH + 6;
 
-  // --- 7. SUIVI DE MAINTENANCE À J+2 & EXÉCUTION DES TRAVAUX DE CHANTIER ---
+  // --- 8. SUIVI DE MAINTENANCE À J+2 & EXÉCUTION DES TRAVAUX DE CHANTIER ---
   let storedInterventions: any[] = [];
   try {
     const rawInv = localStorage.getItem("batismart_interventions");
@@ -1530,7 +1529,7 @@ export function generateInspectionPDF(
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(8.5);
   doc.setTextColor(darkNavy);
-  doc.text("7. SUIVI DE MAINTENANCE À J+2 & EXÉCUTION DES TRAVAUX", 15, y);
+  doc.text("8. SUIVI DE MAINTENANCE À J+2 & EXÉCUTION DES TRAVAUX", 15, y);
 
   y += 3.5;
   const maintBoxH = 36;
@@ -1609,7 +1608,7 @@ export function generateInspectionPDF(
 
   y += maintBoxH + 6;
 
-  // --- 8. RELEVÉS PHOTOGRAPHIQUES ET CLICHÉS DETERRAIN ---
+  // --- 9. RELEVÉS PHOTOGRAPHIQUES ET CLICHÉS DETERRAIN ---
   // Collect up to 5 unique photos for the gallery
   const photosToRender: string[] = [];
   if (Array.isArray(inspection.imageUrls)) {
@@ -1655,7 +1654,7 @@ export function generateInspectionPDF(
     doc.setFont("Helvetica", "bold");
     doc.setFontSize(9.5);
     doc.setTextColor(darkNavy);
-    doc.text("8. RELEVÉS PHOTOGRAPHIQUES DE TERRAIN (HAUTE CLARTÉ)", 15, y);
+    doc.text("9. RELEVÉS PHOTOGRAPHIQUES DE TERRAIN (HAUTE CLARTÉ)", 15, y);
     doc.setDrawColor(lightBlue);
     doc.setLineWidth(0.35);
     doc.line(15, y + 1.5, 125, y + 1.5);
