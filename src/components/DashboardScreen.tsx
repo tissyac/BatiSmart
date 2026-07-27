@@ -226,6 +226,30 @@ export default function DashboardScreen({
   const latestInspection = inspections.find((ins) => ins.id === (latestPoint?.id || selectedInspectionId)) || inspections.find((ins) => ins.id === latestPointOriginal?.id);
   const activeInspection = latestInspection;
 
+  useEffect(() => {
+    const sourceInspection = activeInspection || latestInspection;
+    if (!sourceInspection) return;
+
+    const nextTech = Array.isArray(sourceInspection.selectedTechnicalOptions)
+      ? sourceInspection.selectedTechnicalOptions
+      : [];
+    const nextMaint = Array.isArray(sourceInspection.selectedMaintenanceOptions)
+      ? sourceInspection.selectedMaintenanceOptions
+      : [];
+
+    setSelectedTechnicalOptions((prev) => {
+      const prevSignature = prev.join("||");
+      const nextSignature = nextTech.join("||");
+      return prevSignature === nextSignature ? prev : nextTech;
+    });
+
+    setSelectedMaintenanceOptions((prev) => {
+      const prevSignature = prev.join("||");
+      const nextSignature = nextMaint.join("||");
+      return prevSignature === nextSignature ? prev : nextMaint;
+    });
+  }, [activeInspection?.id, activeInspection?.selectedTechnicalOptions?.join("||"), activeInspection?.selectedMaintenanceOptions?.join("||")]);
+
   const getAiProposedDecision = (score: number, diff: number) => {
     if (score >= 9.0) {
       return {
@@ -649,6 +673,10 @@ export default function DashboardScreen({
     if (onUpdateInspection) {
       onUpdateInspection(updatedInspection);
     }
+
+    setPdfModalTarget(updatedInspection);
+    setSelectedTechnicalOptions(updatedInspection.selectedTechnicalOptions || []);
+    setSelectedMaintenanceOptions(updatedInspection.selectedMaintenanceOptions || []);
 
     // Direct localStorage backup sync for inspections
     try {

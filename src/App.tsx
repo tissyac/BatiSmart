@@ -250,6 +250,8 @@ export default function App() {
               maintenanceStatus: ins.maintenanceStatus || (seed ? seed.maintenanceStatus : undefined),
               maintenanceTasks: ins.maintenanceTasks || (seed ? seed.maintenanceTasks : undefined),
               maintenancePhotos: ins.maintenancePhotos || (seed ? seed.maintenancePhotos : undefined),
+              selectedTechnicalOptions: Array.isArray(ins.selectedTechnicalOptions) ? ins.selectedTechnicalOptions : [],
+              selectedMaintenanceOptions: Array.isArray(ins.selectedMaintenanceOptions) ? ins.selectedMaintenanceOptions : [],
               isUserCreated: ins.isUserCreated || false
             };
           });
