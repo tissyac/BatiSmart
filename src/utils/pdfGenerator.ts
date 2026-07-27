@@ -1050,7 +1050,7 @@ export function generateInspectionPDF(
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(9.5);
   doc.setTextColor(darkNavy);
-  doc.text("4. PROGRAMME DE RÉHABILITATION ET DE MAINTENANCE PRÉVENTIVE", 15, y);
+  doc.text("6. PROGRAMME DE RÉHABILITATION ET DE MAINTENANCE PRÉVENTIVE", 15, y);
   doc.setDrawColor(lightBlue);
   doc.setLineWidth(0.35);
   doc.line(15, y + 1.5, 125, y + 1.5);
@@ -1105,7 +1105,7 @@ export function generateInspectionPDF(
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(9.5);
   doc.setTextColor(darkNavy);
-  doc.text("6. ESTIMATION PRÉVISIONNELLE DES COÛTS D'INTERVENTION", 15, y);
+  doc.text("7. ESTIMATION PRÉVISIONNELLE DES COÛTS D'INTERVENTION", 15, y);
   doc.setDrawColor(lightBlue);
   doc.setLineWidth(0.35);
   doc.line(15, y + 1.5, 125, y + 1.5);
@@ -1229,7 +1229,7 @@ export function generateInspectionPDF(
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(10.5);
   doc.setTextColor(darkNavy);
-  doc.text("7. ANALYSE DE RENTABILITÉ ÉCONOMIQUE & RETOUR SUR INVESTISSEMENT (ROI)", 15, y);
+  doc.text("8. ANALYSE DE RENTABILITÉ ÉCONOMIQUE & RETOUR SUR INVESTISSEMENT (ROI)", 15, y);
   doc.setDrawColor(lightBlue);
   doc.setLineWidth(0.35);
   doc.line(15, y + 1.5, 125, y + 1.5);
