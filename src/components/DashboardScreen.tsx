@@ -265,7 +265,7 @@ export default function DashboardScreen({
   const [expertCommentsInput, setExpertCommentsInput] = useState<string>("");
   const [expertSignatureData, setExpertSignatureData] = useState<string>("");
   const [validationSuccess, setValidationSuccess] = useState<boolean>(false);
-  const [selectedTechnicalOption, setSelectedTechnicalOption] = useState<string>("");
+  const [selectedTechnicalOptions, setSelectedTechnicalOptions] = useState<string[]>([]);
 
   // PDF Modal state
   const [isPdfModalOpen, setIsPdfModalOpen] = useState<boolean>(false);
@@ -439,6 +439,17 @@ export default function DashboardScreen({
     }
     
     return available;
+  };
+
+  // Toggle technical option selection
+  const toggleTechnicalOption = (option: string) => {
+    setSelectedTechnicalOptions((prev) => {
+      if (prev.includes(option)) {
+        return prev.filter((opt) => opt !== option);
+      } else {
+        return [...prev, option];
+      }
+    });
   };
 
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
@@ -2021,29 +2032,42 @@ export default function DashboardScreen({
               {getAvailableTechnicalOptions().length > 0 && (
                 <div className="mb-4">
                   <label className="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
-                    📋 Options techniques recommandées
+                    📋 Options techniques recommandées (multi-sélection)
                   </label>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {getAvailableTechnicalOptions().map((category) => (
                       <div key={category.category} className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800 rounded-xl p-3">
-                        <p className="text-[10px] font-bold text-slate-600 dark:text-slate-300 mb-2 uppercase tracking-wide">
+                        <p className="text-[10px] font-bold text-slate-600 dark:text-slate-300 mb-2.5 uppercase tracking-wide">
                           {category.category}
                         </p>
-                        <select
-                          value={selectedTechnicalOption}
-                          onChange={(e) => setSelectedTechnicalOption(e.target.value)}
-                          className="w-full text-xs p-2.5 rounded-lg bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition cursor-pointer"
-                        >
-                          <option value="">-- Sélectionner une option ({category.category}) --</option>
+                        <div className="space-y-1.5">
                           {category.options.map((option, idx) => (
-                            <option key={idx} value={option}>
-                              {option}
-                            </option>
+                            <label
+                              key={idx}
+                              className="flex items-start gap-2.5 cursor-pointer group"
+                            >
+                              <input
+                                type="checkbox"
+                                checked={selectedTechnicalOptions.includes(option)}
+                                onChange={() => toggleTechnicalOption(option)}
+                                className="mt-1 w-4 h-4 rounded border-2 border-slate-300 dark:border-slate-600 checked:bg-sky-500 checked:border-sky-500 cursor-pointer accent-sky-500 transition"
+                              />
+                              <span className="text-xs text-slate-700 dark:text-slate-300 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition leading-relaxed">
+                                {option}
+                              </span>
+                            </label>
                           ))}
-                        </select>
+                        </div>
                       </div>
                     ))}
                   </div>
+                  {selectedTechnicalOptions.length > 0 && (
+                    <div className="mt-2 p-2 bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-900/50 rounded-lg">
+                      <p className="text-[10px] font-semibold text-sky-700 dark:text-sky-300">
+                        ✓ {selectedTechnicalOptions.length} option(s) sélectionnée(s)
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
 
