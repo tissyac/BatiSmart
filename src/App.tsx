@@ -12,6 +12,7 @@ import HowBatiSmartWorksScreen from "./components/HowBatiSmartWorksScreen";
 import HowItWorksScreen from "./components/HowItWorksScreen";
 import SettingsScreen from "./components/SettingsScreen";
 import SupportScreen from "./components/SupportScreen";
+import ContactFooterBar from "./components/ContactFooterBar";
 import { SEED_INSPECTIONS } from "./data";
 import { Inspection, UserProfile, Intervention } from "./types";
 import { Menu, Lock, ArrowLeft } from "lucide-react";
@@ -528,6 +529,9 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* Contact Footer Bar - Always visible across all pages */}
+      <ContactFooterBar theme={theme} />
 
     </div>
   );

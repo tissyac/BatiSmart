@@ -831,94 +831,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
       </section>
       )}
 
-      {/* 6. CONTACT SECTION */}
-      <section className={`py-16 px-8 transition-colors duration-300 ${
-        isDark ? "bg-gradient-to-b from-slate-900 to-slate-950 border-t border-slate-800" : "bg-gradient-to-b from-white to-slate-50 border-t border-slate-200"
-      }`}>
-        <div className="max-w-6xl mx-auto">
-          {/* Contact Header */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent">
-              🤝 Contactez-nous
-            </h2>
-            <p className={`text-lg mb-2 ${isDark ? "text-slate-300" : "text-slate-700"}`}>
-              Échangeons autour de <span className="font-bold">BatiSmart Roof IA</span>
-            </p>
-            <p className={`text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-              Vous souhaitez en savoir davantage sur le projet, découvrir une démonstration du prototype ou échanger autour d'une future collaboration ?
-            </p>
-          </div>
-
-          {/* Contact Card */}
-          <div className={`max-w-2xl mx-auto p-8 rounded-2xl border transition-colors duration-300 ${
-            isDark 
-              ? "bg-slate-800/50 border-slate-700 shadow-lg shadow-slate-950/50" 
-              : "bg-white border-slate-200 shadow-lg"
-          }`}>
-            {/* Contact Person */}
-            <div className="mb-8 pb-8 border-b" style={{borderColor: isDark ? "rgba(148, 163, 184, 0.2)" : "rgb(226, 232, 240)"}}>
-              <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                <span className="text-2xl">👤</span>
-                Tamoum Djihane
-              </h3>
-              <p className={`text-sm font-semibold mb-3 ${isDark ? "text-sky-400" : "text-sky-600"}`}>
-                Porteuse du projet BatiSmart Roof IA
-              </p>
-              
-              {/* Details */}
-              <div className="space-y-2.5 text-sm">
-                <p className={isDark ? "text-slate-300" : "text-slate-700"}>
-                  <span className="mr-2">🎓</span>
-                  <strong>Étudiante en Master 2</strong> Architecture – Collaboration Urbanisme
-                </p>
-                <p className={isDark ? "text-slate-300" : "text-slate-700"}>
-                  <span className="mr-2">🏫</span>
-                  Université Abderrahmane Mira de Béjaïa
-                </p>
-                <p className={isDark ? "text-slate-300" : "text-slate-700"}>
-                  <span className="mr-2">📍</span>
-                  <strong>Béjaïa – Algérie</strong>
-                </p>
-              </div>
-            </div>
-
-            {/* Contact Information */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <span className="text-xl">✉️</span>
-                <a href="mailto:djihane.tamoum@tech.univ-bejaia.dz" className="text-sky-500 hover:text-sky-600 dark:hover:text-sky-400 font-medium text-sm break-all">
-                  djihane.tamoum@tech.univ-bejaia.dz
-                </a>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-xl">✉️</span>
-                <a href="mailto:djihanetamoum@gmail.com" className="text-sky-500 hover:text-sky-600 dark:hover:text-sky-400 font-medium text-sm">
-                  djihanetamoum@gmail.com
-                </a>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-xl">📱</span>
-                <a href="tel:+213659845529" className="text-sky-500 hover:text-sky-600 dark:hover:text-sky-400 font-medium text-sm">
-                  +213 659 845 529
-                </a>
-              </div>
-            </div>
-
-            {/* CTA Button */}
-            <div className="mt-8 pt-6 border-t" style={{borderColor: isDark ? "rgba(148, 163, 184, 0.2)" : "rgb(226, 232, 240)"}}>
-              <button
-                onClick={() => window.location.href = "mailto:djihane.tamoum@tech.univ-bejaia.dz?subject=Demande%20d'information%20-%20BatiSmart%20Roof%20IA"}
-                className="w-full py-3 px-6 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group shadow-lg"
-              >
-                <span>📧 Nous contacter</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. STATISTICS SECTION */}
+      {/* 6. STATISTICS SECTION */}
       <section className={`py-16 px-8 transition-colors duration-300 ${
         isDark ? "bg-slate-950" : "bg-slate-50"
       }`}>
@@ -1006,7 +919,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
         </div>
       </section>
 
-      {/* 8. FOOTER */}
+      {/* Spacer for sticky contact footer */}
+      <div className="h-20 sm:h-16" />
+
+      {/* 7. FOOTER */}
       <footer className={`py-12 border-t text-center text-xs transition-colors duration-300 ${
         isDark ? "border-slate-900 bg-slate-950 text-slate-500" : "border-slate-200 bg-white text-slate-400 shadow-inner"
       }`}>
