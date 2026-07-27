@@ -267,6 +267,8 @@ export default function DashboardScreen({
   const [validationSuccess, setValidationSuccess] = useState<boolean>(false);
   const [selectedTechnicalOptions, setSelectedTechnicalOptions] = useState<string[]>([]);
   const [expandedTechnicalCategory, setExpandedTechnicalCategory] = useState<string | null>(null);
+  const [selectedMaintenanceOptions, setSelectedMaintenanceOptions] = useState<string[]>([]);
+  const [expandedMaintenanceCategory, setExpandedMaintenanceCategory] = useState<string | null>(null);
 
   // PDF Modal state
   const [isPdfModalOpen, setIsPdfModalOpen] = useState<boolean>(false);
@@ -445,6 +447,117 @@ export default function DashboardScreen({
   // Toggle technical option selection
   const toggleTechnicalOption = (option: string) => {
     setSelectedTechnicalOptions((prev) => {
+      if (prev.includes(option)) {
+        return prev.filter((opt) => opt !== option);
+      } else {
+        return [...prev, option];
+      }
+    });
+  };
+
+  // Maintenance options by diagnostic type
+  const maintenanceOptions: Record<string, string[]> = {
+    riskScore: [
+      "Aucune intervention corrective nécessaire à ce stade ; une surveillance périodique est maintenue.",
+      "Un programme de maintenance préventive a été planifié afin de limiter l'évolution des pathologies détectées.",
+      "Les travaux prioritaires ont été réalisés conformément aux recommandations issues du prédiagnostic IA.",
+      "Une intervention globale de sécurisation et de remise en état de la toiture a été effectuée.",
+      "Les principales anomalies détectées ont été corrigées et une inspection de contrôle est programmée.",
+      "Les travaux ont été réalisés conformément aux normes techniques en vigueur et aux recommandations du bureau d'études."
+    ],
+    cracks: [
+      "Les fissures superficielles ont été nettoyées, rebouchées et traitées avec un mortier de réparation adapté.",
+      "Les fissures structurelles ont été injectées avec une résine époxy afin de restaurer la continuité de l'ouvrage.",
+      "Les zones fissurées ont été renforcées par un traitement spécifique garantissant leur stabilité.",
+      "Les éléments présentant des fissures importantes ont été remplacés.",
+      "Une inspection de contrôle a été réalisée après les travaux afin de vérifier l'absence d'évolution des fissures.",
+      "Les réparations ont été effectuées conformément aux prescriptions techniques du bureau d'études."
+    ],
+    humidity: [
+      "Les zones affectées par l'humidité ont été asséchées avant toute intervention.",
+      "Les matériaux dégradés par l'humidité ont été remplacés.",
+      "Un traitement hydrofuge a été appliqué sur les surfaces concernées.",
+      "Les causes des remontées d'humidité ont été identifiées puis supprimées.",
+      "Les performances de ventilation ont été améliorées afin de limiter la condensation.",
+      "Une inspection complémentaire est programmée afin de contrôler l'efficacité des travaux réalisés."
+    ],
+    infiltration: [
+      "Les infiltrations ont été localisées puis supprimées après réfection de l'étanchéité.",
+      "Les joints défectueux ont été remplacés sur l'ensemble des zones concernées.",
+      "Les relevés d'étanchéité ont été entièrement repris.",
+      "Les évacuations des eaux pluviales ont été nettoyées et remises en service.",
+      "Les zones infiltrées ont été réparées et contrôlées après intervention.",
+      "Un essai d'étanchéité a confirmé l'efficacité des réparations réalisées."
+    ],
+    degradation: [
+      "La membrane d'étanchéité dégradée a été remplacée.",
+      "Une nouvelle membrane bitumineuse multicouche a été installée.",
+      "Les relevés périphériques et les acrotères ont été entièrement rénovés.",
+      "Les points singuliers de la toiture ont été repris conformément aux normes techniques.",
+      "Les défauts d'étanchéité identifiés lors du prédiagnostic ont été corrigés.",
+      "Un contrôle complet de l'étanchéité a été effectué après les travaux."
+    ],
+    corrosion: [
+      "Les éléments métalliques corrodés ont été nettoyés puis protégés par un traitement anticorrosion.",
+      "Les pièces présentant une corrosion avancée ont été remplacées.",
+      "Une peinture anticorrosion haute performance a été appliquée.",
+      "Les armatures apparentes ont été protégées après traitement.",
+      "Les éléments métalliques ont été inspectés afin de vérifier leur résistance mécanique.",
+      "Les travaux de protection anticorrosion ont été validés par une inspection finale."
+    ],
+    deformation: [
+      "Les zones présentant des déformations ont été renforcées.",
+      "Les éléments déformés ont été remplacés afin de rétablir la stabilité de l'ouvrage.",
+      "Les charges excessives ont été supprimées ou redistribuées.",
+      "Une consolidation locale de la structure a été réalisée.",
+      "La géométrie de la toiture a été contrôlée après les travaux.",
+      "Une surveillance structurelle est maintenue afin de suivre l'évolution de l'ouvrage."
+    ],
+    aging: [
+      "Les matériaux présentant un vieillissement avancé ont été remplacés.",
+      "Les revêtements de toiture ont été entièrement rénovés.",
+      "Les éléments de protection de la toiture ont été renouvelés.",
+      "Les matériaux utilisés répondent aux exigences actuelles de durabilité.",
+      "Les travaux ont permis d'améliorer la durée de vie estimée de la toiture.",
+      "Un programme de maintenance préventive a été mis en place afin de préserver les performances de l'ouvrage."
+    ]
+  };
+
+  // Get available maintenance options based on selected diagnostics
+  const getAvailableMaintenanceOptions = (): { category: string; options: string[] }[] => {
+    const available: { category: string; options: string[] }[] = [];
+    
+    if (activeLines.riskScore) {
+      available.push({ category: "Niveau de risque global", options: maintenanceOptions.riskScore });
+    }
+    if (activeLines.cracks) {
+      available.push({ category: "Fissures", options: maintenanceOptions.cracks });
+    }
+    if (activeLines.humidity) {
+      available.push({ category: "Humidité", options: maintenanceOptions.humidity });
+    }
+    if (activeLines.infiltration) {
+      available.push({ category: "Infiltrations", options: maintenanceOptions.infiltration });
+    }
+    if (activeLines.degradation) {
+      available.push({ category: "Défauts d'étanchéité", options: maintenanceOptions.degradation });
+    }
+    if (activeLines.corrosion) {
+      available.push({ category: "Corrosion", options: maintenanceOptions.corrosion });
+    }
+    if (activeLines.deformation) {
+      available.push({ category: "Déformations", options: maintenanceOptions.deformation });
+    }
+    if (activeLines.aging) {
+      available.push({ category: "Vieillissement", options: maintenanceOptions.aging });
+    }
+    
+    return available;
+  };
+
+  // Toggle maintenance option selection
+  const toggleMaintenanceOption = (option: string) => {
+    setSelectedMaintenanceOptions((prev) => {
       if (prev.includes(option)) {
         return prev.filter((opt) => opt !== option);
       } else {
@@ -2335,6 +2448,72 @@ export default function DashboardScreen({
                 <label className="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
                   Description exhaustive des travaux réalisés *
                 </label>
+                
+                {/* Maintenance Options Accordion */}
+                {getAvailableMaintenanceOptions().length > 0 && (
+                  <div className="mb-3">
+                    <div className="space-y-1.5">
+                      {getAvailableMaintenanceOptions().map((category) => {
+                        const isExpanded = expandedMaintenanceCategory === category.category;
+                        const selectedCount = category.options.filter((opt) =>
+                          selectedMaintenanceOptions.includes(opt)
+                        ).length;
+                        return (
+                          <div key={category.category}>
+                            {/* Category Header - Clickable */}
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setExpandedMaintenanceCategory(
+                                  isExpanded ? null : category.category
+                                )
+                              }
+                              className="w-full flex items-center justify-between gap-2 p-2.5 bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-lg hover:border-sky-300 dark:hover:border-sky-900/50 transition group"
+                            >
+                              <span className="flex items-center gap-2 flex-1 text-left">
+                                <span className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wide">
+                                  {category.category}
+                                </span>
+                                {selectedCount > 0 && (
+                                  <span className="inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold text-white bg-sky-500 rounded-full">
+                                    {selectedCount}
+                                  </span>
+                                )}
+                              </span>
+                              <span className={`text-slate-400 dark:text-slate-500 transition transform ${isExpanded ? 'rotate-180' : ''}`}>
+                                ▼
+                              </span>
+                            </button>
+
+                            {/* Options - Expandable */}
+                            {isExpanded && (
+                              <div className="mt-1.5 ml-0 p-3 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800 rounded-lg space-y-1.5">
+                                {category.options.map((option, idx) => (
+                                  <label
+                                    key={idx}
+                                    className="flex items-start gap-2.5 cursor-pointer group"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={selectedMaintenanceOptions.includes(option)}
+                                      onChange={() => toggleMaintenanceOption(option)}
+                                      className="mt-1 w-4 h-4 rounded border-2 border-slate-300 dark:border-slate-600 checked:bg-sky-500 checked:border-sky-500 cursor-pointer accent-sky-500 transition"
+                                    />
+                                    <span className="text-xs text-slate-700 dark:text-slate-300 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition leading-relaxed">
+                                      {option}
+                                    </span>
+                                  </label>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Textarea for additional details */}
                 <textarea
                   rows={2}
                   required
@@ -2343,6 +2522,14 @@ export default function DashboardScreen({
                   placeholder="Décrire en détail l'injection de résine, l'application de la bâche bitumineuse, l'évacuation des gravats, etc."
                   className="w-full text-xs p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none transition resize-none"
                 />
+                
+                {selectedMaintenanceOptions.length > 0 && (
+                  <div className="mt-2 p-2 bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-900/50 rounded-lg">
+                    <p className="text-[10px] font-semibold text-sky-700 dark:text-sky-300">
+                      ✓ {selectedMaintenanceOptions.length} option(s) sélectionnée(s)
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-5">
