@@ -231,56 +231,50 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
       return false;
     }
 
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: { ideal: mode },
-          width: { ideal: 1280 },
-          height: { ideal: 720 }
-        },
-        audio: false
-      });
+    const constraints = [
+      { video: { facingMode: { ideal: mode } }, audio: false },
+      { video: { facingMode: "user" }, audio: false },
+      { video: true, audio: false }
+    ];
 
-      setCameraStream(stream);
-      setCameraActive(true);
+    for (const constraint of constraints) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraint as MediaStreamConstraints);
+        setCameraStream(stream);
+        setCameraActive(true);
 
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        videoRef.current.setAttribute("playsinline", "true");
-        videoRef.current.setAttribute("webkit-playsinline", "true");
-        videoRef.current.onloadedmetadata = () => {
-          setCameraReady(true);
-        };
-        videoRef.current.oncanplay = () => {
-          setCameraReady(true);
-        };
-        await videoRef.current.play().catch(() => undefined);
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.setAttribute("playsinline", "true");
+          videoRef.current.setAttribute("webkit-playsinline", "true");
+          videoRef.current.onloadedmetadata = () => {
+            setCameraReady(true);
+          };
+          videoRef.current.oncanplay = () => {
+            setCameraReady(true);
+          };
+          await videoRef.current.play().catch(() => undefined);
 
-        await new Promise(resolve => setTimeout(resolve, 900));
+          await new Promise(resolve => setTimeout(resolve, 600));
 
-        if (videoRef.current.videoWidth && videoRef.current.videoHeight) {
-          setCameraReady(true);
-          setCameraLaunching(false);
-          return true;
+          if (videoRef.current.videoWidth && videoRef.current.videoHeight) {
+            setCameraReady(true);
+            setCameraLaunching(false);
+            return true;
+          }
         }
-      }
 
-      stream.getTracks().forEach((track) => track.stop());
-      setCameraStream(null);
-      setCameraActive(false);
-      setCameraReady(false);
-      setCameraError("Le flux caméra live ne s'affiche pas correctement sur cet appareil.");
-      setCameraLaunching(false);
-      return false;
-    } catch (err: any) {
-      console.error("Error accessing camera:", err);
-      setCameraError(
-        "Impossible d'accéder à l'appareil photo. Autorisez la caméra dans votre navigateur ou utilisez la prise de photo mobile."
-      );
-      setCameraActive(false);
-      setCameraLaunching(false);
-      return false;
+        stream.getTracks().forEach((track) => track.stop());
+      } catch (err) {
+        // Try the next constraint.
+      }
     }
+
+    setCameraError("Impossible d’accéder à la caméra de votre appareil. Vérifiez les autorisations du navigateur puis réessayez.");
+    setCameraActive(false);
+    setCameraReady(false);
+    setCameraLaunching(false);
+    return false;
   };
 
   const stopCamera = () => {
@@ -360,28 +354,9 @@ export default function ScanScreen({ onNewInspection, inspectorName, inspectorEm
     }
   };
 
-  const triggerNativeCamera = () => {
-    if (typeof window === "undefined") return;
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.capture = "environment";
-    input.onchange = (event) => {
-      const target = event.target as HTMLInputElement;
-      const files = target.files;
-      if (files && files.length > 0) {
-        processUploadedFiles(files);
-      }
-    };
-    input.click();
-  };
-
   const handleCameraButtonClick = async () => {
     setAcquisitionMode("camera");
-    const started = await startCamera(facingMode);
-    if (!started) {
-      triggerNativeCamera();
-    }
+    await startCamera(facingMode);
   };
 
   const handleModeSelection = (modeId: "camera" | "gallery" | "drone" | "thermal" | "3d_scan", modeLabel: string, isFuture: boolean) => {
