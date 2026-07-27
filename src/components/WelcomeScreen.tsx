@@ -24,7 +24,7 @@ interface WelcomeScreenProps {
 
 export default function WelcomeScreen({ onStartInspection, onNavigateToTab, theme, setTheme, user }: WelcomeScreenProps) {
   const isDark = theme === "dark";
-  const [activeSection, setActiveSection] = React.useState<"home" | "problem" | "solution" | "features" | "benefits">("home");
+  const [activeSection, setActiveSection] = React.useState<"home" | "problem" | "solution" | "features" | "benefits" | "demo">("home");
 
   React.useEffect(() => {
     if (activeSection === "home") {
@@ -129,6 +129,19 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
             }
           >
             Bénéfices
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveSection("demo")}
+            className={
+              `px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 ${
+                activeSection === "demo"
+                  ? "bg-sky-500 text-white hover:bg-sky-500 dark:bg-sky-500 dark:text-white"
+                  : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              }`
+            }
+          >
+            Démo
           </button>
         </nav>
         {activeSection !== "home" && (
@@ -831,7 +844,63 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
       </section>
       )}
 
-      {/* 6. STATISTICS SECTION */}
+      {/* 7. DEMO SECTION */}
+      {activeSection === "demo" && (
+      <section id="demo" className={`relative overflow-hidden py-16 transition-colors duration-300 section-3d ${
+        isDark ? "bg-slate-950 text-slate-200" : "bg-white text-slate-800"
+      }`}>
+        <div className="absolute inset-x-0 top-6 h-52 opacity-50 blur-3xl section-3d-glow" />
+        <div className="max-w-6xl mx-auto px-8">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-[10px] font-extrabold text-teal-600 dark:text-teal-400 tracking-widest uppercase block">
+              DÉMONSTRATION
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif tracking-tight title-3d">
+              Découvrez BatiSmart Roof IA
+            </h2>
+            <p className="mt-4 text-sm md:text-base leading-relaxed text-slate-500 dark:text-slate-400">
+              Consultez notre documentation complète et notre guide d'utilisation détaillé
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <button
+              onClick={() => {
+                const pdfUrl = '/demo.pdf'; // Remplacer avec le chemin réel du PDF
+                window.open(pdfUrl, '_blank');
+              }}
+              className={`px-8 py-4 rounded-xl font-semibold text-base transition-all duration-300 flex items-center justify-center gap-2 ${
+                isDark
+                  ? "bg-sky-600 hover:bg-sky-700 text-white shadow-lg shadow-sky-500/30"
+                  : "bg-sky-500 hover:bg-sky-600 text-white shadow-lg shadow-sky-500/20"
+              }`}
+            >
+              <Eye className="w-5 h-5" />
+              Voir la démo
+            </button>
+            <button
+              onClick={() => {
+                const pdfUrl = '/demo.pdf'; // Remplacer avec le chemin réel du PDF
+                const link = document.createElement('a');
+                link.href = pdfUrl;
+                link.download = 'BatiSmart-Demo.pdf';
+                link.click();
+              }}
+              className={`px-8 py-4 rounded-xl font-semibold text-base transition-all duration-300 flex items-center justify-center gap-2 ${
+                isDark
+                  ? "bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/30"
+                  : "bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20"
+              }`}
+            >
+              <FileText className="w-5 h-5" />
+              Télécharger le PDF
+            </button>
+          </div>
+        </div>
+      </section>
+      )}
+
+      {/* 8. STATISTICS SECTION */}
       <section className={`py-16 px-8 transition-colors duration-300 ${
         isDark ? "bg-slate-950" : "bg-slate-50"
       }`}>
