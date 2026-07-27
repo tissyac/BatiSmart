@@ -997,8 +997,6 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
       <footer className={`py-12 border-t text-center text-xs transition-colors duration-300 ${
         isDark ? "border-slate-900 bg-slate-950 text-slate-500" : "border-slate-200 bg-white text-slate-400 shadow-inner"
       }`}>
-        <p>© 2026 BatiSmart Roof IA. Labellisé Startup par le Ministère de l'Économie de la Connaissance et des Startups.</p>
-        <p className="mt-2 font-light">Développé en partenariat scientifique avec l'Université de Béjaïa.</p>
       </footer>
 
     </div>
