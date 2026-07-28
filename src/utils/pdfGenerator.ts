@@ -1626,8 +1626,8 @@ export function generateInspectionPDF(
   const maintenancePhotoEntries = Array.isArray(inspection.maintenancePhotos) ? inspection.maintenancePhotos : [];
   const latestBeforePhoto = [...maintenancePhotoEntries].reverse().find((photo: any) => /avant|before/i.test(photo?.label || ""))?.url || "";
   const latestAfterPhoto = [...maintenancePhotoEntries].reverse().find((photo: any) => /après|after|apres/i.test(photo?.label || ""))?.url || "";
-  const inspectionPhotoBefore = normalizeTextValue(latestBeforePhoto || maintenancePhotoEntries[0]?.url || "");
-  const inspectionPhotoAfter = normalizeTextValue(latestAfterPhoto || maintenancePhotoEntries[1]?.url || "");
+  const inspectionPhotoBefore = normalizeTextValue(latestBeforePhoto || "");
+  const inspectionPhotoAfter = normalizeTextValue(latestAfterPhoto || "");
   const interventionDescriptionText = normalizeTextValue(
     inspection.maintenanceDescription ||
     (rawInspection as any)?.maintenanceDescription ||
