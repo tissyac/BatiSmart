@@ -1381,134 +1381,86 @@ export function generateInspectionPDF(
   const maintenanceResponsible = inspection.maintenanceResponsible || "";
   const maintenanceDuration = inspection.maintenanceDuration || "";
   const maintenanceCost = inspection.maintenanceCost || "";
-  const governanceLines: string[] = [];
+  const proposedDecision = inspection.aiProposedDecision || "Intervention corrective recommandée";
+  const proposedJustification = inspection.aiProposedJustification || "Le score de risque est élevé. Des travaux de réhabilitation de l'étanchéité sont recommandés.";
+  const validationStatus = inspection.expertDecisionStatus || "À vérifier";
+  const expertName = inspection.expertName || "Non renseigné";
+  const expertOrg = inspection.expertOrganization || "Non renseigné";
+  const validationDate = inspection.expertValidationDate ? new Date(inspection.expertValidationDate).toLocaleDateString('fr-FR') : "Non renseigné";
+  const expertComments = inspection.expertComments || "";
+  const hasSignature = Boolean(inspection.expertSignature);
 
-  if (techOptions.length > 0) {
-    governanceLines.push("Options techniques recommandées :");
-    techOptions.forEach(option => governanceLines.push(`• ${option}`));
-  }
-
-  const maintenanceSummaryLines: string[] = [];
-  if (maintenanceType) maintenanceSummaryLines.push(`Type d'intervention : ${maintenanceType}`);
-  if (maintenanceDate) maintenanceSummaryLines.push(`Date : ${maintenanceDate}`);
-  if (maintenanceCompany) maintenanceSummaryLines.push(`Entreprise : ${maintenanceCompany}`);
-  if (maintenanceResponsible) maintenanceSummaryLines.push(`Responsable : ${maintenanceResponsible}`);
-  if (maintenanceDuration) maintenanceSummaryLines.push(`Durée : ${maintenanceDuration}`);
-  if (maintenanceCost) maintenanceSummaryLines.push(`Coût estimé : ${maintenanceCost}`);
-  if (maintenanceDescription) maintenanceSummaryLines.push(`Description : ${maintenanceDescription}`);
-  if (maintenanceOpts.length > 0) maintenanceSummaryLines.push(...maintenanceOpts.map(option => `• ${option}`));
-
-  if (maintenanceSummaryLines.length > 0) {
-    governanceLines.push("Maintenance de l’édifice :");
-    governanceLines.push(...maintenanceSummaryLines);
-  }
-
-  if (governanceLines.length > 0) {
-    doc.setFillColor("#f8fafc");
-    doc.rect(15, y, pageWidth - 30, 24, "F");
-    doc.setDrawColor("#cbd5e1");
-    doc.setLineWidth(0.2);
-    doc.rect(15, y, pageWidth - 30, 24, "S");
-
-    doc.setFont("Helvetica", "bold");
-    doc.setFontSize(7.2);
-    doc.setTextColor(darkNavy);
-    doc.text("Informations issues du tableau de bord", 20, y + 5);
-
-    doc.setFont("Helvetica", "normal");
-    doc.setFontSize(6.6);
-    doc.setTextColor(charcoal);
-    const wrappedGovernance = doc.splitTextToSize(governanceLines.join("\n"), pageWidth - 46);
-    doc.text(wrappedGovernance, 20, y + 9.5);
-
-    y += 28;
-  }
-
-  const decisionBoxH = 34;
+  const decisionBoxH = 60;
   doc.setFillColor("#f8fafc"); // light slate
   doc.rect(15, y, pageWidth - 30, decisionBoxH, "F");
   doc.setDrawColor("#cbd5e1");
   doc.setLineWidth(0.2);
   doc.rect(15, y, pageWidth - 30, decisionBoxH, "S");
 
-  // Proposed decision by IA
-  const proposedDecision = inspection.aiProposedDecision || "Intervention corrective recommandée";
-  const proposedJustification = inspection.aiProposedJustification || "Le score de risque est élevé. Des travaux de réhabilitation de l'étanchéité sont recommandés.";
+  let contentY = y + 5;
+  const labelX = 20;
+  const valueX = 78;
 
-  doc.setFont("Helvetica", "bold");
-  doc.setFontSize(7.5);
-  doc.setTextColor(darkNavy);
-  doc.text("Décision proposée par l'IA :", 20, y + 5);
+  const drawField = (label: string, value: string, lineY: number) => {
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(6.8);
+    doc.setTextColor(darkNavy);
+    doc.text(label, labelX, lineY);
 
-  doc.setFont("Helvetica", "bold");
-  doc.setFontSize(8);
-  if (proposedDecision.includes("Aucune") || proposedDecision.includes("🟢")) {
-    doc.setTextColor("#10b981"); // green
-  } else if (proposedDecision.includes("Surveillance") || proposedDecision.includes("🟡")) {
-    doc.setTextColor("#d97706"); // amber
-  } else if (proposedDecision.includes("Urgente") || proposedDecision.includes("🚨") || proposedDecision.includes("🔴")) {
-    doc.setTextColor("#dc2626"); // red
-  } else {
-    doc.setTextColor("#f97316"); // orange
-  }
-  doc.text(proposedDecision, 56, y + 5);
+    const wrappedValue = doc.splitTextToSize(value, pageWidth - 92);
+    doc.setFont("Helvetica", "normal");
+    doc.setFontSize(6.6);
+    doc.setTextColor(charcoal);
+    doc.text(wrappedValue, valueX, lineY);
+  };
 
-  doc.setFont("Helvetica", "normal");
-  doc.setFontSize(6.8);
-  doc.setTextColor(charcoal);
-  const splitJustif = doc.splitTextToSize(proposedJustification, pageWidth - 42);
-  doc.text(splitJustif, 20, y + 9);
-
-  // Divider line inside box
-  doc.setDrawColor("#e2e8f0");
-  doc.line(18, y + 17, pageWidth - 18, y + 17);
-
-  // Expert Validation Status
-  const validationStatus = inspection.expertDecisionStatus || "À vérifier";
-  const expertName = inspection.expertName || "Non renseigné";
-  const expertOrg = inspection.expertOrganization || "Non renseigné";
-  const validationDate = inspection.expertValidationDate ? new Date(inspection.expertValidationDate).toLocaleDateString('fr-FR') : "Non renseigné";
-  const expertComments = inspection.expertComments || "Aucun commentaire particulier saisi.";
-
-  doc.setFont("Helvetica", "bold");
-  doc.setFontSize(7.5);
-  doc.setTextColor(darkNavy);
-  doc.text("Validation de l'expert :", 20, y + 21);
-
-  // Validation state badge
-  doc.setFont("Helvetica", "bold");
-  doc.setFontSize(7.5);
-  if (validationStatus === "Validé") {
-    doc.setTextColor("#166534");
-    doc.text("[X] Validé      [ ] À vérifier      [ ] Refusé", 53, y + 21);
-  } else if (validationStatus === "À vérifier") {
-    doc.setTextColor("#854d0e");
-    doc.text("[ ] Validé      [X] À vérifier      [ ] Refusé", 53, y + 21);
-  } else {
-    doc.setTextColor("#991b1b");
-    doc.text("[ ] Validé      [ ] À vérifier      [X] Refusé", 53, y + 21);
-  }
-
-  doc.setFont("Helvetica", "normal");
-  doc.setFontSize(6.8);
-  doc.setTextColor(charcoal);
-  doc.text(`Expert : ${expertName} (${expertOrg})`, 20, y + 25);
-  doc.text(`Date : ${validationDate}`, 120, y + 25);
-
-  const splitComments = doc.splitTextToSize(`Commentaires : ${expertComments}`, pageWidth - 42);
-  doc.text(splitComments, 20, y + 29);
-
-  // If there's a signature, draw it in the box or at the bottom visa area!
-  if (inspection.expertSignature) {
-    try {
-      doc.setFont("Times", "italic");
-      doc.setFontSize(7);
-      doc.setTextColor("#475569");
-      doc.text("Signature :", 155, y + 21);
-      doc.addImage(inspection.expertSignature, "PNG", 168, y + 17, 20, 7);
-    } catch (e) {
-      doc.text("[Signature numérique]", 168, y + 21);
+  const drawStatus = (lineY: number) => {
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(6.8);
+    if (validationStatus === "Validé") {
+      doc.setTextColor("#166534");
+      doc.text("[X] Validé      [ ] À vérifier      [ ] Refusé", valueX, lineY);
+    } else if (validationStatus === "À vérifier") {
+      doc.setTextColor("#854d0e");
+      doc.text("[ ] Validé      [X] À vérifier      [ ] Refusé", valueX, lineY);
+    } else {
+      doc.setTextColor("#991b1b");
+      doc.text("[ ] Validé      [ ] À vérifier      [X] Refusé", valueX, lineY);
     }
+  };
+
+  drawField("Validation de l'Expert :", validationStatus, contentY);
+  contentY += 4.2;
+  drawStatus(contentY);
+  contentY += 4.2;
+
+  drawField("Nom de l'expert * :", expertName, contentY);
+  contentY += 4.2;
+  drawField("Organisme / Bureau d'études * :", expertOrg, contentY);
+  contentY += 4.2;
+  drawField("Date de validation * :", validationDate, contentY);
+  contentY += 4.2;
+
+  const optionsValue = techOptions.length > 0 ? techOptions.join(" | ") : "Non renseigné";
+  drawField("Options techniques recommandées (multi-sélection) :", optionsValue, contentY);
+  contentY += 4.2;
+
+  if (expertComments && expertComments.trim()) {
+    drawField("Commentaires techniques additionnels :", expertComments, contentY);
+    contentY += 4.2;
+  }
+
+  drawField("Signature :", hasSignature ? "Présente" : "Non renseignée", contentY);
+  contentY += 4.2;
+  drawField("Décision proposée par l'IA :", proposedDecision, contentY);
+  contentY += 4.2;
+
+  if (proposedJustification && proposedJustification.trim()) {
+    const wrappedJustif = doc.splitTextToSize(proposedJustification, pageWidth - 92);
+    doc.setFont("Helvetica", "italic");
+    doc.setFontSize(6.2);
+    doc.setTextColor("#64748b");
+    doc.text(wrappedJustif, valueX, contentY);
   }
 
   y += decisionBoxH + 6;
