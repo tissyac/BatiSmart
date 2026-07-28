@@ -1363,11 +1363,14 @@ export function generateInspectionPDF(
   }
 
   doc.setFont("Helvetica", "bold");
-  doc.setFontSize(8.5);
+  doc.setFontSize(10.5);
   doc.setTextColor(darkNavy);
   doc.text("9. TABLEAU DE BORD DÉCISIONNEL & VALIDATION DE L'EXPERT", 15, y);
+  doc.setDrawColor(lightBlue);
+  doc.setLineWidth(0.35);
+  doc.line(15, y + 1.5, 125, y + 1.5);
   
-  y += 3.5;
+  y += 6;
 
   const techOptions = inspection.selectedTechnicalOptions || [];
   const maintenanceOpts = inspection.selectedMaintenanceOptions || [];
