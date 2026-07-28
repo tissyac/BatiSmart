@@ -1358,7 +1358,7 @@ export function generateInspectionPDF(
   y += (splitEconDisclaimer.length * 2.5) + 6;
 
   // --- 7. TABLEAU DE BORD DÉCISIONNEL & VALIDATION DE L'EXPERT ---
-  if (y + 80 > 260) {
+  if (y + 95 > 260) {
     addPageWithHeader("TABLEAU DE BORD DÉCISIONNEL");
   }
 
@@ -1390,7 +1390,7 @@ export function generateInspectionPDF(
   const expertComments = inspection.expertComments || "";
   const hasSignature = Boolean(inspection.expertSignature);
 
-  const decisionBoxH = 60;
+  const decisionBoxH = 74;
   doc.setFillColor("#f8fafc"); // light slate
   doc.rect(15, y, pageWidth - 30, decisionBoxH, "F");
   doc.setDrawColor("#cbd5e1");
@@ -1470,14 +1470,22 @@ export function generateInspectionPDF(
   }
   contentY += 12;
 
-  contentY = drawField("Décision proposée par l'IA :", proposedDecision, contentY);
+  doc.setFont("Helvetica", "bold");
+  doc.setFontSize(6.8);
+  doc.setTextColor("#0f766e");
+  doc.text("Décision proposée par l'IA :", labelX, contentY);
+
+  doc.setFont("Helvetica", "bold");
+  doc.setFontSize(6.8);
+  doc.setTextColor("#0f766e");
+  doc.text(proposedDecision, valueX, contentY);
 
   if (proposedJustification && proposedJustification.trim()) {
     const wrappedJustif = doc.splitTextToSize(proposedJustification, pageWidth - 92);
     doc.setFont("Helvetica", "italic");
     doc.setFontSize(6.2);
-    doc.setTextColor("#64748b");
-    doc.text(wrappedJustif, valueX, contentY);
+    doc.setTextColor("#0f766e");
+    doc.text(wrappedJustif, valueX, contentY + 3.6);
   }
 
   y += decisionBoxH + 6;
