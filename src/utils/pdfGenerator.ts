@@ -1624,16 +1624,10 @@ export function generateInspectionPDF(
   };
 
   const maintenancePhotoEntries = Array.isArray(inspection.maintenancePhotos) ? inspection.maintenancePhotos : [];
-  const inspectionPhotoBefore = normalizeTextValue(
-    maintenancePhotoEntries.find((photo: any) => /avant|before/i.test(photo?.label || ""))?.url ||
-    maintenancePhotoEntries[0]?.url ||
-    ""
-  );
-  const inspectionPhotoAfter = normalizeTextValue(
-    maintenancePhotoEntries.find((photo: any) => /après|after|apres/i.test(photo?.label || ""))?.url ||
-    maintenancePhotoEntries[1]?.url ||
-    ""
-  );
+  const latestBeforePhoto = [...maintenancePhotoEntries].reverse().find((photo: any) => /avant|before/i.test(photo?.label || ""))?.url || "";
+  const latestAfterPhoto = [...maintenancePhotoEntries].reverse().find((photo: any) => /après|after|apres/i.test(photo?.label || ""))?.url || "";
+  const inspectionPhotoBefore = normalizeTextValue(latestBeforePhoto || maintenancePhotoEntries[0]?.url || "");
+  const inspectionPhotoAfter = normalizeTextValue(latestAfterPhoto || maintenancePhotoEntries[1]?.url || "");
   const interventionDescriptionText = normalizeTextValue(
     inspection.maintenanceDescription ||
     (rawInspection as any)?.maintenanceDescription ||

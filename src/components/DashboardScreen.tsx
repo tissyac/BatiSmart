@@ -656,7 +656,7 @@ export default function DashboardScreen({
       : (latestInspection.customSurface || defaultEcon.roofSurface);
 
     const maintenancePhotos = [
-      ...(latestInspection.maintenancePhotos || []),
+      ...(latestInspection.maintenancePhotos || []).filter((photo: any) => photo?.url),
       ...(intervPhotoBefore ? [{ id: `before-${Date.now()}`, label: "Avant - intervention", url: intervPhotoBefore, date: new Date().toISOString() }] : []),
       ...(intervPhotoAfter ? [{ id: `after-${Date.now()}`, label: "Après - intervention", url: intervPhotoAfter, date: new Date().toISOString() }] : [])
     ].filter((photo: any) => photo?.url);
