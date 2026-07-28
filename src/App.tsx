@@ -290,6 +290,25 @@ export default function App() {
     }
   }, []);
 
+  // Listen for external updates to inspections (e.g., PDF generated) and reload from storage
+  useEffect(() => {
+    const handler = () => {
+      try {
+        const raw = safeStorage.getItem("batismart_inspections");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            setInspections(parsed);
+          }
+        }
+      } catch (e) {
+        console.warn("Failed to reload inspections after external update:", e);
+      }
+    };
+    window.addEventListener("batismart:inspections-updated", handler as EventListener);
+    return () => window.removeEventListener("batismart:inspections-updated", handler as EventListener);
+  }, []);
+
   // 2. Add a new AI-analyzed building to registry
   const handleNewInspection = (newIns: Inspection, autoSwitch: boolean = true) => {
     setInspections((prev) => {

@@ -30,7 +30,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
 
   // Derived statistics
   const totalInspected = (inspections || []).length;
-  const uniqueBuildings = new Set((inspections || []).map((i: any) => (i.buildingName || i.address || "").trim().toLowerCase())).size;
+  const uniqueBuildings = 69; // Fixed number of wilayas covered (static)
   const criticalAlerts = (inspections || []).filter((i: any) => Number(i.riskScore) >= 7).length;
   const mediumAlerts = (inspections || []).filter((i: any) => Number(i.riskScore) >= 4 && Number(i.riskScore) < 7).length;
   const activeAlerts = criticalAlerts + mediumAlerts;

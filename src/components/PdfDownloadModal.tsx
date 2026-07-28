@@ -147,6 +147,8 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
               const parsed = JSON.parse(raw);
               const updated = Array.isArray(parsed) ? parsed.map((it: any) => it.id === inspection.id ? { ...it, pdfGenerated: true } : it) : parsed;
               safeStorage.setItem("batismart_inspections", JSON.stringify(updated));
+                  // Notify app to reload inspections
+                  try { window.dispatchEvent(new CustomEvent('batismart:inspections-updated')); } catch(e) {}
             }
           } catch (e) {
             console.warn("Failed to mark PDF generated:", e);
@@ -179,6 +181,7 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
               const parsed = JSON.parse(raw);
               const updated = Array.isArray(parsed) ? parsed.map((it: any) => it.id === inspection.id ? { ...it, pdfGenerated: true } : it) : parsed;
               safeStorage.setItem("batismart_inspections", JSON.stringify(updated));
+              try { window.dispatchEvent(new CustomEvent('batismart:inspections-updated')); } catch(e) {}
             }
           } catch (e) {}
         } else {
@@ -191,6 +194,7 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
               const parsed = JSON.parse(raw);
               const updated = Array.isArray(parsed) ? parsed.map((it: any) => it.id === inspection.id ? { ...it, pdfGenerated: true } : it) : parsed;
               safeStorage.setItem("batismart_inspections", JSON.stringify(updated));
+              try { window.dispatchEvent(new CustomEvent('batismart:inspections-updated')); } catch(e) {}
             }
           } catch (e) {}
         }
@@ -219,6 +223,7 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
           const parsed = JSON.parse(raw);
           const updated = Array.isArray(parsed) ? parsed.map((it: any) => it.id === inspection.id ? { ...it, pdfGenerated: true } : it) : parsed;
           safeStorage.setItem("batismart_inspections", JSON.stringify(updated));
+          try { window.dispatchEvent(new CustomEvent('batismart:inspections-updated')); } catch(e) {}
         }
       } catch (e) {}
     } catch (err) {
@@ -245,6 +250,7 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
           const parsed = JSON.parse(raw);
           const updated = Array.isArray(parsed) ? parsed.map((it: any) => it.id === inspection.id ? { ...it, pdfGenerated: true } : it) : parsed;
           safeStorage.setItem("batismart_inspections", JSON.stringify(updated));
+          try { window.dispatchEvent(new CustomEvent('batismart:inspections-updated')); } catch(e) {}
         }
       } catch (e) {}
     } catch (err) {
