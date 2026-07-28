@@ -1531,6 +1531,14 @@ export function generateInspectionPDF(
   const historyValueX = 78;
   let historyY = y + 5;
 
+  const normalizeTextValue = (value: any) => {
+    if (typeof value === "string") {
+      const trimmed = value.trim();
+      return trimmed && trimmed !== "undefined" ? trimmed : "";
+    }
+    return "";
+  };
+
   const drawHistoryField = (label: string, value: string, lineY: number) => {
     doc.setFont("Helvetica", "bold");
     doc.setFontSize(6.8);
@@ -1584,20 +1592,43 @@ export function generateInspectionPDF(
     }
   };
 
-  const interventionType = latestIntervention?.type || inspection.maintenanceInterventionType || "Non renseigné";
-  const interventionDate = latestIntervention?.date || inspection.maintenanceInterventionDate || "Non renseigné";
+  const maintenancePhotoEntries = Array.isArray(inspection.maintenancePhotos) ? inspection.maintenancePhotos : [];
+  const interventionDescriptionText = normalizeTextValue(
+    latestIntervention?.description ||
+    inspection.maintenanceDescription ||
+    (rawInspection as any)?.maintenanceDescription ||
+    (rawInspection as any)?.interventionDescription ||
+    (rawInspection as any)?.description ||
+    ""
+  );
+  const interventionType = normalizeTextValue(latestIntervention?.type || inspection.maintenanceInterventionType) || "Non renseigné";
+  const interventionDate = normalizeTextValue(latestIntervention?.date || inspection.maintenanceInterventionDate) || "Non renseigné";
   const descriptionParts = [
-    latestIntervention?.description || inspection.maintenanceDescription || "",
+    interventionDescriptionText,
     techOptions.length > 0 ? `Options techniques : ${techOptions.join(" | ")}` : "",
     maintenanceOpts.length > 0 ? `Options maintenance : ${maintenanceOpts.join(" | ")}` : ""
   ].filter(Boolean);
   const interventionDescription = descriptionParts.join("\n");
-  const interventionCompany = latestIntervention?.company || inspection.maintenanceCompany || "Non renseigné";
-  const interventionResponsible = latestIntervention?.responsible || inspection.maintenanceResponsible || "Non renseigné";
-  const interventionDuration = latestIntervention?.duration || inspection.maintenanceDuration || "Non renseigné";
-  const interventionCost = latestIntervention?.estimatedCost || inspection.maintenanceCost || "Non renseigné";
-  const interventionBeforePhoto = latestIntervention?.photoBefore || "";
-  const interventionAfterPhoto = latestIntervention?.photoAfter || "";
+  const interventionCompany = normalizeTextValue(latestIntervention?.company || inspection.maintenanceCompany) || "Non renseigné";
+  const interventionResponsible = normalizeTextValue(latestIntervention?.responsible || inspection.maintenanceResponsible) || "Non renseigné";
+  const interventionDuration = normalizeTextValue(latestIntervention?.duration || inspection.maintenanceDuration) || "Non renseigné";
+  const interventionCost = normalizeTextValue(latestIntervention?.estimatedCost || inspection.maintenanceCost) || "Non renseigné";
+  const interventionBeforePhoto = normalizeTextValue(
+    latestIntervention?.photoBefore ||
+    (rawInspection as any)?.photoBefore ||
+    (rawInspection as any)?.intervPhotoBefore ||
+    maintenancePhotoEntries.find((photo: any) => /avant|before/i.test(photo?.label || ""))?.url ||
+    maintenancePhotoEntries[0]?.url ||
+    ""
+  );
+  const interventionAfterPhoto = normalizeTextValue(
+    latestIntervention?.photoAfter ||
+    (rawInspection as any)?.photoAfter ||
+    (rawInspection as any)?.intervPhotoAfter ||
+    maintenancePhotoEntries.find((photo: any) => /après|after|apres/i.test(photo?.label || ""))?.url ||
+    maintenancePhotoEntries[1]?.url ||
+    ""
+  );
 
   historyY = drawHistoryField("Type d'intervention * :", interventionType, historyY);
   historyY = drawHistoryField("Date de réalisation * :", interventionDate, historyY);
