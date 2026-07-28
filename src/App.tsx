@@ -347,6 +347,8 @@ export default function App() {
             theme={theme}
             setTheme={handleThemeChange}
             user={user}
+            inspections={inspections}
+            interventions={interventions}
           />
         );
       case "dashboard":
@@ -426,6 +428,8 @@ export default function App() {
             theme={theme}
             setTheme={handleThemeChange}
             user={user}
+            inspections={inspections}
+            interventions={interventions}
           />
         );
     }

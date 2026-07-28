@@ -20,11 +20,22 @@ interface WelcomeScreenProps {
   theme: "light" | "dark";
   setTheme: (theme: "light" | "dark") => void;
   user: UserProfile;
+  inspections?: any[];
+  interventions?: any[];
 }
 
-export default function WelcomeScreen({ onStartInspection, onNavigateToTab, theme, setTheme, user }: WelcomeScreenProps) {
+export default function WelcomeScreen({ onStartInspection, onNavigateToTab, theme, setTheme, user, inspections = [], interventions = [] }: WelcomeScreenProps) {
   const isDark = theme === "dark";
   const [activeSection, setActiveSection] = React.useState<"home" | "problem" | "solution" | "features" | "benefits" | "demo">("home");
+
+  // Derived statistics
+  const totalInspected = (inspections || []).length;
+  const uniqueBuildings = new Set((inspections || []).map((i: any) => (i.buildingName || i.address || "").trim().toLowerCase())).size;
+  const criticalAlerts = (inspections || []).filter((i: any) => Number(i.riskScore) >= 7).length;
+  const mediumAlerts = (inspections || []).filter((i: any) => Number(i.riskScore) >= 4 && Number(i.riskScore) < 7).length;
+  const activeAlerts = criticalAlerts + mediumAlerts;
+  const pdfReports = (inspections || []).filter((i: any) => !!i.pdfGenerated).length || totalInspected;
+  const interventionsFollowed = (interventions || []).filter((it: any) => it.photoAfter || it.estimatedCost).length;
 
   React.useEffect(() => {
     if (activeSection === "home") {
@@ -924,7 +935,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 : "bg-white border-slate-200 hover:border-sky-300"
             }`}>
               <div className="text-4xl font-bold bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent mb-2">
-                12
+                {totalInspected}
               </div>
               <p className={`text-sm font-semibold ${isDark ? "text-slate-300" : "text-slate-700"}`}>
                 Prédiagnostics réalisés
@@ -938,7 +949,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 : "bg-white border-slate-200 hover:border-sky-300"
             }`}>
               <div className="text-4xl font-bold bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent mb-2">
-                69
+                {uniqueBuildings}
               </div>
               <p className={`text-sm font-semibold ${isDark ? "text-slate-300" : "text-slate-700"}`}>
                 Wilayas couvertes
@@ -952,7 +963,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 : "bg-white border-slate-200 hover:border-sky-300"
             }`}>
               <div className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-600 bg-clip-text text-transparent mb-2">
-                8
+                {activeAlerts}
               </div>
               <p className={`text-sm font-semibold ${isDark ? "text-slate-300" : "text-slate-700"}`}>
                 Alertes actives
@@ -966,7 +977,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 : "bg-white border-slate-200 hover:border-sky-300"
             }`}>
               <div className="text-4xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent mb-2">
-                12
+                {pdfReports}
               </div>
               <p className={`text-sm font-semibold ${isDark ? "text-slate-300" : "text-slate-700"}`}>
                 Rapports PDF
@@ -980,7 +991,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 : "bg-white border-slate-200 hover:border-sky-300"
             }`}>
               <div className="text-4xl font-bold bg-gradient-to-r from-rose-500 to-red-600 bg-clip-text text-transparent mb-2">
-                2
+                {interventionsFollowed}
               </div>
               <p className={`text-sm font-semibold ${isDark ? "text-slate-300" : "text-slate-700"}`}>
                 Interventions suivies

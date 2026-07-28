@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Inspection } from "../types";
 import { generateInspectionPDF } from "../utils/pdfGenerator";
+import { safeStorage } from "../utils/storage";
 
 interface PdfDownloadModalProps {
   isOpen: boolean;
@@ -139,6 +140,17 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
         .then(() => {
           setSuccessMessage("Menu de partage ouvert !");
           showToast("Partage du PDF initié 📸");
+          // Mark PDF as generated in storage
+          try {
+            const raw = safeStorage.getItem("batismart_inspections");
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              const updated = Array.isArray(parsed) ? parsed.map((it: any) => it.id === inspection.id ? { ...it, pdfGenerated: true } : it) : parsed;
+              safeStorage.setItem("batismart_inspections", JSON.stringify(updated));
+            }
+          } catch (e) {
+            console.warn("Failed to mark PDF generated:", e);
+          }
         })
         .catch((shareErr) => {
           console.warn("Share was aborted or failed:", shareErr);
@@ -153,7 +165,7 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
         // Fallback: Web Share API or file sharing not supported on this browser
         const url = URL.createObjectURL(blob);
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        if (isMobile) {
+          if (isMobile) {
           const win = window.open(url, "_blank");
           if (win) {
             setSuccessMessage("Aperçu PDF ouvert ! Utilisez l'icône de partage de votre navigateur mobile.");
@@ -161,16 +173,32 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
           } else {
             window.location.href = url;
           }
+          try {
+            const raw = safeStorage.getItem("batismart_inspections");
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              const updated = Array.isArray(parsed) ? parsed.map((it: any) => it.id === inspection.id ? { ...it, pdfGenerated: true } : it) : parsed;
+              safeStorage.setItem("batismart_inspections", JSON.stringify(updated));
+            }
+          } catch (e) {}
         } else {
           doc.save(filename);
           setSuccessMessage("Téléchargement du fichier PDF démarré !");
           showToast("Rapport PDF enregistré 💾");
+          try {
+            const raw = safeStorage.getItem("batismart_inspections");
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              const updated = Array.isArray(parsed) ? parsed.map((it: any) => it.id === inspection.id ? { ...it, pdfGenerated: true } : it) : parsed;
+              safeStorage.setItem("batismart_inspections", JSON.stringify(updated));
+            }
+          } catch (e) {}
         }
       }
     } catch (err) {
       console.error(err);
       setErrorMessage("Le partage direct a échoué. Veuillez essayer de l'ouvrir en tant qu'Aperçu PDF.");
-    } finally {
+      } finally {
       setLoadingAction(null);
     }
   };
@@ -185,6 +213,14 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
       doc.save(filename);
       setSuccessMessage("Téléchargement du fichier démarré !");
       showToast("Rapport PDF généré ! 💾");
+      try {
+        const raw = safeStorage.getItem("batismart_inspections");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          const updated = Array.isArray(parsed) ? parsed.map((it: any) => it.id === inspection.id ? { ...it, pdfGenerated: true } : it) : parsed;
+          safeStorage.setItem("batismart_inspections", JSON.stringify(updated));
+        }
+      } catch (e) {}
     } catch (err) {
       console.error(err);
       setErrorMessage("Le téléchargement direct a échoué. Si le téléchargement automatique ne démarre pas sur votre smartphone Android, vous pouvez utiliser l'option de Partage ou ouvrir l'Aperçu PDF.");
@@ -203,6 +239,14 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
       doc.save(filename);
       setSuccessMessage("Téléchargement du fichier démarré !");
       showToast("Rapport PDF généré ! 💾");
+      try {
+        const raw = safeStorage.getItem("batismart_inspections");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          const updated = Array.isArray(parsed) ? parsed.map((it: any) => it.id === inspection.id ? { ...it, pdfGenerated: true } : it) : parsed;
+          safeStorage.setItem("batismart_inspections", JSON.stringify(updated));
+        }
+      } catch (e) {}
     } catch (err) {
       console.error(err);
       setErrorMessage("Le téléchargement du PDF a échoué. Veuillez réessayer.");
