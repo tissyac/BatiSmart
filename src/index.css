@@ -334,6 +334,17 @@
   backdrop-filter: blur(10px);
 }
 
+.glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  backdrop-filter: blur(12px);
+}
+
+.dark .glass-card {
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(71, 85, 105, 0.35);
+}
+
 .dark .card-3d-inner {
   background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.88));
   border: 1px solid rgba(71, 85, 105, 0.35);

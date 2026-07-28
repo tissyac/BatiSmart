@@ -610,8 +610,8 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-4 order-1">
               <span className="text-xs font-extrabold text-sky-400 uppercase tracking-widest block mb-4">LES FONCTIONNALITÉS</span>
-              <h2 className="text-3xl font-bold font-serif text-white mb-4">FONCTIONNALITÉS</h2>
-              <p className="text-sm text-slate-300 leading-relaxed mb-6">
+              <h2 className={`text-3xl font-bold font-serif mb-4 ${isDark ? "text-white" : "text-slate-900"}`}>FONCTIONNALITÉS</h2>
+              <p className={`${isDark ? "text-slate-300" : "text-slate-600"} text-sm leading-relaxed mb-6`}>
                 BatiSmart Roof IA offre un ensemble complet de fonctionnalités intelligentes pour assurer un <span className="text-sky-400 font-semibold">prédiagnostic précis</span>, une meilleure <span className="text-sky-400 font-semibold">planification</span> et un <span className="text-sky-400 font-semibold">pilotage efficace</span> de la maintenance.
               </p>
               <div className="mt-6 rounded-3xl overflow-hidden glass-card p-4 flex items-center justify-center bg-slate-900/20 border border-slate-700/80">
