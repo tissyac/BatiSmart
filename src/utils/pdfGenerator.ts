@@ -1411,7 +1411,9 @@ export function generateInspectionPDF(
     doc.setFont("Helvetica", "normal");
     doc.setFontSize(6.6);
     doc.setTextColor(charcoal);
-    doc.text(wrappedValue, valueX, lineY);
+    doc.text(wrappedValue, valueX, lineY + 3.2);
+
+    return lineY + 3.2 + Math.max(1, wrappedValue.length) * 3.2;
   };
 
   const drawStatus = (lineY: number) => {
@@ -1429,31 +1431,46 @@ export function generateInspectionPDF(
     }
   };
 
-  drawField("Validation de l'Expert :", validationStatus, contentY);
-  contentY += 4.2;
-  drawStatus(contentY);
+  contentY = drawField("Validation de l'Expert :", validationStatus, contentY);
+  drawStatus(contentY - 3.2);
   contentY += 4.2;
 
-  drawField("Nom de l'expert * :", expertName, contentY);
-  contentY += 4.2;
-  drawField("Organisme / Bureau d'études * :", expertOrg, contentY);
-  contentY += 4.2;
-  drawField("Date de validation * :", validationDate, contentY);
-  contentY += 4.2;
+  contentY = drawField("Nom de l'expert * :", expertName, contentY);
+  contentY = drawField("Organisme / Bureau d'études * :", expertOrg, contentY);
+  contentY = drawField("Date de validation * :", validationDate, contentY);
 
   const optionsValue = techOptions.length > 0 ? techOptions.join(" | ") : "Non renseigné";
-  drawField("Options techniques recommandées (multi-sélection) :", optionsValue, contentY);
-  contentY += 4.2;
+  contentY = drawField("Options techniques recommandées (multi-sélection) :", optionsValue, contentY);
 
   if (expertComments && expertComments.trim()) {
-    drawField("Commentaires techniques additionnels :", expertComments, contentY);
-    contentY += 4.2;
+    contentY = drawField("Commentaires techniques additionnels :", expertComments, contentY);
   }
 
-  drawField("Signature :", hasSignature ? "Présente" : "Non renseignée", contentY);
-  contentY += 4.2;
-  drawField("Décision proposée par l'IA :", proposedDecision, contentY);
-  contentY += 4.2;
+  doc.setFont("Helvetica", "bold");
+  doc.setFontSize(6.8);
+  doc.setTextColor(darkNavy);
+  doc.text("Signature :", labelX, contentY);
+  if (hasSignature) {
+    try {
+      doc.setFont("Times", "italic");
+      doc.setFontSize(6.6);
+      doc.setTextColor("#475569");
+      doc.addImage(inspection.expertSignature, "PNG", valueX, contentY - 2.2, 40, 10);
+    } catch (e) {
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(6.6);
+      doc.setTextColor(charcoal);
+      doc.text("Signature numérique disponible", valueX, contentY + 0.5);
+    }
+  } else {
+    doc.setFont("Helvetica", "normal");
+    doc.setFontSize(6.6);
+    doc.setTextColor(charcoal);
+    doc.text("Non renseignée", valueX, contentY + 0.5);
+  }
+  contentY += 12;
+
+  contentY = drawField("Décision proposée par l'IA :", proposedDecision, contentY);
 
   if (proposedJustification && proposedJustification.trim()) {
     const wrappedJustif = doc.splitTextToSize(proposedJustification, pageWidth - 92);
