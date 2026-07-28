@@ -114,6 +114,14 @@ export function generateInspectionPDF(
 
   let y = 31;
 
+  const normalizeTextValue = (value: any) => {
+    if (typeof value === "string") {
+      const trimmed = value.trim();
+      return trimmed && trimmed !== "undefined" ? trimmed : "";
+    }
+    return "";
+  };
+
   const addPageWithHeader = (pageTitle: string) => {
     doc.addPage();
     
@@ -551,7 +559,8 @@ export function generateInspectionPDF(
   // Retrieve inspections list for calculating history and comparing pathologies
   let allInspections: Inspection[] = [];
   try {
-    const stored = localStorage.getItem("batismart_inspections");
+    const storage = typeof window !== "undefined" && window.localStorage ? window.localStorage : undefined;
+    const stored = storage ? storage.getItem("batismart_inspections") : null;
     if (stored) {
       allInspections = JSON.parse(stored);
     }
@@ -1497,7 +1506,8 @@ export function generateInspectionPDF(
   // --- 10. HISTORIQUE DES INTERVENTIONS ---
   let storedInterventions: any[] = [];
   try {
-    const rawInv = localStorage.getItem("batismart_interventions");
+    const storage = typeof window !== "undefined" && window.localStorage ? window.localStorage : undefined;
+    const rawInv = storage ? storage.getItem("batismart_interventions") : null;
     if (rawInv) storedInterventions = JSON.parse(rawInv);
   } catch (e) {}
 
@@ -1549,14 +1559,6 @@ export function generateInspectionPDF(
   const historyLabelX = 20;
   const historyValueX = 78;
   let historyY = y + 5;
-
-  const normalizeTextValue = (value: any) => {
-    if (typeof value === "string") {
-      const trimmed = value.trim();
-      return trimmed && trimmed !== "undefined" ? trimmed : "";
-    }
-    return "";
-  };
 
   const drawHistoryField = (label: string, value: string, lineY: number) => {
     doc.setFont("Helvetica", "bold");
