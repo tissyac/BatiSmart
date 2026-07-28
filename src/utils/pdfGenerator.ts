@@ -1365,7 +1365,7 @@ export function generateInspectionPDF(
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(8.5);
   doc.setTextColor(darkNavy);
-  doc.text("7. TABLEAU DE BORD DÉCISIONNEL & VALIDATION DE L'EXPERT", 15, y);
+  doc.text("9. TABLEAU DE BORD DÉCISIONNEL & VALIDATION DE L'EXPERT", 15, y);
   
   y += 3.5;
 
