@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Mail, Lock, User, MapPin, Briefcase, RefreshCw, Shield, ClipboardCheck, Landmark, FileText, Hammer, Building2, Plane, Check, Sun, Moon } from "lucide-react";
+import { Mail, Lock, User, MapPin, Briefcase, RefreshCw, Shield, ClipboardCheck, Landmark, FileText, Hammer, Building2, Plane, Check, Sun, Moon, Sparkles } from "lucide-react";
 import { UserProfile, UserRole } from "../types";
 import Logo from "./Logo";
 import { safeStorage, safeSessionStorage } from "../utils/storage";
@@ -174,6 +174,11 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
   ];
 
   const AUTH_CREDENTIALS_KEY = "batismart_auth_credentials";
+  const DEMO_ACCOUNT = {
+    email: "demonstration@batismartroofia.com",
+    password: "BatiDemo@2026",
+    role: "Expert / Diagnostiqueur" as UserRole,
+  };
 
   const loadCredentials = (): Record<string, string> => {
     const stored = safeStorage.getItem(AUTH_CREDENTIALS_KEY);
@@ -184,12 +189,29 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
     safeStorage.setItem(AUTH_CREDENTIALS_KEY, JSON.stringify(credentials));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const authenticateUser = ({
+    emailValue,
+    passwordValue,
+    nameValue,
+    roleValue,
+    wilayaValue,
+    customWilayaValue,
+    loginMode,
+    resetMode,
+  }: {
+    emailValue: string;
+    passwordValue: string;
+    nameValue: string;
+    roleValue: UserRole;
+    wilayaValue: string;
+    customWilayaValue: string;
+    loginMode: boolean;
+    resetMode: boolean;
+  }) => {
     setError("");
     setMessage("");
 
-    if (!email || !password) {
+    if (!emailValue || (!resetMode && !passwordValue)) {
       setError("Veuillez remplir tous les champs requis.");
       return;
     }
@@ -197,8 +219,8 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
     setLoading(true);
 
     setTimeout(() => {
-      if (isReset) {
-        setMessage(`Un e-mail de réinitialisation a été envoyé à l'adresse : ${email}`);
+      if (resetMode) {
+        setMessage(`Un e-mail de réinitialisation a été envoyé à l'adresse : ${emailValue}`);
         setLoading(false);
         setTimeout(() => {
           setIsReset(false);
@@ -207,18 +229,20 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
         return;
       }
 
-      const cleanEmail = email.trim().toLowerCase();
+      const cleanEmail = emailValue.trim().toLowerCase();
       const credentials = loadCredentials();
 
-      if (isLogin) {
+      if (loginMode) {
+        const isDemoLogin = cleanEmail === DEMO_ACCOUNT.email.toLowerCase() && passwordValue === DEMO_ACCOUNT.password;
         const savedPassword = credentials[cleanEmail];
-        if (!savedPassword) {
+
+        if (!isDemoLogin && !savedPassword) {
           setError("Aucun compte trouvé avec cette adresse e-mail.");
           setLoading(false);
           return;
         }
 
-        if (savedPassword !== password) {
+        if (!isDemoLogin && savedPassword !== passwordValue) {
           setError("Mot de passe incorrect. Veuillez réessayer.");
           setLoading(false);
           return;
@@ -228,16 +252,15 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
         const authenticatedUser: UserProfile = {
           uid: userUid,
           email: cleanEmail,
-          displayName: name || (cleanEmail.split("@")[0].charAt(0).toUpperCase() + cleanEmail.split("@")[0].slice(1)),
-          role: role,
-          wilaya: wilaya || "Béjaïa (06)",
+          displayName: nameValue || (cleanEmail.split("@")[0].charAt(0).toUpperCase() + cleanEmail.split("@")[0].slice(1)),
+          role: roleValue,
+          wilaya: wilayaValue || "Béjaïa (06)",
           createdAt: new Date().toISOString()
         };
         safeSessionStorage.setItem("batismart_user", JSON.stringify(authenticatedUser));
         onAuthSuccess(authenticatedUser);
       } else {
-        // Register Simulation
-        if (!name) {
+        if (!nameValue) {
           setError("Veuillez entrer votre nom complet.");
           setLoading(false);
           return;
@@ -248,21 +271,56 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
         const newUser: UserProfile = {
           uid: userUid,
           email: newUserEmail,
-          displayName: name,
-          role: role,
-          wilaya: wilaya === "Autre (Saisir manuellement)" ? (customWilaya || "Autre") : wilaya,
+          displayName: nameValue,
+          role: roleValue,
+          wilaya: wilayaValue === "Autre (Saisir manuellement)" ? (customWilayaValue || "Autre") : wilayaValue,
           createdAt: new Date().toISOString()
         };
 
         saveCredentials({
           ...credentials,
-          [newUserEmail]: password
+          [newUserEmail]: passwordValue
         });
         safeSessionStorage.setItem("batismart_user", JSON.stringify(newUser));
         onAuthSuccess(newUser);
       }
       setLoading(false);
     }, 1000);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    authenticateUser({
+      emailValue: email,
+      passwordValue: password,
+      nameValue: name,
+      roleValue: role,
+      wilayaValue: wilaya,
+      customWilayaValue: customWilaya,
+      loginMode: isLogin,
+      resetMode: isReset,
+    });
+  };
+
+  const handleDemoLogin = () => {
+    setEmail(DEMO_ACCOUNT.email);
+    setPassword(DEMO_ACCOUNT.password);
+    setName("Compte de démonstration");
+    setRole(DEMO_ACCOUNT.role);
+    setWilaya("Béjaïa (06)");
+    setCustomWilaya("");
+    setIsLogin(true);
+    setIsReset(false);
+    authenticateUser({
+      emailValue: DEMO_ACCOUNT.email,
+      passwordValue: DEMO_ACCOUNT.password,
+      nameValue: "Compte de démonstration",
+      roleValue: DEMO_ACCOUNT.role,
+      wilayaValue: "Béjaïa (06)",
+      customWilayaValue: "",
+      loginMode: true,
+      resetMode: false,
+    });
   };
 
   const [currentTheme, setCurrentTheme] = useState<"light" | "dark">(() => {
@@ -543,6 +601,22 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
               "Créer mon compte"
             )}
           </button>
+
+          {isLogin && (
+            <button
+              type="button"
+              onClick={handleDemoLogin}
+              disabled={loading}
+              className={`w-full mt-3 border rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
+                isDark
+                  ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20"
+                  : "border-emerald-500/30 bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+              }`}
+            >
+              <Sparkles className="w-4 h-4" />
+              Connexion rapide en mode démo
+            </button>
+          )}
 
           {/* Dynamic State Toggle Footer */}
           <div className={`mt-6 pt-5 border-t text-center space-y-3 ${
