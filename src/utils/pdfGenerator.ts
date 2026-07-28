@@ -1510,9 +1510,21 @@ export function generateInspectionPDF(
   });
 
   const fallbackInterventions = matchingInterventions.length > 0 ? matchingInterventions : normalizedStoredInterventions;
-  const latestIntervention = [...fallbackInterventions].reverse().find((inv: any) =>
-    normalizeTextValue(inv?.photoBefore) || normalizeTextValue(inv?.photoAfter) || normalizeTextValue(inv?.description) || normalizeTextValue(inv?.type)
-  ) || fallbackInterventions[fallbackInterventions.length - 1] || null;
+  const inspectionHasCurrentMaintenanceData = Boolean(
+    normalizeTextValue(inspection.maintenanceDescription || (rawInspection as any)?.maintenanceDescription) ||
+    normalizeTextValue(inspection.maintenanceInterventionType || (rawInspection as any)?.maintenanceInterventionType) ||
+    normalizeTextValue(inspection.maintenanceInterventionDate || (rawInspection as any)?.maintenanceInterventionDate) ||
+    normalizeTextValue(inspection.maintenanceCompany || (rawInspection as any)?.maintenanceCompany) ||
+    normalizeTextValue(inspection.maintenanceResponsible || (rawInspection as any)?.maintenanceResponsible) ||
+    normalizeTextValue(inspection.maintenanceDuration || (rawInspection as any)?.maintenanceDuration) ||
+    normalizeTextValue(inspection.maintenanceCost || (rawInspection as any)?.maintenanceCost) ||
+    (Array.isArray(inspection.maintenancePhotos) && inspection.maintenancePhotos.some((photo: any) => normalizeTextValue(photo?.url)))
+  );
+  const latestIntervention = inspectionHasCurrentMaintenanceData
+    ? null
+    : ([...fallbackInterventions].reverse().find((inv: any) =>
+        normalizeTextValue(inv?.photoBefore) || normalizeTextValue(inv?.photoAfter) || normalizeTextValue(inv?.description) || normalizeTextValue(inv?.type)
+      ) || fallbackInterventions[fallbackInterventions.length - 1] || null);
 
   if (y + 105 > 260) {
     addPageWithHeader("HISTORIQUE DES INTERVENTIONS");
@@ -1600,39 +1612,47 @@ export function generateInspectionPDF(
   };
 
   const maintenancePhotoEntries = Array.isArray(inspection.maintenancePhotos) ? inspection.maintenancePhotos : [];
+  const inspectionPhotoBefore = normalizeTextValue(
+    maintenancePhotoEntries.find((photo: any) => /avant|before/i.test(photo?.label || ""))?.url ||
+    maintenancePhotoEntries[0]?.url ||
+    ""
+  );
+  const inspectionPhotoAfter = normalizeTextValue(
+    maintenancePhotoEntries.find((photo: any) => /après|after|apres/i.test(photo?.label || ""))?.url ||
+    maintenancePhotoEntries[1]?.url ||
+    ""
+  );
   const interventionDescriptionText = normalizeTextValue(
-    latestIntervention?.description ||
     inspection.maintenanceDescription ||
     (rawInspection as any)?.maintenanceDescription ||
+    latestIntervention?.description ||
     (rawInspection as any)?.interventionDescription ||
     (rawInspection as any)?.description ||
     ""
   );
-  const interventionType = normalizeTextValue(latestIntervention?.type || inspection.maintenanceInterventionType) || "Non renseigné";
-  const interventionDate = normalizeTextValue(latestIntervention?.date || inspection.maintenanceInterventionDate) || "Non renseigné";
+  const interventionType = normalizeTextValue(inspection.maintenanceInterventionType || latestIntervention?.type || (rawInspection as any)?.maintenanceInterventionType) || "Non renseigné";
+  const interventionDate = normalizeTextValue(inspection.maintenanceInterventionDate || latestIntervention?.date || (rawInspection as any)?.maintenanceInterventionDate) || "Non renseigné";
   const descriptionParts = [
     interventionDescriptionText,
     maintenanceOpts.length > 0 ? `${maintenanceOpts.join(" | ")}` : ""
   ].filter(Boolean);
   const interventionDescription = descriptionParts.join("\n");
-  const interventionCompany = normalizeTextValue(latestIntervention?.company || inspection.maintenanceCompany) || "Non renseigné";
-  const interventionResponsible = normalizeTextValue(latestIntervention?.responsible || inspection.maintenanceResponsible) || "Non renseigné";
-  const interventionDuration = normalizeTextValue(latestIntervention?.duration || inspection.maintenanceDuration) || "Non renseigné";
-  const interventionCost = normalizeTextValue(latestIntervention?.estimatedCost || inspection.maintenanceCost) || "Non renseigné";
+  const interventionCompany = normalizeTextValue(inspection.maintenanceCompany || latestIntervention?.company || (rawInspection as any)?.maintenanceCompany) || "Non renseigné";
+  const interventionResponsible = normalizeTextValue(inspection.maintenanceResponsible || latestIntervention?.responsible || (rawInspection as any)?.maintenanceResponsible) || "Non renseigné";
+  const interventionDuration = normalizeTextValue(inspection.maintenanceDuration || latestIntervention?.duration || (rawInspection as any)?.maintenanceDuration) || "Non renseigné";
+  const interventionCost = normalizeTextValue(inspection.maintenanceCost || latestIntervention?.estimatedCost || (rawInspection as any)?.maintenanceCost) || "Non renseigné";
   const interventionBeforePhoto = normalizeTextValue(
+    inspectionPhotoBefore ||
     latestIntervention?.photoBefore ||
     (rawInspection as any)?.photoBefore ||
     (rawInspection as any)?.intervPhotoBefore ||
-    maintenancePhotoEntries.find((photo: any) => /avant|before/i.test(photo?.label || ""))?.url ||
-    maintenancePhotoEntries[0]?.url ||
     ""
   );
   const interventionAfterPhoto = normalizeTextValue(
+    inspectionPhotoAfter ||
     latestIntervention?.photoAfter ||
     (rawInspection as any)?.photoAfter ||
     (rawInspection as any)?.intervPhotoAfter ||
-    maintenancePhotoEntries.find((photo: any) => /après|after|apres/i.test(photo?.label || ""))?.url ||
-    maintenancePhotoEntries[1]?.url ||
     ""
   );
 
