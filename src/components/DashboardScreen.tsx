@@ -665,23 +665,17 @@ export default function DashboardScreen({
     return nextPhotos.filter((photo: any) => photo?.url);
   };
 
-  const handleSaveExpertValidation = () => {
-    if (!latestInspection) return;
+  const buildCurrentInspectionSnapshot = (sourceInspection?: Inspection | null): Inspection | null => {
+    if (!sourceInspection) return null;
 
     const { decision, justification } = getAiProposedDecision(latestScore, scoreDiff);
-    const defaultEcon = getEconomicAnalysis(latestInspection);
-    const userSurface = customSurfaces[selectedBuilding] !== undefined 
-      ? customSurfaces[selectedBuilding] 
-      : (latestInspection.customSurface || defaultEcon.roofSurface);
+    const defaultEcon = getEconomicAnalysis(sourceInspection);
+    const userSurface = customSurfaces[selectedBuilding] !== undefined
+      ? customSurfaces[selectedBuilding]
+      : (sourceInspection.customSurface || defaultEcon.roofSurface);
 
-    const maintenancePhotos = buildMaintenancePhotos(
-      latestInspection.maintenancePhotos || [],
-      intervPhotoBefore || "",
-      intervPhotoAfter || ""
-    );
-
-    const updatedInspection: Inspection = {
-      ...latestInspection,
+    return {
+      ...sourceInspection,
       expertDecisionStatus: expertStatus,
       expertName: expertNameInput,
       expertOrganization: expertOrgInput,
@@ -700,8 +694,15 @@ export default function DashboardScreen({
       maintenanceResponsible: intervResponsible,
       maintenanceDuration: intervDuration,
       maintenanceCost: intervCost,
-      maintenancePhotos,
+      maintenancePhotos: buildMaintenancePhotos(sourceInspection.maintenancePhotos || [], intervPhotoBefore || "", intervPhotoAfter || ""),
     };
+  };
+
+  const handleSaveExpertValidation = () => {
+    if (!latestInspection) return;
+
+    const updatedInspection = buildCurrentInspectionSnapshot(latestInspection) as Inspection;
+    if (!updatedInspection) return;
 
     if (onUpdateInspection) {
       onUpdateInspection(updatedInspection);
@@ -1006,7 +1007,7 @@ export default function DashboardScreen({
         <button
           type="button"
           onClick={() => {
-            const target = activeInspection || latestInspection;
+            const target = buildCurrentInspectionSnapshot(activeInspection || latestInspection);
             if (target) {
               setPdfModalTarget(target);
               setIsPdfModalOpen(true);
