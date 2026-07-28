@@ -230,28 +230,9 @@ export default function DashboardScreen({
     const sourceInspection = activeInspection || latestInspection;
     if (!sourceInspection) return;
 
-    const hasCurrentSelection = selectedTechnicalOptions.length > 0 || selectedMaintenanceOptions.length > 0;
-    if (hasCurrentSelection) return;
-
-    const nextTech = Array.isArray(sourceInspection.selectedTechnicalOptions)
-      ? sourceInspection.selectedTechnicalOptions
-      : [];
-    const nextMaint = Array.isArray(sourceInspection.selectedMaintenanceOptions)
-      ? sourceInspection.selectedMaintenanceOptions
-      : [];
-
-    setSelectedTechnicalOptions((prev) => {
-      const prevSignature = prev.join("||");
-      const nextSignature = nextTech.join("||");
-      return prevSignature === nextSignature ? prev : nextTech;
-    });
-
-    setSelectedMaintenanceOptions((prev) => {
-      const prevSignature = prev.join("||");
-      const nextSignature = nextMaint.join("||");
-      return prevSignature === nextSignature ? prev : nextMaint;
-    });
-  }, [activeInspection?.id, activeInspection?.selectedTechnicalOptions?.join("||"), activeInspection?.selectedMaintenanceOptions?.join("||")]);
+    setSelectedTechnicalOptions([]);
+    setSelectedMaintenanceOptions([]);
+  }, [activeInspection?.id, latestInspection?.id]);
 
   const getAiProposedDecision = (score: number, diff: number) => {
     if (score >= 9.0) {
