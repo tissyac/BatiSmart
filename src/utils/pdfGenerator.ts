@@ -1605,8 +1605,7 @@ export function generateInspectionPDF(
   const interventionDate = normalizeTextValue(latestIntervention?.date || inspection.maintenanceInterventionDate) || "Non renseigné";
   const descriptionParts = [
     interventionDescriptionText,
-    techOptions.length > 0 ? `Options techniques sélectionnées : ${techOptions.join(" | ")}` : "",
-    maintenanceOpts.length > 0 ? `Options de maintenance sélectionnées : ${maintenanceOpts.join(" | ")}` : ""
+    maintenanceOpts.length > 0 ? `${maintenanceOpts.join(" | ")}` : ""
   ].filter(Boolean);
   const interventionDescription = descriptionParts.join("\n");
   const interventionCompany = normalizeTextValue(latestIntervention?.company || inspection.maintenanceCompany) || "Non renseigné";
