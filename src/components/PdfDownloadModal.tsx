@@ -201,7 +201,13 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
       const doc = generateInspectionPDF(currentInspection, false, "jspdf");
       const blob = doc.output("blob");
       const url = URL.createObjectURL(blob);
-      const previewWindow = window.open(url, "_blank", "noopener,noreferrer");
+
+      let previewWindow: Window | null = null;
+      try {
+        previewWindow = window.open(url, "_blank", "noopener,noreferrer");
+      } catch (popupErr) {
+        console.warn("Preview popup blocked, falling back to download:", popupErr);
+      }
 
       if (previewWindow) {
         setSuccessMessage("Aperçu PDF ouvert dans un nouvel onglet !");
@@ -220,7 +226,24 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
       }
     } catch (err) {
       console.error(err);
-      setErrorMessage("Impossible d'ouvrir l'aperçu. Le téléchargement du PDF a été lancé à la place.");
+      try {
+        const doc = generateInspectionPDF(currentInspection, false, "jspdf");
+        const blob = doc.output("blob");
+        const url = URL.createObjectURL(blob);
+        const fallbackLink = document.createElement("a");
+        fallbackLink.href = url;
+        fallbackLink.target = "_blank";
+        fallbackLink.rel = "noopener noreferrer";
+        fallbackLink.download = `Rapport_BatiSmart_${currentInspection.buildingName.replace(/\s+/g, "_")}.pdf`;
+        document.body.appendChild(fallbackLink);
+        fallbackLink.click();
+        document.body.removeChild(fallbackLink);
+        setSuccessMessage("Le PDF a été téléchargé pour consultation.");
+        showToast("Aperçu téléchargé 💾");
+      } catch (downloadErr) {
+        console.error(downloadErr);
+        setErrorMessage("Le téléchargement du PDF a échoué. Veuillez réessayer.");
+      }
     } finally {
       setLoadingAction(null);
     }
