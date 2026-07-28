@@ -230,6 +230,9 @@ export default function DashboardScreen({
     const sourceInspection = activeInspection || latestInspection;
     if (!sourceInspection) return;
 
+    const hasCurrentSelection = selectedTechnicalOptions.length > 0 || selectedMaintenanceOptions.length > 0;
+    if (hasCurrentSelection) return;
+
     const nextTech = Array.isArray(sourceInspection.selectedTechnicalOptions)
       ? sourceInspection.selectedTechnicalOptions
       : [];
