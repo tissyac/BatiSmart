@@ -1585,19 +1585,29 @@ export function generateInspectionPDF(
     doc.setLineWidth(0.2);
     doc.rect(x, yPos + 3.5, 44, 22, "S");
 
-    if (photoUrl) {
-      try {
-        let format = "JPEG";
-        if (photoUrl.startsWith("data:image/")) {
-          const matches = photoUrl.match(/^data:image\/([a-zA-Z+]+);base64,/);
-          if (matches && matches[1]) {
-            const ext = matches[1].toUpperCase();
-            if (ext === "PNG") format = "PNG";
-            else if (ext === "WEBP") format = "WEBP";
+    if (photoUrl && typeof photoUrl === "string") {
+      const sanitizedUrl = photoUrl.trim();
+      const isDataUrl = sanitizedUrl.startsWith("data:image/");
+      const isHttpUrl = /^https?:\/\//i.test(sanitizedUrl);
+      if (sanitizedUrl && (isDataUrl || isHttpUrl)) {
+        try {
+          let format = "JPEG";
+          if (sanitizedUrl.startsWith("data:image/")) {
+            const matches = sanitizedUrl.match(/^data:image\/([a-zA-Z+]+);base64,/);
+            if (matches && matches[1]) {
+              const ext = matches[1].toUpperCase();
+              if (ext === "PNG") format = "PNG";
+              else if (ext === "WEBP") format = "WEBP";
+            }
           }
+          doc.addImage(sanitizedUrl, format, x + 0.5, yPos + 4, 43, 21);
+        } catch (e) {
+          doc.setFont("Helvetica", "italic");
+          doc.setFontSize(5.8);
+          doc.setTextColor(charcoal);
+          doc.text("Image non disponible", x + 5, yPos + 13);
         }
-        doc.addImage(photoUrl, format, x + 0.5, yPos + 4, 43, 21);
-      } catch (e) {
+      } else {
         doc.setFont("Helvetica", "italic");
         doc.setFontSize(5.8);
         doc.setTextColor(charcoal);
