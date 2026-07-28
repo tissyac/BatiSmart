@@ -1421,13 +1421,13 @@ export function generateInspectionPDF(
     doc.setFontSize(6.8);
     if (validationStatus === "Validé") {
       doc.setTextColor("#166534");
-      doc.text("[X] Validé      [ ] À vérifier      [ ] Refusé", valueX, lineY);
+      doc.text("[X]   [ ]   [ ]", valueX, lineY);
     } else if (validationStatus === "À vérifier") {
       doc.setTextColor("#854d0e");
-      doc.text("[ ] Validé      [X] À vérifier      [ ] Refusé", valueX, lineY);
+      doc.text("[ ]   [X]   [ ]", valueX, lineY);
     } else {
       doc.setTextColor("#991b1b");
-      doc.text("[ ] Validé      [ ] À vérifier      [X] Refusé", valueX, lineY);
+      doc.text("[ ]   [ ]   [X]", valueX, lineY);
     }
   };
 
