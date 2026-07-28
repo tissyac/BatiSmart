@@ -177,6 +177,25 @@ export default function HistoryScreen({
     }
   }, [selectedInspectionId, inspections]);
 
+  const buildMaintenancePhotos = (existingPhotos: any[] = [], beforePhoto?: string, afterPhoto?: string) => {
+    const filteredPhotos = (existingPhotos || []).filter((photo: any) => {
+      const label = String(photo?.label || "").toLowerCase();
+      return !/(avant|before|après|after|apres)/i.test(label);
+    });
+
+    const nextPhotos: any[] = [...filteredPhotos];
+
+    if (beforePhoto) {
+      nextPhotos.push({ id: `before-${Date.now()}`, label: "Avant - intervention", url: beforePhoto, date: new Date().toISOString() });
+    }
+
+    if (afterPhoto) {
+      nextPhotos.push({ id: `after-${Date.now()}`, label: "Après - intervention", url: afterPhoto, date: new Date().toISOString() });
+    }
+
+    return nextPhotos.filter((photo: any) => photo?.url);
+  };
+
   const handleSaveInterventionSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedBuildingInterv) return;
@@ -211,11 +230,11 @@ export default function HistoryScreen({
         maintenanceResponsible: intervResponsible || selectedInspection.maintenanceResponsible || "",
         maintenanceDuration: intervDuration || selectedInspection.maintenanceDuration || "",
         maintenanceCost: intervCost || selectedInspection.maintenanceCost || "",
-        maintenancePhotos: [
-          ...(selectedInspection.maintenancePhotos || []).filter((photo: any) => photo?.url),
-          ...(intervPhotoBefore ? [{ id: `before-${Date.now()}`, label: "Avant - intervention", url: intervPhotoBefore, date: new Date().toISOString() }] : []),
-          ...(intervPhotoAfter ? [{ id: `after-${Date.now()}`, label: "Après - intervention", url: intervPhotoAfter, date: new Date().toISOString() }] : [])
-        ].filter((photo: any) => photo?.url),
+        maintenancePhotos: buildMaintenancePhotos(
+          selectedInspection.maintenancePhotos || [],
+          intervPhotoBefore || "",
+          intervPhotoAfter || ""
+        ),
       };
       if (onUpdateInspection) {
         onUpdateInspection(updatedInspection as any);
