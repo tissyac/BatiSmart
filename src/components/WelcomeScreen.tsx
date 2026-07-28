@@ -624,10 +624,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 <div className="col-span-12 md:col-span-4">
                   <div className="glass-card p-4 h-full flex flex-col">
                     <div className="flex items-center justify-between mb-3">
-                      <h4 className="text-sm font-bold text-white">DÉTECTION AUTOMATIQUE</h4>
+                      <h4 className={`text-sm font-bold ${isDark ? "text-white" : "text-slate-900"}`}>DÉTECTION AUTOMATIQUE</h4>
                       <div className="text-sky-400"><Search className="w-5 h-5" /></div>
                     </div>
-                    <p className="text-xs text-slate-300 mb-3">Détection automatique des fissures, infiltrations, humidité, corrosion et défauts d'étanchéité.</p>
+                    <p className={`${isDark ? "text-slate-300" : "text-slate-600"} text-xs mb-3`}>Détection automatique des fissures, infiltrations, humidité, corrosion et défauts d'étanchéité.</p>
                     <div className="flex-1 rounded-xl overflow-hidden bg-slate-800/40 border border-slate-700/80 p-3 flex items-center justify-center min-h-[220px]">
                       <img src={detectionAutoImg} alt="Détection automatique" className="w-full h-full object-contain" />
                     </div>
@@ -637,10 +637,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 <div className="col-span-12 md:col-span-4">
                   <div className="glass-card p-4 h-full flex flex-col">
                     <div className="flex items-center justify-between mb-3">
-                      <h4 className="text-sm font-bold text-white">CARTOGRAPHIE SIG</h4>
+                      <h4 className={`text-sm font-bold ${isDark ? "text-white" : "text-slate-900"}`}>CARTOGRAPHIE SIG</h4>
                       <div className="text-sky-400"><MapPin className="w-5 h-5" /></div>
                     </div>
-                    <p className="text-xs text-slate-300 mb-3">Localisation des bâtiments sur les 69 wilayas.</p>
+                    <p className={`${isDark ? "text-slate-300" : "text-slate-600"} text-xs mb-3`}>Localisation des bâtiments sur les 69 wilayas.</p>
                     <div className="flex-1 rounded-xl overflow-hidden bg-slate-800/40 border border-slate-700/80 p-3 flex items-center justify-center min-h-[220px]">
                       <img src={cartographieSigImg} alt="Cartographie SIG" className="w-full h-full object-contain" />
                     </div>
@@ -650,10 +650,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 <div className="col-span-12 md:col-span-4">
                   <div className="glass-card p-4 h-full flex flex-col">
                     <div className="flex items-center justify-between mb-3">
-                      <h4 className="text-sm font-bold text-white">TABLEAU DE BORD</h4>
+                      <h4 className={`text-sm font-bold ${isDark ? "text-white" : "text-slate-900"}`}>TABLEAU DE BORD</h4>
                       <div className="text-sky-400"><Sparkles className="w-5 h-5" /></div>
                     </div>
-                    <p className="text-xs text-slate-300 mb-3">Suivi des indicateurs, alertes, évolution des pathologies, ROI et aide à la décision.</p>
+                    <p className={`${isDark ? "text-slate-300" : "text-slate-600"} text-xs mb-3`}>Suivi des indicateurs, alertes, évolution des pathologies, ROI et aide à la décision.</p>
                     <div className="flex-1 rounded-xl overflow-hidden bg-slate-800/40 border border-slate-700/80 p-3 flex items-center justify-center min-h-[220px]">
                       <img src={tableauBordImg} alt="Tableau de bord" className="w-full h-full object-contain" />
                     </div>
@@ -663,10 +663,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 <div className="col-span-12 md:col-span-4">
                   <div className="glass-card p-4 h-full flex flex-col items-start">
                     <div className="flex items-center justify-between w-full mb-3">
-                      <h4 className="text-sm font-bold text-white">RAPPORT PDF</h4>
+                      <h4 className={`text-sm font-bold ${isDark ? "text-white" : "text-slate-900"}`}>RAPPORT PDF</h4>
                       <div className="text-red-400"><FileText className="w-5 h-5" /></div>
                     </div>
-                    <p className="text-xs text-slate-300 mb-3">Rapport professionnel généré automatiquement.</p>
+                    <p className={`${isDark ? "text-slate-300" : "text-slate-600"} text-xs mb-3`}>Rapport professionnel généré automatiquement.</p>
                     <div className="w-full rounded-xl bg-slate-800/30 border border-slate-700/80 p-4 flex items-center justify-center min-h-[220px]">
                       <img src={rapportPdfImg} alt="Rapport PDF" className="w-full h-full object-contain rounded-md" />
                     </div>
@@ -676,10 +676,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 <div className="col-span-12 md:col-span-4">
                   <div className="glass-card p-4 h-full flex flex-col">
                     <div className="flex items-center justify-between mb-3">
-                      <h4 className="text-sm font-bold text-white">ASSISTANT IA</h4>
+                      <h4 className={`text-sm font-bold ${isDark ? "text-white" : "text-slate-900"}`}>ASSISTANT IA</h4>
                       <div className="text-sky-400"><Bot className="w-5 h-5" /></div>
                     </div>
-                    <p className="text-xs text-slate-300 mb-3">Assistant conversationnel technique.</p>
+                    <p className={`${isDark ? "text-slate-300" : "text-slate-600"} text-xs mb-3`}>Assistant conversationnel technique.</p>
                     <div className="flex-1 rounded-xl bg-slate-900/20 p-3 overflow-hidden flex items-center justify-center min-h-[220px] border border-slate-700/60">
                       <img src={assistantIaImg} alt="Assistant IA" className="w-full h-full object-contain rounded-md" />
                     </div>
@@ -689,10 +689,10 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 <div className="col-span-12 md:col-span-4">
                   <div className="glass-card p-4 h-full flex flex-col">
                     <div className="flex items-center justify-between mb-3">
-                      <h4 className="text-sm font-bold text-white">HISTORIQUE</h4>
+                      <h4 className={`text-sm font-bold ${isDark ? "text-white" : "text-slate-900"}`}>HISTORIQUE</h4>
                       <div className="text-sky-400"><Clock className="w-5 h-5" /></div>
                     </div>
-                    <p className="text-xs text-slate-300 mb-3">Historique des inspections et interventions.</p>
+                    <p className={`${isDark ? "text-slate-300" : "text-slate-600"} text-xs mb-3`}>Historique des inspections et interventions.</p>
                     <div className="overflow-hidden rounded-xl flex items-center justify-center bg-slate-900/20 p-3 border border-slate-700/60 min-h-[220px]">
                       <img src={historiqueImg} alt="Historique" className="w-full h-full object-contain rounded-md" />
                     </div>
@@ -704,7 +704,7 @@ export default function WelcomeScreen({ onStartInspection, onNavigateToTab, them
                 <div className="p-2 bg-sky-500/20 rounded-md">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l7 4v6c0 5-3.6 9.7-7 11-3.4-1.3-7-6-7-11V6l7-4z"/><path d="M8 12l2 2 4-4"/></svg>
                 </div>
-                <div className="text-sm text-slate-300">Des <span className="text-sky-400 font-semibold">fonctionnalités avancées</span> pour un <span className="text-sky-400 font-semibold">prédiagnostic intelligent, rapide et fiable</span>.</div>
+                <div className={`${isDark ? "text-slate-300" : "text-slate-600"} text-sm`}>Des <span className="text-sky-400 font-semibold">fonctionnalités avancées</span> pour un <span className="text-sky-400 font-semibold">prédiagnostic intelligent, rapide et fiable</span>.</div>
               </div>
             </div>
           </div>
