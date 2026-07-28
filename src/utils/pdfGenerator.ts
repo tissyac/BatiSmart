@@ -1501,11 +1501,18 @@ export function generateInspectionPDF(
     if (rawInv) storedInterventions = JSON.parse(rawInv);
   } catch (e) {}
 
-  const matchingInterventions = storedInterventions.filter((inv: any) => 
-    (inv.buildingName && inspection.buildingName && inv.buildingName.trim().toLowerCase() === inspection.buildingName.trim().toLowerCase()) ||
-    (inv.linkedInspectionId && inv.linkedInspectionId === inspection.id)
-  );
-  const latestIntervention = matchingInterventions.length > 0 ? matchingInterventions[matchingInterventions.length - 1] : null;
+  const normalizedStoredInterventions = Array.isArray(storedInterventions) ? storedInterventions.filter(Boolean) : [];
+  const matchingInterventions = normalizedStoredInterventions.filter((inv: any) => {
+    const sameBuilding = inv?.buildingName && inspection.buildingName && inv.buildingName.trim().toLowerCase() === inspection.buildingName.trim().toLowerCase();
+    const sameInspection = Boolean(inv?.linkedInspectionId && inv.linkedInspectionId === inspection.id);
+    const sameBuildingSlug = Boolean(inv?.buildingName && inspection.buildingName && inv.buildingName.toLowerCase().includes(inspection.buildingName.toLowerCase().split(" ")[0] || ""));
+    return sameBuilding || sameInspection || sameBuildingSlug;
+  });
+
+  const fallbackInterventions = matchingInterventions.length > 0 ? matchingInterventions : normalizedStoredInterventions;
+  const latestIntervention = [...fallbackInterventions].reverse().find((inv: any) =>
+    normalizeTextValue(inv?.photoBefore) || normalizeTextValue(inv?.photoAfter) || normalizeTextValue(inv?.description) || normalizeTextValue(inv?.type)
+  ) || fallbackInterventions[fallbackInterventions.length - 1] || null;
 
   if (y + 105 > 260) {
     addPageWithHeader("HISTORIQUE DES INTERVENTIONS");
