@@ -201,6 +201,27 @@ export default function HistoryScreen({
       photoAfter: intervPhotoAfter || "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=800&q=80",
     };
 
+    if (selectedInspection) {
+      const updatedInspection = {
+        ...selectedInspection,
+        maintenanceDescription: intervDescription || selectedInspection.maintenanceDescription || "",
+        maintenanceInterventionType: intervType || selectedInspection.maintenanceInterventionType || "",
+        maintenanceInterventionDate: intervDate || selectedInspection.maintenanceInterventionDate || "",
+        maintenanceCompany: intervCompany || selectedInspection.maintenanceCompany || "",
+        maintenanceResponsible: intervResponsible || selectedInspection.maintenanceResponsible || "",
+        maintenanceDuration: intervDuration || selectedInspection.maintenanceDuration || "",
+        maintenanceCost: intervCost || selectedInspection.maintenanceCost || "",
+        maintenancePhotos: [
+          ...(selectedInspection.maintenancePhotos || []),
+          ...(intervPhotoBefore ? [{ id: `before-${Date.now()}`, label: "Avant - intervention", url: intervPhotoBefore, date: new Date().toISOString() }] : []),
+          ...(intervPhotoAfter ? [{ id: `after-${Date.now()}`, label: "Après - intervention", url: intervPhotoAfter, date: new Date().toISOString() }] : [])
+        ].filter((photo: any) => photo?.url),
+      };
+      if (onUpdateInspection) {
+        onUpdateInspection(updatedInspection as any);
+      }
+    }
+
     if (onAddIntervention) {
       onAddIntervention(newInterv);
     }

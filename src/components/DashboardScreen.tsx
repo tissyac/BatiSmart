@@ -655,6 +655,12 @@ export default function DashboardScreen({
       ? customSurfaces[selectedBuilding] 
       : (latestInspection.customSurface || defaultEcon.roofSurface);
 
+    const maintenancePhotos = [
+      ...(latestInspection.maintenancePhotos || []),
+      ...(intervPhotoBefore ? [{ id: `before-${Date.now()}`, label: "Avant - intervention", url: intervPhotoBefore, date: new Date().toISOString() }] : []),
+      ...(intervPhotoAfter ? [{ id: `after-${Date.now()}`, label: "Après - intervention", url: intervPhotoAfter, date: new Date().toISOString() }] : [])
+    ].filter((photo: any) => photo?.url);
+
     const updatedInspection: Inspection = {
       ...latestInspection,
       expertDecisionStatus: expertStatus,
@@ -675,6 +681,7 @@ export default function DashboardScreen({
       maintenanceResponsible: intervResponsible,
       maintenanceDuration: intervDuration,
       maintenanceCost: intervCost,
+      maintenancePhotos,
     };
 
     if (onUpdateInspection) {
