@@ -201,16 +201,26 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
       const doc = generateInspectionPDF(currentInspection, false, "jspdf");
       const blob = doc.output("blob");
       const url = URL.createObjectURL(blob);
-      const win = window.open(url, "_blank");
-      if (win) {
+      const previewWindow = window.open(url, "_blank", "noopener,noreferrer");
+
+      if (previewWindow) {
         setSuccessMessage("Aperçu PDF ouvert dans un nouvel onglet !");
         showToast("Aperçu ouvert ! 👁️");
       } else {
-        window.location.href = url;
+        const link = document.createElement("a");
+        link.href = url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.download = `Rapport_BatiSmart_${currentInspection.buildingName.replace(/\s+/g, "_")}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setSuccessMessage("Le PDF a été téléchargé pour consultation.");
+        showToast("Aperçu téléchargé 💾");
       }
     } catch (err) {
       console.error(err);
-      setErrorMessage("Impossible d'ouvrir l'aperçu. Veuillez autoriser les fenêtres contextuelles (popups) pour BatiSmart.");
+      setErrorMessage("Impossible d'ouvrir l'aperçu. Le téléchargement du PDF a été lancé à la place.");
     } finally {
       setLoadingAction(null);
     }
