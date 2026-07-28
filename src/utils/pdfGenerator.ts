@@ -1494,105 +1494,125 @@ export function generateInspectionPDF(
 
   y += decisionBoxH + 6;
 
-  // --- 8. SUIVI DE MAINTENANCE À J+2 & EXÉCUTION DES TRAVAUX DE CHANTIER ---
+  // --- 10. HISTORIQUE DES INTERVENTIONS ---
   let storedInterventions: any[] = [];
   try {
     const rawInv = localStorage.getItem("batismart_interventions");
     if (rawInv) storedInterventions = JSON.parse(rawInv);
   } catch (e) {}
 
-  const bInterventions = storedInterventions.filter((inv: any) => 
+  const matchingInterventions = storedInterventions.filter((inv: any) => 
     (inv.buildingName && inspection.buildingName && inv.buildingName.trim().toLowerCase() === inspection.buildingName.trim().toLowerCase()) ||
     (inv.linkedInspectionId && inv.linkedInspectionId === inspection.id)
   );
+  const latestIntervention = matchingInterventions.length > 0 ? matchingInterventions[matchingInterventions.length - 1] : null;
 
-  if (y + 40 > 260) {
-    addPageWithHeader("SUIVI DE MAINTENANCE & CHANTIER (J+2)");
+  if (y + 105 > 260) {
+    addPageWithHeader("HISTORIQUE DES INTERVENTIONS");
   }
 
   doc.setFont("Helvetica", "bold");
-  doc.setFontSize(8.5);
+  doc.setFontSize(10.5);
   doc.setTextColor(darkNavy);
-  doc.text("8. SUIVI DE MAINTENANCE À J+2 & EXÉCUTION DES TRAVAUX", 15, y);
+  doc.text("10. HISTORIQUE DES INTERVENTIONS", 15, y);
+  doc.setDrawColor(lightBlue);
+  doc.setLineWidth(0.35);
+  doc.line(15, y + 1.5, 125, y + 1.5);
 
-  y += 3.5;
-  const maintBoxH = 36;
+  y += 6;
+  const historyBoxH = 96;
   doc.setFillColor("#f8fafc");
-  doc.rect(15, y, pageWidth - 30, maintBoxH, "F");
+  doc.rect(15, y, pageWidth - 30, historyBoxH, "F");
   doc.setDrawColor("#cbd5e1");
   doc.setLineWidth(0.2);
-  doc.rect(15, y, pageWidth - 30, maintBoxH, "S");
+  doc.rect(15, y, pageWidth - 30, historyBoxH, "S");
 
-  // Statut de maintenance
-  const currentMStatus = inspection.maintenanceStatus || "Planifiée";
-  doc.setFont("Helvetica", "bold");
-  doc.setFontSize(7.5);
-  doc.setTextColor(darkNavy);
-  doc.text("Statut de la maintenance à J+2 :", 20, y + 5);
+  const historyLabelX = 20;
+  const historyValueX = 78;
+  let historyY = y + 5;
 
-  doc.setFont("Helvetica", "bold");
-  doc.setFontSize(8);
-  if (currentMStatus === "Clôturée") doc.setTextColor("#166534");
-  else if (currentMStatus === "En cours") doc.setTextColor("#0284c7");
-  else doc.setTextColor("#d97706");
-  doc.text(currentMStatus.toUpperCase(), 68, y + 5);
+  const drawHistoryField = (label: string, value: string, lineY: number) => {
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(6.8);
+    doc.setTextColor(darkNavy);
+    doc.text(label, historyLabelX, lineY);
 
-  // Maintenance Tasks
-  doc.setFont("Helvetica", "bold");
-  doc.setFontSize(7);
-  doc.setTextColor(darkNavy);
-  doc.text("Programme & Tâches de réhabilitation (J+2) :", 20, y + 10);
-
-  const defaultTasks = [
-    { id: "1", label: "Traitement des fissures & pontage des acrotères", completed: true },
-    { id: "2", label: "Application primaire d'accrochage & résine SEL", completed: true },
-    { id: "3", label: "Nettoyage des noues & contrôle des évacuations pluviales", completed: true }
-  ];
-  const activeTasks = Array.isArray(inspection.maintenanceTasks) && inspection.maintenanceTasks.length > 0 
-    ? inspection.maintenanceTasks 
-    : defaultTasks;
-
-  doc.setFont("Helvetica", "normal");
-  doc.setFontSize(6.5);
-  let taskY = y + 14;
-  activeTasks.slice(0, 4).forEach((t: any) => {
-    const mark = t.completed ? "[X]" : "[ ]";
-    doc.setTextColor(t.completed ? "#166534" : "#475569");
-    doc.text(`${mark} ${t.label}`, 22, taskY);
-    taskY += 3.8;
-  });
-
-  // Interventions history summary
-  doc.setFont("Helvetica", "bold");
-  doc.setFontSize(7);
-  doc.setTextColor(darkNavy);
-  doc.text(`Interventions de chantier enregistrées (${bInterventions.length}) :`, 110, y + 10);
-
-  let invY = y + 14;
-  if (bInterventions.length === 0) {
-    doc.setFont("Helvetica", "italic");
-    doc.setFontSize(6.5);
+    const wrappedValue = doc.splitTextToSize(value, pageWidth - 95);
+    doc.setFont("Helvetica", "normal");
+    doc.setFontSize(6.6);
     doc.setTextColor(charcoal);
-    doc.text("• Diagnostic initial en attente d'engagement de travaux", 112, invY);
-  } else {
-    bInterventions.slice(0, 3).forEach((inv: any) => {
-      doc.setFont("Helvetica", "bold");
-      doc.setFontSize(6.5);
-      doc.setTextColor(valueBlack);
-      doc.text(`• ${inv.type} (${inv.company || "Entreprise"}) - ${inv.estimatedCost || "Coût N/A"}`, 112, invY);
-      invY += 3.5;
-      doc.setFont("Helvetica", "normal");
+    doc.text(wrappedValue, historyValueX, lineY + 3.2);
+
+    return lineY + 3.2 + Math.max(1, wrappedValue.length) * 3.2;
+  };
+
+  const drawPhotoSlot = (label: string, photoUrl: string, x: number, yPos: number) => {
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(6.5);
+    doc.setTextColor(darkNavy);
+    doc.text(label, x, yPos);
+
+    doc.setFillColor("#f8fafc");
+    doc.rect(x, yPos + 3.5, 44, 22, "F");
+    doc.setDrawColor("#cbd5e1");
+    doc.setLineWidth(0.2);
+    doc.rect(x, yPos + 3.5, 44, 22, "S");
+
+    if (photoUrl) {
+      try {
+        let format = "JPEG";
+        if (photoUrl.startsWith("data:image/")) {
+          const matches = photoUrl.match(/^data:image\/([a-zA-Z+]+);base64,/);
+          if (matches && matches[1]) {
+            const ext = matches[1].toUpperCase();
+            if (ext === "PNG") format = "PNG";
+            else if (ext === "WEBP") format = "WEBP";
+          }
+        }
+        doc.addImage(photoUrl, format, x + 0.5, yPos + 4, 43, 21);
+      } catch (e) {
+        doc.setFont("Helvetica", "italic");
+        doc.setFontSize(5.8);
+        doc.setTextColor(charcoal);
+        doc.text("Image non disponible", x + 5, yPos + 13);
+      }
+    } else {
+      doc.setFont("Helvetica", "italic");
       doc.setFontSize(5.8);
       doc.setTextColor(charcoal);
-      const desc = inv.description ? inv.description.substring(0, 45) : "Chantier d'étanchéité";
-      doc.text(`  Date: ${inv.date} | ${desc}`, 112, invY);
-      invY += 4;
-    });
-  }
+      doc.text("Non renseignée", x + 5, yPos + 13);
+    }
+  };
 
-  y += maintBoxH + 6;
+  const interventionType = latestIntervention?.type || inspection.maintenanceInterventionType || "Non renseigné";
+  const interventionDate = latestIntervention?.date || inspection.maintenanceInterventionDate || "Non renseigné";
+  const descriptionParts = [
+    latestIntervention?.description || inspection.maintenanceDescription || "",
+    techOptions.length > 0 ? `Options techniques : ${techOptions.join(" | ")}` : "",
+    maintenanceOpts.length > 0 ? `Options maintenance : ${maintenanceOpts.join(" | ")}` : ""
+  ].filter(Boolean);
+  const interventionDescription = descriptionParts.join("\n");
+  const interventionCompany = latestIntervention?.company || inspection.maintenanceCompany || "Non renseigné";
+  const interventionResponsible = latestIntervention?.responsible || inspection.maintenanceResponsible || "Non renseigné";
+  const interventionDuration = latestIntervention?.duration || inspection.maintenanceDuration || "Non renseigné";
+  const interventionCost = latestIntervention?.estimatedCost || inspection.maintenanceCost || "Non renseigné";
+  const interventionBeforePhoto = latestIntervention?.photoBefore || "";
+  const interventionAfterPhoto = latestIntervention?.photoAfter || "";
 
-  // --- 9. RELEVÉS PHOTOGRAPHIQUES ET CLICHÉS DETERRAIN ---
+  historyY = drawHistoryField("Type d'intervention * :", interventionType, historyY);
+  historyY = drawHistoryField("Date de réalisation * :", interventionDate, historyY);
+  historyY = drawHistoryField("Description exhaustive des travaux réalisés * :", interventionDescription || "Non renseigné", historyY);
+  historyY = drawHistoryField("Entreprise * :", interventionCompany, historyY);
+  historyY = drawHistoryField("Responsable * :", interventionResponsible, historyY);
+  historyY = drawHistoryField("Durée travaux * :", interventionDuration, historyY);
+  historyY = drawHistoryField("Coût estimé (DA) * :", interventionCost, historyY);
+
+  drawPhotoSlot("Photo Avant (Dégradations)", interventionBeforePhoto, 20, historyY + 2);
+  drawPhotoSlot("Photo Après (Réparations)", interventionAfterPhoto, 100, historyY + 2);
+
+  y += historyBoxH + 6;
+
+  // --- 11. RELEVÉS PHOTOGRAPHIQUES ET CLICHÉS DETERRAIN ---
   // Collect up to 5 unique photos for the gallery
   const photosToRender: string[] = [];
   if (Array.isArray(inspection.imageUrls)) {
@@ -1638,7 +1658,7 @@ export function generateInspectionPDF(
     doc.setFont("Helvetica", "bold");
     doc.setFontSize(9.5);
     doc.setTextColor(darkNavy);
-    doc.text("9. RELEVÉS PHOTOGRAPHIQUES DE TERRAIN (HAUTE CLARTÉ)", 15, y);
+    doc.text("11. RELEVÉS PHOTOGRAPHIQUES DE TERRAIN (HAUTE CLARTÉ)", 15, y);
     doc.setDrawColor(lightBlue);
     doc.setLineWidth(0.35);
     doc.line(15, y + 1.5, 125, y + 1.5);
