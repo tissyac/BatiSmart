@@ -1432,7 +1432,8 @@ export function generateInspectionPDF(
   };
 
   contentY = drawField("Validation de l'Expert :", validationStatus, contentY);
-  drawStatus(contentY - 3.2);
+  contentY += 1.4;
+  drawStatus(contentY);
   contentY += 4.2;
 
   contentY = drawField("Nom de l'expert * :", expertName, contentY);
