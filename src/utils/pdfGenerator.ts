@@ -1431,7 +1431,10 @@ export function generateInspectionPDF(
     }
   };
 
-  contentY = drawField("Validation de l'Expert :", validationStatus, contentY);
+  doc.setFont("Helvetica", "bold");
+  doc.setFontSize(6.8);
+  doc.setTextColor(darkNavy);
+  doc.text("Validation de l'Expert :", labelX, contentY);
   contentY += 1.4;
   drawStatus(contentY);
   contentY += 4.2;
