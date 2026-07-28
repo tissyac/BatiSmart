@@ -201,16 +201,45 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
       const doc = generateInspectionPDF(currentInspection, false, "jspdf");
       const blob = doc.output("blob");
       const url = URL.createObjectURL(blob);
-      const win = window.open(url, "_blank");
-      if (win) {
-        setSuccessMessage("Aperçu PDF ouvert dans un nouvel onglet !");
+
+      const iframe = document.createElement("iframe");
+      iframe.src = url;
+      iframe.style.position = "fixed";
+      iframe.style.top = "0";
+      iframe.style.left = "0";
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.border = "none";
+      iframe.style.zIndex = "99999";
+      document.body.appendChild(iframe);
+
+      const cleanup = () => {
+        try {
+          document.body.removeChild(iframe);
+          URL.revokeObjectURL(url);
+        } catch (e) {}
+      };
+
+      iframe.onload = () => {
+        setSuccessMessage("Aperçu PDF affiché dans la fenêtre du navigateur.");
         showToast("Aperçu ouvert ! 👁️");
-      } else {
-        window.location.href = url;
-      }
+        setTimeout(cleanup, 2000);
+      };
+
+      iframe.onerror = () => {
+        cleanup();
+        setErrorMessage("Impossible d'afficher l'aperçu dans ce navigateur. Le PDF sera téléchargé à la place.");
+        doc.save(`Rapport_BatiSmart_${currentInspection.buildingName.replace(/\s+/g, "_")}.pdf`);
+      };
     } catch (err) {
       console.error(err);
-      setErrorMessage("Impossible d'ouvrir l'aperçu. Veuillez autoriser les fenêtres contextuelles (popups) pour BatiSmart.");
+      setErrorMessage("Impossible d'ouvrir l'aperçu. Le téléchargement du PDF a été lancé à la place.");
+      try {
+        const doc = generateInspectionPDF(currentInspection, false, "jspdf");
+        doc.save(`Rapport_BatiSmart_${currentInspection.buildingName.replace(/\s+/g, "_")}.pdf`);
+      } catch (downloadErr) {
+        console.error(downloadErr);
+      }
     } finally {
       setLoadingAction(null);
     }
