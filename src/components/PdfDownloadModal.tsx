@@ -201,49 +201,16 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
       const doc = generateInspectionPDF(currentInspection, false, "jspdf");
       const blob = doc.output("blob");
       const url = URL.createObjectURL(blob);
-
-      let previewWindow: Window | null = null;
-      try {
-        previewWindow = window.open(url, "_blank", "noopener,noreferrer");
-      } catch (popupErr) {
-        console.warn("Preview popup blocked, falling back to download:", popupErr);
-      }
-
-      if (previewWindow) {
+      const win = window.open(url, "_blank");
+      if (win) {
         setSuccessMessage("Aperçu PDF ouvert dans un nouvel onglet !");
         showToast("Aperçu ouvert ! 👁️");
       } else {
-        const link = document.createElement("a");
-        link.href = url;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        link.download = `Rapport_BatiSmart_${currentInspection.buildingName.replace(/\s+/g, "_")}.pdf`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        setSuccessMessage("Le PDF a été téléchargé pour consultation.");
-        showToast("Aperçu téléchargé 💾");
+        window.location.href = url;
       }
     } catch (err) {
       console.error(err);
-      try {
-        const doc = generateInspectionPDF(currentInspection, false, "jspdf");
-        const blob = doc.output("blob");
-        const url = URL.createObjectURL(blob);
-        const fallbackLink = document.createElement("a");
-        fallbackLink.href = url;
-        fallbackLink.target = "_blank";
-        fallbackLink.rel = "noopener noreferrer";
-        fallbackLink.download = `Rapport_BatiSmart_${currentInspection.buildingName.replace(/\s+/g, "_")}.pdf`;
-        document.body.appendChild(fallbackLink);
-        fallbackLink.click();
-        document.body.removeChild(fallbackLink);
-        setSuccessMessage("Le PDF a été téléchargé pour consultation.");
-        showToast("Aperçu téléchargé 💾");
-      } catch (downloadErr) {
-        console.error(downloadErr);
-        setErrorMessage("Le téléchargement du PDF a échoué. Veuillez réessayer.");
-      }
+      setErrorMessage("Impossible d'ouvrir l'aperçu. Veuillez autoriser les fenêtres contextuelles (popups) pour BatiSmart.");
     } finally {
       setLoadingAction(null);
     }
